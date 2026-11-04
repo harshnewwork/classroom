@@ -30,7 +30,7 @@ export function Problem() {
               <div className="absolute inset-0 overflow-hidden rounded-xl border border-[#C9A96B]/30 shadow-2xl shadow-black/30">
                 <img
                   src="/images/classroom-standard.png"
-                  alt="Standard classroom setup at Mentors Studio"
+                  alt="Air-conditioned furnished teaching cabin for rent in Gurugram with whiteboard and student desks"
                   className="h-full w-full object-cover object-center"
                   loading="lazy"
                 />

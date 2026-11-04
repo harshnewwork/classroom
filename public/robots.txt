@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /manage-rooms-7f2a
+
+Sitemap: https://[YOUR_DOMAIN]/sitemap.xml
+

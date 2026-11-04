@@ -73,7 +73,7 @@ export function Facilities() {
           <div className="relative overflow-hidden rounded-sm">
             <img
               src="/images/terrace-balcony.png"
-              alt="Mentors Studio Balcony Corridor & Modern Facade"
+              alt="Mentors Studio Balcony and Outdoor Terrace on Golf Course Extension Road, Sector 57, Gurugram"
               className="w-full h-48 lg:h-56 object-cover"
               loading="lazy"
             />

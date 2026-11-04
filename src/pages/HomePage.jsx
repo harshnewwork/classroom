@@ -11,12 +11,21 @@ import { Educators }   from '../components/sections/Educators';
 import { Kits }        from '../components/sections/Kits';
 import { Booking }     from '../components/sections/Booking';
 import { Contact }     from '../components/sections/Contact';
+import { SEO }         from '../components/seo/SEO';
+import { getLocalBusinessSchema } from '../components/seo/schema';
 
 export function HomePage() {
   const [selectedCapacity, setSelectedCapacity] = useState(10);
 
   return (
     <>
+      <SEO
+        title="Classroom & Teaching Space for Rent in Gurugram | Mentors Studio"
+        description="Furnished, AC classrooms for rent on Golf Course Extension Road, Sector 57, Gurugram. Pay per seat, no deposit. Built for tutors, coaches & trainers."
+        canonicalPath="/"
+        schema={getLocalBusinessSchema()}
+      />
+
       <Hero />
 
       {/* Brand Identity Showcase */}
@@ -26,7 +35,7 @@ export function HomePage() {
           <div className="bg-[#F7F2EA] rounded-md p-3 sm:p-5 border border-[#C9A96B]/50 shadow-2xl shadow-black/60 flex items-center justify-center">
             <img
               src="/brand/logo-banner.png"
-              alt="Mentors Studio by The Vensej — Learn, Grow, Create, Move"
+              alt="Mentors Studio by The Vensej — Learn, Grow, Create, Move — Classroom rental for educators in Gurugram"
               className="w-full max-h-14 sm:max-h-20 object-contain"
             />
           </div>

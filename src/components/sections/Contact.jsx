@@ -1,13 +1,14 @@
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
 import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
+import { siteConfig } from '../../config/siteConfig';
 
 const CONTACT = {
-  phone:    '[PHONE_NUMBER]',
-  whatsapp: '[WHATSAPP_NUMBER]',
-  email:    '[EMAIL_ADDRESS]',
-  address:  '[Floor and Unit], [Mall Name], Golf Course Extension Road, Sector 57, Gurugram, Haryana — 122003',
-  mapsUrl:  'https://maps.google.com/?q=Golf+Course+Extension+Road+Sector+57+Gurugram',
+  phone:    siteConfig.contact.phone,
+  whatsapp: siteConfig.contact.whatsapp,
+  email:    siteConfig.contact.email,
+  address:  `${siteConfig.contact.address.floorUnit}, ${siteConfig.contact.address.mallName}, Golf Course Extension Road, Sector 57, Gurugram, Haryana — 122003`,
+  mapsUrl:  siteConfig.contact.mapsUrl,
 };
 
 export function Contact() {

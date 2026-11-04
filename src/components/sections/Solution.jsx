@@ -41,7 +41,7 @@ export function Solution() {
           <AnimatedSection className="lg:col-span-5 relative overflow-hidden rounded-sm" direction="left">
             <img
               src="/images/classroom-physics.png"
-              alt="Interactive Physics & Technology Classroom at Mentors Studio"
+              alt="Technology equipped classroom on rent in Gurugram with projector and digital display"
               className="w-full h-full min-h-[400px] object-cover"
               loading="lazy"
             />
@@ -82,9 +82,9 @@ export function Solution() {
         <AnimatedSection>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { src: '/images/classroom-seminar.png', alt: 'Spacious Seminar Hall with projector and modern seating' },
-              { src: '/images/classroom-biology.png', alt: 'Biology & Life Sciences teaching space with interactive screen' },
-              { src: '/images/classroom-music.png', alt: 'Acoustic Music & Performing Arts classroom' },
+              { src: '/images/classroom-seminar.png', alt: 'Spacious 24-seat seminar hall and test-prep classroom in Sector 57 Gurugram' },
+              { src: '/images/classroom-biology.png', alt: 'Furnished 12-seat tuition and coaching classroom with interactive digital display' },
+              { src: '/images/classroom-music.png', alt: 'Dedicated Arts and Crafts teaching workshop room with creative supplies' },
             ].map((img, i) => (
               <div key={i} className="overflow-hidden rounded-sm aspect-[4/3]">
                 <img

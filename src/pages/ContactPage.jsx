@@ -3,15 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection } from '../components/ui/AnimatedSection';
-import { MapPin, Phone, Mail, MessageCircle, Clock, CheckCircle2, AlertCircle, Send } from 'lucide-react';
+import { Breadcrumbs } from '../components/seo/Breadcrumbs';
+import { SEO } from '../components/seo/SEO';
+import { getLocalBusinessSchema } from '../components/seo/schema';
+import { MapPin, Phone, Mail, MessageCircle, Clock, CheckCircle2, AlertCircle, Send, ExternalLink } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
+import { siteConfig } from '../config/siteConfig';
 
 const CONTACT = {
-  phone:    '[PHONE_NUMBER]',
-  whatsapp: '[WHATSAPP_NUMBER]',
-  email:    '[EMAIL_ADDRESS]',
-  address:  '[Floor and Unit], [Mall Name], Golf Course Extension Road, Sector 57, Gurugram, Haryana — 122003',
-  mapsUrl:  'https://maps.google.com/?q=Golf+Course+Extension+Road+Sector+57+Gurugram',
+  phone:    siteConfig.contact.phone,
+  whatsapp: siteConfig.contact.whatsapp,
+  email:    siteConfig.contact.email,
+  address:  `${siteConfig.contact.address.floorUnit}, ${siteConfig.contact.address.mallName}, Golf Course Extension Road, Sector 57, Gurugram, Haryana — 122003`,
+  mapsUrl:  siteConfig.contact.mapsUrl,
 };
 
 const initial = {
@@ -60,7 +64,7 @@ function buildWA(f) {
     `Teaching: ${f.subject}\nStudents: ${f.studentType}\nBatch: ${f.batchSize}\n` +
     `Cabin: ${f.cabinCapacity}\nDays: ${f.days}\nTime: ${f.time}\n` +
     (f.notes ? `Notes: ${f.notes}\n` : '') +
-    `\nFrom mentorsstudio.in`
+    `\nFrom ${siteConfig.domain}`
   );
 }
 
@@ -101,7 +105,6 @@ export function ContactPage() {
         status: 'new',
       };
 
-      // Background non-blocking sync: failures will never block visitor action
       supabase
         .from('enquiries')
         .insert([payload])
@@ -138,13 +141,23 @@ export function ContactPage() {
 
   return (
     <div className="bg-premium-dark min-h-screen">
-      <PageHero
-        label="Contact"
-        title={<>Let's Build a Better Space <span className="text-gradient">for Your Teaching.</span></>}
-        subtitle="Fill in the enquiry form below. Our manager will review your requirements and confirm your slots. This is an enquiry — every booking is personally confirmed."
-        breadcrumb={[{ label: 'Contact' }]}
-        image="/images/reception-lobby.png"
+      <SEO
+        title="Contact & Location | Mentors Studio, Golf Course Extension Road, Gurugram"
+        description={`Visit Mentors Studio on Golf Course Extension Road, Sector 57, Gurugram. ${CONTACT.phone} · ${CONTACT.email} · Monday–Saturday, 10am–8:29pm.`}
+        canonicalPath="/contact"
+        schema={getLocalBusinessSchema()}
+        breadcrumbs={[{ name: 'Contact & Location', path: '/contact' }]}
       />
+
+      <PageHero
+        label="Contact & Location"
+        title="Visit Us on Golf Course Extension Road, Sector 57"
+        subtitle="Schedule a walkthrough, discuss your teaching schedule, and tour our 9 fully equipped classroom cabins. Conveniently located on Golf Course Extension Road in Sector 57, Gurugram."
+        image="/images/reception-lobby.png"
+        cta={{ label: 'Send an Enquiry', to: '#enquiry-form' }}
+      />
+
+      <Breadcrumbs items={[{ name: 'Contact & Location' }]} />
 
       {/* Contact details bar */}
       <div className="bg-[#231F1B] border-b border-[#3A3228]">
@@ -155,7 +168,7 @@ export function ContactPage() {
             { icon: Mail,          label: 'Email',    value: CONTACT.email,    ph: true },
             { icon: MapPin,        label: 'Location', value: 'Sector 57, Gurugram', ph: false },
           ].map(({ icon: Icon, label, value, ph }) => (
-            <div key={label} className={`flex items-center gap-3 ${ph ? 'opacity-50' : ''}`}>
+            <div key={label} className={`flex items-center gap-3 ${ph ? 'opacity-65' : ''}`}>
               <div className="w-9 h-9 bg-[#3E2F1F]/40 rounded-sm flex items-center justify-center flex-shrink-0">
                 <Icon size={15} className="text-[#C9A96B]" />
               </div>
@@ -178,26 +191,26 @@ export function ContactPage() {
               Your Next Class Starts Here.
             </h2>
             <p className="font-body text-[#A89880] text-base leading-relaxed mb-8">
-              Fill in the form and the manager will get back to confirm your slots. This is an enquiry — not an automatic booking. Every slot is personally reviewed.
+              Fill in the form and our on-site facility manager will get back to confirm your recurring slots. This is an enquiry — not an automatic booking. Every slot is personally reviewed to ensure perfect cabin availability.
             </p>
 
             {/* Steps */}
             <div className="flex flex-col gap-4 mb-8">
               {[
-                { n: '01', t: 'Submit this enquiry' },
-                { n: '02', t: 'Manager reviews your requirements' },
-                { n: '03', t: 'Slots confirmed on the calendar' },
-                { n: '04', t: 'Teach — receive invoice monthly' },
+                { n: '01', t: 'Submit this enquiry with your requirements' },
+                { n: '02', t: 'Manager reviews your batch size & timings' },
+                { n: '03', t: 'Slots confirmed on the shared master calendar' },
+                { n: '04', t: 'Teach your students — receive monthly invoice' },
               ].map(({ n, t }) => (
                 <div key={n} className="flex items-center gap-4">
-                  <span className="font-mono text-xs text-[#C9A96B] w-8 flex-shrink-0">{n}</span>
+                  <span className="font-mono text-xs text-[#C9A96B] w-8 flex-shrink-0 font-bold">{n}</span>
                   <span className="font-body text-sm text-[#A89880]">{t}</span>
                 </div>
               ))}
             </div>
 
             {/* Operating hours */}
-            <div className="p-5 border border-[#3A3228] rounded-sm bg-[#1A1A1A]">
+            <div className="p-5 border border-[#3A3228] rounded-sm bg-[#1A1A1A] mb-4">
               <div className="flex items-center gap-2 mb-3">
                 <Clock size={13} className="text-[#C9A96B]" />
                 <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-[#A89880]">Operating Hours</p>
@@ -205,37 +218,35 @@ export function ContactPage() {
               <p className="font-display font-semibold text-[#F7F2EA] text-sm">Monday – Saturday</p>
               <p className="font-mono text-xs text-[#A89880] mt-0.5">10:00 am – 8:29 pm</p>
               <p className="font-display font-semibold text-[#F7F2EA] text-sm mt-3">Three Sundays per month</p>
-              <p className="font-mono text-xs text-[#A89880] mt-0.5">Confirmed by manager</p>
+              <p className="font-mono text-xs text-[#A89880] mt-0.5">By prior scheduling with manager</p>
             </div>
 
             {/* Location */}
-            <div className="mt-4 p-5 border border-[#3A3228] rounded-sm bg-[#1A1A1A]">
+            <div className="p-5 border border-[#3A3228] rounded-sm bg-[#1A1A1A]">
               <div className="flex items-center gap-2 mb-3">
                 <MapPin size={13} className="text-[#C9A96B]" />
-                <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-[#A89880]">Location</p>
+                <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-[#A89880]">Physical Location</p>
               </div>
               <p className="font-body text-sm text-[#F7F2EA] leading-relaxed">
-                [Floor and Unit], [Mall Name]<br />
-                Golf Course Extension Road<br />
-                Sector 57, Gurugram<br />
-                Haryana — 122003
+                {siteConfig.contact.address.street}<br />
+                {siteConfig.contact.address.city}, {siteConfig.contact.address.region} — {siteConfig.contact.address.postalCode}
               </p>
-              <p className="font-mono text-[10px] text-[#C9A96B] mt-2">Exact address to be confirmed</p>
+              <p className="font-mono text-[10px] text-[#C9A96B] mt-2">Exact mall suite to be confirmed</p>
               <a
                 href={CONTACT.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 mt-3 font-mono text-[11px] text-[#A89880] hover:text-[#C9A96B] transition-colors"
+                className="inline-flex items-center gap-1.5 mt-3 font-mono text-[11px] text-[#C9A96B] hover:text-[#D4B87A] transition-colors"
               >
-                <MapPin size={11} />
-                View on Google Maps
+                <ExternalLink size={11} />
+                Open in Google Maps
               </a>
             </div>
           </AnimatedSection>
 
           {/* Right: form */}
           <AnimatedSection direction="right" className="lg:col-span-8">
-            <div className="bg-[#1A1A1A] border border-[#3A3228] rounded-sm p-6 lg:p-8">
+            <div id="enquiry-form" className="bg-[#1A1A1A] border border-[#3A3228] rounded-sm p-6 lg:p-8 scroll-mt-28">
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
                 <Field label="Full Name" id="name" required error={errors.name}>
                   <input id="name" placeholder="Your full name" value={form.name} onChange={set('name')} className={inputCls(errors.name)} />
@@ -251,7 +262,7 @@ export function ContactPage() {
               </div>
               <div className="mb-5">
                 <Field label="What will you teach?" id="subject" required error={errors.subject}>
-                  <input id="subject" placeholder="e.g. IELTS Preparation, Advanced Excel, Arts & Crafts" value={form.subject} onChange={set('subject')} className={inputCls(errors.subject)} />
+                  <input id="subject" placeholder="e.g. IELTS Preparation, Advanced Excel, School Maths Grade 10" value={form.subject} onChange={set('subject')} className={inputCls(errors.subject)} />
                 </Field>
               </div>
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
@@ -286,7 +297,7 @@ export function ContactPage() {
               </div>
               <div className="mb-8">
                 <Field label="Additional Requirements" id="notes">
-                  <textarea id="notes" rows={3} placeholder="Special requirements, questions or anything else..." value={form.notes} onChange={set('notes')} className={`${inputCls()} resize-none`} />
+                  <textarea id="notes" rows={3} placeholder="Special equipment, student requests, or anything else..." value={form.notes} onChange={set('notes')} className={`${inputCls()} resize-none`} />
                 </Field>
               </div>
 

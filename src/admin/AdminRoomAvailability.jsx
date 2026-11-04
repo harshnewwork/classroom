@@ -183,27 +183,46 @@ export function AdminRoomAvailability({
     const { room, slot } = bookingModalData;
     setActionLoading(true);
 
-    const newBookingObj = {
-      id: `temp-${Date.now()}`,
-      room_id: room.id,
-      booking_date: selectedDate,
-      slot_id: slot.id,
-      is_booked: true,
-      note: bookingNoteDraft.trim() || null,
-      updated_by: user?.email || 'admin',
-      updated_at: new Date().toISOString(),
-    };
-
-    // Optimistic UI update
-    setBookings((prev) => [
-      ...prev.filter(
-        (b) => !(b.room_id === room.id && b.slot_id === slot.id)
-      ),
-      newBookingObj,
-    ]);
-
     try {
       if (supabase) {
+        // Pre-write freshness check: re-fetch the current row for this cell
+        const { data: freshRow, error: checkError } = await supabase
+          .from('room_slot_bookings')
+          .select('*')
+          .eq('room_id', room.id)
+          .eq('booking_date', selectedDate)
+          .eq('slot_id', slot.id)
+          .maybeSingle();
+
+        if (checkError) throw checkError;
+
+        const currentCellBooking = bookings.find(
+          (b) => b.room_id === room.id && b.slot_id === slot.id
+        );
+
+        const isConflict =
+          freshRow &&
+          freshRow.is_booked &&
+          (!currentCellBooking?.is_booked ||
+            (currentCellBooking?.note || null) !== (freshRow.note || null));
+
+        if (isConflict) {
+          if (showToast) {
+            showToast('This slot was just booked by someone else, refreshing.', 'error');
+          }
+          // Re-render cell with the fresh data and refresh the date bookings
+          setBookings((prev) => [
+            ...prev.filter(
+              (b) => !(b.room_id === room.id && b.slot_id === slot.id)
+            ),
+            freshRow,
+          ]);
+          fetchBookingsForDate(selectedDate, true);
+          setBookingModalData(null);
+          setBookingNoteDraft('');
+          return;
+        }
+
         const payload = {
           room_id: room.id,
           booking_date: selectedDate,
@@ -240,7 +259,6 @@ export function AdminRoomAvailability({
       setBookingModalData(null);
       setBookingNoteDraft('');
     } catch (err) {
-      setBookings((prev) => prev.filter((b) => b.id !== newBookingObj.id));
       if (showToast) showToast(`Failed to book slot: ${err.message}`, 'error');
     } finally {
       setActionLoading(false);

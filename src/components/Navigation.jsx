@@ -11,6 +11,7 @@ const navLinks = [
   { label: 'How It Works',  to: '/how-it-works' },
   { label: 'Pricing',       to: '/pricing' },
   { label: 'For Educators', to: '/educators' },
+  { label: 'FAQ',           to: '/faq' },
   { label: 'Contact',       to: '/contact' },
 ];
 

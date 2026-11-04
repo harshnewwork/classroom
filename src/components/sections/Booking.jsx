@@ -4,9 +4,12 @@ import { AnimatedSection } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
 import { CheckCircle2, AlertCircle, Send, MessageCircle } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../../lib/supabaseClient';
+import { siteConfig } from '../../config/siteConfig';
 
-const MANAGER_WHATSAPP = '[MANAGER_WHATSAPP_NUMBER]';
-const STUDIO_EMAIL     = '[STUDIO_EMAIL_ADDRESS]';
+const MANAGER_WHATSAPP = siteConfig.contact.whatsapp;
+const STUDIO_EMAIL     = siteConfig.contact.email;
+const PLACEHOLDER_PATTERN = /^\[.*\]$/;
+const FALLBACK_MSG = "WhatsApp isn't set up yet, please use Copy Request or email us directly.";
 
 const initial = { name:'', phone:'', email:'', subject:'', studentType:'', batchSize:'', cabinCapacity:'', days:'', time:'', notes:'' };
 const studentTypes = ['School students (Grade 5 and above)', 'Adults', 'Mixed ages (Grade 5 and above)'];
@@ -34,16 +37,21 @@ export function Booking() {
   const [form,   setForm]   = useState(initial);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }));
 
   const validate = () => {
     const e = {};
     if (!form.name.trim())   e.name = 'Required';
-    if (!form.phone.trim() || !/^\+?[\d\s\-()]{8,}$/.test(form.phone.trim())) e.phone = 'Valid phone required';
+    const phone = form.phone.trim();
+    if (!phone || !/^\+?[\d\s\-()]{8,}$/.test(phone) || (phone.match(/\d/g) || []).length < 8) {
+      e.phone = 'Valid phone required';
+    }
     if (!form.subject.trim()) e.subject = 'Required';
     if (!form.studentType)   e.studentType = 'Required';
-    if (!form.batchSize)     e.batchSize = 'Required';
+    const batchNum = parseInt(form.batchSize, 10);
+    if (!form.batchSize || isNaN(batchNum) || batchNum <= 0) e.batchSize = 'Required';
     if (!form.days.trim())   e.days = 'Required';
     if (!form.time)          e.time = 'Required';
     return e;
@@ -53,7 +61,10 @@ export function Booking() {
     `Mentors Studio — Space Enquiry\n\nName: ${form.name}\nPhone: ${form.phone}\n${form.email?`Email: ${form.email}\n`:''}Teaching: ${form.subject}\nStudents: ${form.studentType}\nBatch: ${form.batchSize}\nCabin: ${form.cabinCapacity}\nDays: ${form.days}\nTime: ${form.time}\n${form.notes?`Notes: ${form.notes}`:''}`;
 
   const saveEnquiry = (submittedVia) => {
-    if (!isSupabaseConfigured || !supabase) return;
+    if (!isSupabaseConfigured || !supabase) {
+      console.error('CRITICAL: Supabase is not configured; enquiry was not saved to database.');
+      return;
+    }
     try {
       const payload = {
         name: form.name.trim(),
@@ -61,7 +72,7 @@ export function Booking() {
         email: form.email.trim() || null,
         subject: form.subject.trim(),
         student_type: form.studentType,
-        batch_size: parseInt(form.batchSize, 10) || 1,
+        batch_size: parseInt(form.batchSize, 10),
         cabin_capacity: form.cabinCapacity || null,
         days: form.days.trim(),
         time_slot: form.time,
@@ -76,32 +87,45 @@ export function Booking() {
         .insert([payload])
         .then(({ error }) => {
           if (error) {
-            console.warn('[Enquiry Sync] Could not save enquiry to Supabase:', error.message);
+            console.error('CRITICAL: [Enquiry Sync] Could not save enquiry to Supabase:', error.message);
           }
         })
         .catch((err) => {
-          console.warn('[Enquiry Sync] Network error dispatching enquiry:', err);
+          console.error('CRITICAL: [Enquiry Sync] Network error dispatching enquiry:', err);
         });
     } catch (err) {
-      console.warn('[Enquiry Sync] Unexpected error:', err);
+      console.error('CRITICAL: [Enquiry Sync] Unexpected error:', err);
     }
   };
 
   const handleCopy = () => {
     const e = validate(); if (Object.keys(e).length) { setErrors(e); return; }
     setErrors({});
+    setIsSubmitting(true);
     saveEnquiry('copy');
     navigator.clipboard.writeText(buildMsg()).then(() => setStatus('copied'));
-    setTimeout(() => setStatus('idle'), 3500);
+    setTimeout(() => {
+      setStatus('idle');
+      setIsSubmitting(false);
+    }, 3500);
   };
 
   const handleWA = () => {
     const e = validate(); if (Object.keys(e).length) { setErrors(e); return; }
     setErrors({});
+    if (PLACEHOLDER_PATTERN.test(MANAGER_WHATSAPP)) {
+      setStatus('wa-error');
+      setTimeout(() => setStatus('idle'), 3500);
+      return;
+    }
+    setIsSubmitting(true);
     saveEnquiry('whatsapp');
     window.open(`https://wa.me/${MANAGER_WHATSAPP}?text=${encodeURIComponent(buildMsg())}`, '_blank');
     setStatus('whatsapp');
-    setTimeout(() => setStatus('idle'), 3500);
+    setTimeout(() => {
+      setStatus('idle');
+      setIsSubmitting(false);
+    }, 3500);
   };
 
   return (
@@ -197,29 +221,44 @@ export function Booking() {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <motion.button onClick={handleWA}
-                  className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white font-body font-bold text-xs tracking-[0.15em] uppercase rounded-sm hover:bg-[#20c05a] transition-colors"
-                  whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  disabled={isSubmitting}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white font-body font-bold text-xs tracking-[0.15em] uppercase rounded-sm hover:bg-[#20c05a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  whileHover={!isSubmitting ? { scale: 1.01 } : undefined} whileTap={!isSubmitting ? { scale: 0.99 } : undefined}>
                   <MessageCircle size={15} />Send via WhatsApp
                 </motion.button>
                 <motion.button onClick={handleCopy}
-                  className="flex-1 flex items-center justify-center gap-2 py-4 border border-[#C9A96B] text-[#3E2F1F] font-body font-bold text-xs tracking-[0.15em] uppercase rounded-sm hover:bg-[#C9A96B]/8 transition-colors"
-                  whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  disabled={isSubmitting}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 border border-[#C9A96B] text-[#3E2F1F] font-body font-bold text-xs tracking-[0.15em] uppercase rounded-sm hover:bg-[#C9A96B]/8 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  whileHover={!isSubmitting ? { scale: 1.01 } : undefined} whileTap={!isSubmitting ? { scale: 0.99 } : undefined}>
                   <Send size={14} />Copy Request
                 </motion.button>
               </div>
 
               <AnimatePresence>
+                {status === 'wa-error' && (
+                  <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}
+                    className="mt-4 flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-sm">
+                    <AlertCircle size={13} className="text-red-500 flex-shrink-0" />
+                    <p className="font-mono text-xs text-red-500">{FALLBACK_MSG}</p>
+                  </motion.div>
+                )}
                 {status === 'copied' && (
                   <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}
                     className="mt-4 flex items-center gap-2 p-3 bg-[#C9A96B]/10 border border-[#C9A96B]/30 rounded-sm">
-                    <CheckCircle2 size={13} className="text-[#C9A96B]" />
-                    <p className="font-body text-sm text-[#1A1A1A]">Copied! Send to the manager on WhatsApp or email: <span className="font-mono text-[#C9A96B]">{STUDIO_EMAIL}</span></p>
+                    <CheckCircle2 size={13} className="text-[#C9A96B] flex-shrink-0" />
+                    <p className="font-body text-sm text-[#1A1A1A]">
+                      {PLACEHOLDER_PATTERN.test(STUDIO_EMAIL) ? (
+                        FALLBACK_MSG
+                      ) : (
+                        <>Copied! Send to the manager on WhatsApp or email: <span className="font-mono text-[#C9A96B]">{STUDIO_EMAIL}</span></>
+                      )}
+                    </p>
                   </motion.div>
                 )}
                 {status === 'whatsapp' && (
                   <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}
                     className="mt-4 flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-sm">
-                    <CheckCircle2 size={13} className="text-green-600" />
+                    <CheckCircle2 size={13} className="text-green-600 flex-shrink-0" />
                     <p className="font-body text-sm text-[#1A1A1A]">WhatsApp opened with your enquiry pre-filled.</p>
                   </motion.div>
                 )}

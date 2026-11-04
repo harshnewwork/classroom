@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ShieldAlert, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { NavLogo } from '../components/ui/Logo';
@@ -43,12 +44,12 @@ export function AdminUnauthorized({ user, onSignOut }) {
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
           </button>
-          <a
-            href="#/"
+          <Link
+            to="/"
             className="flex-1 bg-transparent hover:bg-[#EADCC8] border border-[#DDD0B8] text-[#1A1A1A] font-medium py-2.5 px-4 rounded-sm text-xs flex items-center justify-center transition-colors"
           >
             Return to Public Site
-          </a>
+          </Link>
         </div>
       </div>
     </div>

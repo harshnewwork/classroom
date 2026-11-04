@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, AlertCircle, ChevronRight } from 'lucide-react';
 import { cabins } from '../../data/cabins';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/AnimatedSection';
@@ -38,6 +39,7 @@ function CapacityBar({ capacity, minBillable }) {
 }
 
 export function Spaces({ onCabinSelect }) {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(cabins[0]);
 
   const handleSelect = (cabin) => {
@@ -140,7 +142,7 @@ export function Spaces({ onCabinSelect }) {
                   <div className="relative h-[300px] lg:h-[360px]">
                     <img
                       src={selected.image}
-                      alt={`${selected.name} — ${selected.capacity} seat ${selected.type} at Mentors Studio`}
+                      alt={`${selected.name} — ${selected.capacity} seat air-conditioned teaching cabin on rent in Gurugram, Sector 57`}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
@@ -190,7 +192,7 @@ export function Spaces({ onCabinSelect }) {
                     </div>
 
                     <motion.button
-                      onClick={() => window.location.hash = '#/contact'}
+                      onClick={() => navigate('/contact')}
                       className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#1A1A1A] text-[#F7F2EA] font-body font-bold text-xs tracking-[0.2em] uppercase rounded-sm hover:bg-[#3E2F1F] transition-colors"
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}

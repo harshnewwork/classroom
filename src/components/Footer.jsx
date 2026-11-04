@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
 import { Swoosh } from './ui/Swoosh';
+import { siteConfig } from '../config/siteConfig';
 
 const navLinks = [
   { label: 'Spaces',        to: '/spaces' },
@@ -9,6 +10,7 @@ const navLinks = [
   { label: 'How It Works',  to: '/how-it-works' },
   { label: 'Pricing',       to: '/pricing' },
   { label: 'For Educators', to: '/educators' },
+  { label: 'FAQ',           to: '/faq' },
   { label: 'Contact',       to: '/contact' },
 ];
 
@@ -67,9 +69,9 @@ export function Footer() {
             {/* Contact info */}
             <div className="flex flex-col gap-2.5">
               {[
-                { icon: Phone, text: 'Phone: To be added' },
-                { icon: Mail,  text: 'Email: To be added' },
-                { icon: MapPin,text: 'Sector 57, Gurugram' },
+                { icon: Phone, text: `Phone: ${siteConfig.contact.phone}` },
+                { icon: Mail,  text: `Email: ${siteConfig.contact.email}` },
+                { icon: MapPin,text: `${siteConfig.contact.address.locality}, Gurugram` },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5 text-[#7A6A50]">
                   <Icon size={13} className="text-[#C9A96B] flex-shrink-0" />

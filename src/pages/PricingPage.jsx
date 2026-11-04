@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Check, Info, Calculator as CalcIcon, ChevronDown, ArrowRight } from 'lucide-react';
+import { Check, Info, Calculator as CalcIcon, ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
+import { Breadcrumbs } from '../components/seo/Breadcrumbs';
+import { SEO } from '../components/seo/SEO';
+import { getPricingProductSchemas, getFAQSchema } from '../components/seo/schema';
 import { EDUCATOR_TYPES, PACKAGES, calculatePricing, getMinBillable } from '../data/pricing';
 import { cabins } from '../data/cabins';
+import { FAQS } from '../data/faqs';
 
 const packageHighlight = 'halfyearly';
+
+// Pricing specific FAQ subset
+const pricingFaqs = FAQS.filter(f =>
+  ['pricing-cost', 'deposit', 'booking-options', 'min-billing-calculation'].includes(f.id)
+);
 
 function PricingCard({ pkg, educatorType, isActive, onClick }) {
   const isHighlighted = pkg.id === packageHighlight;
@@ -20,7 +29,7 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
       onClick={onClick}
       className={`relative p-6 rounded-sm border flex flex-col cursor-pointer transition-all duration-200 ${
         isHighlighted
-          ? 'border-[#C9A96B] bg-[#C9A96B]/5'
+          ? 'border-[#C9A96B] bg-[#C9A96B]/5 shadow-md shadow-[#C9A96B]/10'
           : isActive
           ? 'border-[#C9A96B]/50 bg-[#C9A96B]/3'
           : 'border-[#3A3228] bg-[#1A1A1A] hover:border-[#C9A96B]/30'
@@ -44,7 +53,7 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
             <span className="font-display font-bold text-[#F7F2EA] text-4xl">{(pkg.discount * 100).toFixed(0)}%</span>
             <span className="font-body text-[#A89880] text-sm">off</span>
           </div>
-          <p className="font-mono text-sm text-[#7A6A50] mt-1">₹{discounted}/seat/session</p>
+          <p className="font-mono text-sm text-[#C9A96B] mt-1">₹{discounted}/seat/session</p>
         </div>
       ) : (
         <div className="mb-1">
@@ -267,15 +276,30 @@ export function PricingPage() {
   const [activeType, setActiveType] = useState('adult');
   const [activePackage, setActivePackage] = useState('standard');
 
+  const schemas = [
+    ...getPricingProductSchemas(),
+    getFAQSchema(pricingFaqs),
+  ];
+
   return (
     <div className="bg-premium-dark min-h-screen">
-      <PageHero
-        label="Pricing"
-        title={<>Flexible Pricing. <span className="text-gradient">Designed Around Your Teaching.</span></>}
-        subtitle="Pay per seat, per session. Choose a package that matches your teaching commitment and get a discount. Billed monthly after your classes — never upfront."
-        breadcrumb={[{ label: 'Pricing' }]}
-        image="/images/classroom-seminar.png"
+      <SEO
+        title="Classroom Rental Pricing — Pay Per Seat, No Deposit | Mentors Studio"
+        description="Transparent per-seat, per-session pricing for classroom rental in Gurugram. Pay-as-you-go or save up to 20% with Starter, Standard, Half-Yearly and Annual packages."
+        canonicalPath="/pricing"
+        schema={schemas}
+        breadcrumbs={[{ name: 'Pricing', path: '/pricing' }]}
       />
+
+      <PageHero
+        label="Pricing & Packages"
+        title="Simple, Transparent Classroom Rental Pricing"
+        subtitle="Pay per seat, per session. Choose a commitment package that matches your teaching schedule and unlock volume discounts up to 20%. Billed monthly in arrears after you teach — never upfront lock-in."
+        image="/images/classroom-seminar.png"
+        cta={{ label: 'Calculate Your Batch Cost', to: '#calculator' }}
+      />
+
+      <Breadcrumbs items={[{ name: 'Pricing & Packages' }]} />
 
       {/* Base rates */}
       <div className="bg-[#231F1B] border-b border-[#3A3228]">
@@ -303,15 +327,42 @@ export function PricingPage() {
         </div>
       </div>
 
+      {/* Content Depth: Pricing Model & Billing Economics (150-300 words) */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-4">
+        <div className="bg-[#1A1A1A] border border-[#3A3228] rounded-sm p-6 lg:p-8">
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles size={16} className="text-[#C9A96B]" />
+            <h2 className="font-display font-bold text-[#F7F2EA] text-xl">
+              Pay-Per-Seat Economics: Only Pay for What Your Batch Consumes
+            </h2>
+          </div>
+          <p className="font-body text-[#A89880] text-sm lg:text-base leading-relaxed font-light mb-4">
+            Traditional coaching room rentals in Gurugram demand fixed monthly leases between ₹35,000 and ₹75,000 regardless of student turnout. Mentors Studio replaces that liability with an educator-first variable model: you pay strictly per seat, per session, billed monthly in arrears. You collect tuition fees from your students first throughout the month, then settle your classroom invoice with zero cashflow strain.
+          </p>
+          <p className="font-body text-[#A89880] text-sm lg:text-base leading-relaxed font-light mb-4">
+            To reserve a dedicated room, every cabin requires a reasonable 60% minimum billable capacity (rounded up). In an 8-seat cabin, the minimum bill is 5 seats; in a 10-seat cabin, it is 6 seats; in our 24-seat seminar hall, it is 15 seats. If 7 students attend your 10-seat session, you pay for 7 seats; if 4 attend, you pay the 6-seat baseline. With packages offering up to 20% savings, educators run high-margin batches without ever risking lease penalties.
+          </p>
+          <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono">
+            <Link to="/spaces" className="text-[#C9A96B] hover:text-[#F7F2EA] font-semibold inline-flex items-center gap-1">
+              Explore 9 cabin layouts & capacities <ArrowRight size={12} />
+            </Link>
+            <span className="text-[#3A3228]">·</span>
+            <Link to="/faq" className="text-[#C9A96B] hover:text-[#F7F2EA] font-semibold inline-flex items-center gap-1">
+              Read billing & deposit FAQs <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Packages */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
         <AnimatedSection className="mb-10">
           <SectionLabel>Packages</SectionLabel>
           <h2 className="font-display font-bold text-[#F7F2EA] text-2xl mb-2">Choose your commitment, earn a discount.</h2>
           <p className="font-body text-[#A89880] text-sm">Click a package to use it in the calculator below.</p>
         </AnimatedSection>
 
-        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
           {PACKAGES.map((pkg) => (
             <StaggerItem key={pkg.id}>
               <PricingCard
@@ -332,10 +383,10 @@ export function PricingPage() {
             <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#A89880] mb-5">Important pricing conditions</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: '📊', title: 'Minimum 60% billing', desc: 'Even if you have fewer students, you are billed for at least 60% of the cabin capacity per session, rounded up.' },
-                { icon: '💳', title: 'Refundable deposit', desc: 'The Standard, Half-Yearly and Annual packages require a refundable security deposit, returned when you complete the package.' },
-                { icon: '⏳', title: 'Session validity', desc: 'Unused sessions in a package lapse at the end of the validity period. They do not carry forward.' },
-                { icon: '📅', title: 'Monthly billing', desc: 'You receive a bill at the end of each month for sessions taught. Collect from your students first, then pay.' },
+                { icon: '📊', title: 'Minimum 60% billing', desc: 'Even if fewer students attend, you are billed for at least 60% of cabin capacity per session, rounded up.' },
+                { icon: '💳', title: 'Refundable deposit', desc: 'The Standard, Half-Yearly and Annual packages require a security deposit, returned 100% when you complete the term.' },
+                { icon: '⏳', title: 'Session validity', desc: 'Package sessions remain valid across the allocated months (2, 3, 6, or 12 months) for predictable scheduling.' },
+                { icon: '📅', title: 'Monthly billing', desc: 'Receive a consolidated GST invoice at the end of each month. Collect from your students first, then pay.' },
               ].map((note) => (
                 <div key={note.title} className="p-4 border border-[#3A3228] rounded-sm bg-[#1A1A1A]">
                   <span className="text-2xl mb-3 block">{note.icon}</span>
@@ -349,7 +400,7 @@ export function PricingPage() {
       </section>
 
       {/* Calculator */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+      <section id="calculator" className="max-w-7xl mx-auto px-6 lg:px-8 py-16 scroll-mt-24">
         <AnimatedSection className="mb-8">
           <SectionLabel>Calculator</SectionLabel>
           <h2 className="font-display font-bold text-[#F7F2EA] text-2xl">Calculate your exact cost</h2>
@@ -364,8 +415,8 @@ export function PricingPage() {
       <AnimatedSection className="max-w-7xl mx-auto px-6 lg:px-8 pb-20">
         <div className="bg-[#1A1A1A] border border-[#C9A96B]/20 rounded-sm p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="font-display font-bold text-[#F7F2EA] text-xl mb-2">Ready to book your space?</h3>
-            <p className="font-body text-[#A89880] text-sm">Start with a conversation. The manager confirms your slots before any commitment.</p>
+            <h3 className="font-display font-bold text-[#F7F2EA] text-xl mb-2">Ready to book your classroom slots?</h3>
+            <p className="font-body text-[#A89880] text-sm">Schedule a personal walkthrough on Golf Course Extension Road. Our facility manager confirms your timetable before any commitment.</p>
           </div>
           <Link
             to="/contact"

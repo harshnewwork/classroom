@@ -23,7 +23,7 @@ export function Hero() {
       <div className="absolute inset-0" aria-hidden="true">
         <img
           src="/images/reception-lobby.png"
-          alt="Mentors Studio Reception & Campus Corridor"
+          alt="Mentors Studio Reception and Campus Corridor — Furnished teaching spaces and classrooms for rent on Golf Course Extension Road, Sector 57, Gurugram"
           className="h-full w-full object-cover object-center"
           fetchPriority="high"
         />
@@ -71,11 +71,10 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="font-display font-medium text-[#F7F2EA] leading-[1.06] tracking-tight mb-5"
-              style={{ fontSize: 'clamp(2.4rem, 5vw, 4rem)' }}
+              style={{ fontSize: 'clamp(2.2rem, 4.4vw, 3.8rem)' }}
             >
-              Your Knowledge{' '}
-              <em className="not-italic text-[#D4B87A]">Deserves</em> a
-              Professional Space.
+              Teaching Space for Rent in Gurugram —{' '}
+              <em className="not-italic text-[#D4B87A]">Furnished Classrooms</em>, Pay Per Seat
             </motion.h1>
 
             {/* Sub */}

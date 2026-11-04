@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 import { Lock, Mail, AlertCircle, Loader2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { NavLogo } from '../components/ui/Logo';
@@ -169,12 +170,12 @@ export function AdminLogin({ onLoginSuccess }) {
 
         {/* Back to public site button */}
         <div className="text-center mt-6">
-          <a
-            href="#/"
+          <Link
+            to="/"
             className="font-mono text-xs text-[#7A6A50] hover:text-[#1A1A1A] transition-colors inline-flex items-center gap-1.5"
           >
             ← Return to public website
-          </a>
+          </Link>
         </div>
       </div>
     </div>

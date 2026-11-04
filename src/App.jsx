@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Navigation }       from './components/Navigation';
 import { Footer }           from './components/Footer';
 import { CustomCursor }     from './components/CustomCursor';
@@ -12,13 +13,15 @@ import { HowItWorksPage }   from './pages/HowItWorksPage';
 import { PricingPage }      from './pages/PricingPage';
 import { EducatorsPage }    from './pages/EducatorsPage';
 import { ContactPage }      from './pages/ContactPage';
+import { FAQPage }          from './pages/FAQPage';
+import { NotFoundPage }     from './pages/NotFoundPage';
 import { ADMIN_ROUTE }      from './admin/constants';
 
 const AdminPage = lazy(() =>
   import('./admin/AdminPage').then((module) => ({ default: module.AdminPage }))
 );
 
-function AppContent() {
+export function AppContent() {
   const location = useLocation();
   const isAdminRoute =
     location.pathname === ADMIN_ROUTE ||
@@ -54,8 +57,9 @@ function AppContent() {
           <Route path="/pricing"      element={<PricingPage />} />
           <Route path="/educators"    element={<EducatorsPage />} />
           <Route path="/contact"      element={<ContactPage />} />
-          {/* Catch-all → home */}
-          <Route path="*"             element={<HomePage />} />
+          <Route path="/faq"          element={<FAQPage />} />
+          {/* Real 404 handler with navigation back */}
+          <Route path="*"             element={<NotFoundPage />} />
         </Routes>
       </main>
 
@@ -67,9 +71,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </HelmetProvider>
   );
 }
 

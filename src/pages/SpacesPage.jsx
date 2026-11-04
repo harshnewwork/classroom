@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, AlertCircle, ChevronRight, Users, ArrowRight } from 'lucide-react';
+import { CheckCircle2, AlertCircle, ChevronRight, Users, ArrowRight, Sparkles } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
+import { Breadcrumbs } from '../components/seo/Breadcrumbs';
+import { SEO } from '../components/seo/SEO';
 import { cabins } from '../data/cabins';
 
 const typeColors = {
-  'Standard':  { bg: '#3E2F1F', text: '#EADCC8' },
-  'Medium':    { bg: '#5A4A2A', text: '#EADCC8' },
-  'Large':     { bg: '#C9A96B', text: '#1A1A1A' },
-  'Seminar':   { bg: '#1A1A1A', text: '#C9A96B' },
-  'Open Area': { bg: '#2A3A20', text: '#D4E8C2' },
+  'Standard':  { bg: '#3E2F1F', text: '#EADCC8', anchor: 'standard-cabins' },
+  'Medium':    { bg: '#5A4A2A', text: '#EADCC8', anchor: 'medium-cabins' },
+  'Large':     { bg: '#C9A96B', text: '#1A1A1A', anchor: 'large-cabins' },
+  'Seminar':   { bg: '#1A1A1A', text: '#C9A96B', anchor: 'seminar-cabins' },
+  'Open Area': { bg: '#2A3A20', text: '#D4E8C2', anchor: 'open-area' },
 };
 
 function CapacityBar({ capacity, minBillable }) {
@@ -41,13 +43,22 @@ export function SpacesPage() {
 
   return (
     <div className="bg-warm-stone min-h-screen">
+      <SEO
+        title="Classroom Cabins for Rent (6–24 Seats) | Mentors Studio, Gurugram"
+        description="9 furnished teaching cabins from 6 to 24 seats, plus an open-air balcony and arts area. Whiteboards, AC, Wi-Fi and display tech in every room."
+        canonicalPath="/spaces"
+        breadcrumbs={[{ name: 'Spaces', path: '/spaces' }]}
+      />
+
       <PageHero
-        label="Our Spaces"
-        title={<>Nine Cabins & Two <span className="text-gradient italic">Open Spaces.</span></>}
-        subtitle="Every cabin is fully furnished, air-conditioned and equipped with professional teaching technology. Browse all available spaces and find the perfect fit for your batch."
+        label="Our Spaces & Cabins"
+        title="Classrooms & Teaching Cabins on Rent — Choose Your Capacity"
+        subtitle="Nine dedicated teaching cabins from 6 to 24 seats, plus an open-air balcony and dedicated arts space on Golf Course Extension Road, Sector 57, Gurugram. Fully furnished with climate-controlled AC, high-speed Wi-Fi, and presentation displays."
         image="/images/classroom-seminar.png"
         cta={{ label: 'Book a Space', to: '/contact' }}
       />
+
+      <Breadcrumbs items={[{ name: 'Spaces & Cabins' }]} />
 
       {/* Stats */}
       <div className="bg-[#1A1A1A] border-b border-[#3A3228]">
@@ -61,8 +72,39 @@ export function SpacesPage() {
         </div>
       </div>
 
+      {/* Content Depth: Editorial Overview (150-300 words) */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pt-12 pb-6">
+        <div className="bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm p-6 lg:p-8">
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles size={16} className="text-[#C9A96B]" />
+            <h2 className="font-display font-bold text-[#1A1A1A] text-xl">
+              Engineered Exclusively for Independent Educators in Gurugram
+            </h2>
+          </div>
+          <p className="font-body text-[#7A6A50] text-sm lg:text-base leading-relaxed font-light mb-4">
+            Unlike makeshift residential tuition setups or standard commercial offices, Mentors Studio offers custom-built teaching suites in Sector 57 on Golf Course Extension Road. Every cabin features acoustic consideration to prevent spillover between adjoining classes, high-lumen digital displays or projectors for interactive coursework, full-length magnetic whiteboards, and dedicated high-speed optical fiber connectivity.
+          </p>
+          <p className="font-body text-[#7A6A50] text-sm lg:text-base leading-relaxed font-light mb-4">
+            Our 9 enclosed cabins accommodate batches from 6 to 24 students. Small cabins (A through D, 6–8 seats) provide intimate environments for one-on-one coaching, spoken English drills, and personalized academic tutoring. Medium and large rooms (E through H, 10–12 seats) serve school batches and test-prep programs like IELTS and TOEFL, while Cabin I (24 seats) functions as our flagship seminar and competitive exam hall.
+          </p>
+          <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono">
+            <Link to="/pricing" className="text-[#C9A96B] hover:text-[#3E2F1F] font-semibold inline-flex items-center gap-1">
+              Check per-seat session pricing <ArrowRight size={12} />
+            </Link>
+            <span className="text-[#DDD0B8]">·</span>
+            <Link to="/facilities" className="text-[#C9A96B] hover:text-[#3E2F1F] font-semibold inline-flex items-center gap-1">
+              Explore included tech & amenities <ArrowRight size={12} />
+            </Link>
+            <span className="text-[#DDD0B8]">·</span>
+            <Link to="/how-it-works" className="text-[#C9A96B] hover:text-[#3E2F1F] font-semibold inline-flex items-center gap-1">
+              How classroom booking works <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Min billing note */}
-      <AnimatedSection className="max-w-7xl mx-auto px-6 lg:px-10 pt-12 pb-4">
+      <AnimatedSection className="max-w-7xl mx-auto px-6 lg:px-10 pt-2 pb-4">
         <div className="bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 shadow-sm">
           <div className="w-10 h-10 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm flex items-center justify-center flex-shrink-0">
             <Users size={16} className="text-[#C9A96B]" />
@@ -70,7 +112,7 @@ export function SpacesPage() {
           <div className="flex-1">
             <p className="font-display font-semibold text-[#1A1A1A] text-sm mb-1">How minimum billing works</p>
             <p className="font-body text-[#7A6A50] text-sm leading-relaxed font-light">
-              Every cabin bills a minimum of 60% of its capacity per session, rounded up. If a 10-seat cabin has 5 students, you still pay for 6 seats. You only pay for extra seats when more students attend.
+              Every cabin bills a minimum of 60% of its capacity per session, rounded up. For example, in a 10-seat cabin, if 5 students attend, you pay for 6 seats. You only pay for additional seats when more students attend.
             </p>
           </div>
           <div className="flex items-center gap-4 text-[10px] font-mono text-[#7A6A50] flex-shrink-0">
@@ -80,8 +122,24 @@ export function SpacesPage() {
         </div>
       </AnimatedSection>
 
+      {/* Cabin Category Anchor Links */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-4 pb-2">
+        <div className="flex items-center gap-2 flex-wrap text-xs font-mono text-[#7A6A50]">
+          <span className="uppercase tracking-wider text-[10px] text-[#A89880]">Jump to category:</span>
+          {Object.entries(typeColors).map(([type, meta]) => (
+            <a
+              key={type}
+              href={`#${meta.anchor}`}
+              className="px-2.5 py-1 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm hover:border-[#C9A96B] hover:text-[#C9A96B] transition-colors"
+            >
+              #{type}
+            </a>
+          ))}
+        </div>
+      </div>
+
       {/* Filter */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-6 pb-4">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-4 pb-4">
         <div className="flex gap-2 flex-wrap">
           {types.map(t => (
             <button key={t} onClick={() => setFilterType(t)}
@@ -104,8 +162,10 @@ export function SpacesPage() {
                 const isSel = selected?.id === cabin.id;
                 return (
                   <StaggerItem key={cabin.id}>
-                    <motion.button onClick={() => setSelected(cabin)} whileHover={{ x: 3 }}
-                      className={`w-full text-left p-4 rounded-sm border transition-all duration-200 group ${
+                    <motion.button
+                      id={cabin.type === 'Standard' && cabin.id === 'A' ? 'standard-cabins' : cabin.type === 'Medium' && cabin.id === 'E' ? 'medium-cabins' : cabin.type === 'Large' && cabin.id === 'G' ? 'large-cabins' : cabin.type === 'Seminar' ? 'seminar-cabins' : cabin.type === 'Open Area' && cabin.id === 'ARTS' ? 'open-area' : undefined}
+                      onClick={() => setSelected(cabin)} whileHover={{ x: 3 }}
+                      className={`w-full text-left p-4 rounded-sm border transition-all duration-200 group scroll-mt-28 ${
                         isSel ? 'border-[#C9A96B] bg-[#C9A96B]/6 shadow-sm' : 'border-[#DDD0B8] hover:border-[#C9A96B]/50 bg-[#F7F2EA]'
                       }`}>
                       <div className="flex items-center justify-between">
@@ -151,8 +211,12 @@ export function SpacesPage() {
                   transition={{ duration: 0.35 }}
                   className="border border-[#DDD0B8] rounded-sm overflow-hidden bg-[#F7F2EA] shadow-lg shadow-[#C9A96B]/6">
                   <div className="relative h-[320px] lg:h-[380px]">
-                    <img src={selected.image} alt={`${selected.name} — ${selected.capacity} seat ${selected.type}`}
-                      className="w-full h-full object-cover" loading="lazy" />
+                    <img
+                      src={selected.image}
+                      alt={`${selected.name} — ${selected.capacity} seat air-conditioned teaching cabin on rent in Gurugram, Sector 57`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4 px-3 py-1.5 rounded-sm font-mono text-[9px] tracking-wide"
                       style={{ background: typeColors[selected.type].bg, color: typeColors[selected.type].text }}>
