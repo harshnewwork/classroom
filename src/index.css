@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #F7F2EA;
+  --color-beige: #EADCC8;
+  --color-ink:   #1A1A1A;
+  --color-esp:   #3E2F1F;
+  --color-gold:  #C9A96B;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans:    "Montserrat", system-ui, sans-serif;
+  --font-script:  "Allura", cursive;
+
+  --color-charcoal: #1A1A1A;
+  --color-espresso: #3E2F1F;
+  --color-gold-light: #D4B87A;
+  --color-gold-dark: #A8883F;
+  --color-ivory-dark: #EDE6D8;
+  --color-cream: #F7F2EA;
+  --color-muted: #7A6A50;
+  --color-muted-light: #A89880;
+  --color-border: #DDD0B8;
+  --color-dark-bg: #1A1A1A;
+  --color-dark-surface: #231F1B;
+  --color-dark-border: #3A3228;
+  --font-body: "Montserrat", system-ui, sans-serif;
+  --font-mono: "Montserrat", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #F7F2EA;
+  color: #1A1A1A;
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -.01em;
+}
+
+/* ─── Custom cursor ─────────────────────────────────────────────────────────── */
+@media (pointer: fine) {
+  .cursor-dot {
+    width: 6px; height: 6px;
+    background: #C9A96B;
+    border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: opacity 0.3s ease;
+  }
+  .cursor-ring {
+    width: 28px; height: 28px;
+    border: 1.5px solid rgba(201,169,107,0.5);
+    border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: width 0.2s ease, height 0.2s ease, opacity 0.3s ease;
+  }
+}
+
+/* ─── Typography helpers ────────────────────────────────────────────────────── */
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+.font-body    { font-family: 'Montserrat', sans-serif; }
+.font-mono    { font-family: 'Montserrat', sans-serif; }
+.font-script  { font-family: 'Allura', cursive; }
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #F7F2EA; }
+::-webkit-scrollbar-thumb { background: #C9A96B; border-radius: 3px; }
+
+/* ─── Selection ─────────────────────────────────────────────────────────────── */
+::selection { background: #C9A96B; color: #1A1A1A; }
+
+/* ─── Section spacing ───────────────────────────────────────────────────────── */
+.section-pad { padding-top: 7rem; padding-bottom: 7rem; }
+@media (max-width: 768px) { .section-pad { padding-top: 4rem; padding-bottom: 4rem; } }
+
+/* ─── Gold divider ──────────────────────────────────────────────────────────── */
+.gold-divider {
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.gold-divider::before, .gold-divider::after {
+  content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #C9A96B, transparent);
+}
+
+/* ─── Text gradient gold ────────────────────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, #C9A96B 0%, #D4B87A 50%, #A8883F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Subtle paper texture bg ───────────────────────────────────────────────── */
+.bg-paper {
+  background-color: #F7F2EA;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(201,169,107,0.04) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(62,47,31,0.03) 0%, transparent 50%);
+}
+
+.bg-warm-stone {
+  background-color: #EADCC8;
+  background-image:
+    radial-gradient(ellipse at 12% 8%, rgba(201,169,107,0.12), transparent 34rem),
+    linear-gradient(145deg, rgba(247,242,234,0.35), transparent 55%);
+}
+
+.bg-premium-dark {
+  background-color: #1A1A1A;
+  background-image:
+    radial-gradient(ellipse at 88% 10%, rgba(201,169,107,0.09), transparent 34rem),
+    linear-gradient(145deg, #1A1A1A, #231F1B 62%, #1A1A1A);
+}
+
+/* ─── Dark section ──────────────────────────────────────────────────────────── */
+.bg-dark { background-color: #1A1A1A; color: #F7F2EA; }
+
+/* ─── Grid bg (subtle) ──────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(201,169,107,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,107,0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ─── Gold glow ─────────────────────────────────────────────────────────────── */
+.gold-glow { box-shadow: 0 0 40px rgba(201,169,107,0.15); }
+
+/* ─── Card styles ───────────────────────────────────────────────────────────── */
+.card-light {
+  background: #F7F2EA;
+  border: 1px solid #DDD0B8;
+  border-radius: 0.5rem;
+}
+.card-dark {
+  background: #231F1B;
+  border: 1px solid #3A3228;
+  border-radius: 0.5rem;
+}
+
+.rounded-sm { border-radius: 0.5rem; }
+
+/* ─── Reduce motion ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
