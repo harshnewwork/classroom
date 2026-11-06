@@ -1,18 +1,64 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
 import { MapPin, Home, Package, Monitor, Wifi, Printer, Settings } from 'lucide-react';
 
 const challenges = [
-  { icon: MapPin,   text: 'Finding the right location in a competitive area' },
-  { icon: Home,     text: 'Paying large deposits and ongoing rent' },
-  { icon: Package,  text: 'Setting up furniture and classroom infrastructure' },
-  { icon: Monitor,  text: 'Purchasing and installing digital boards and displays' },
-  { icon: Wifi,     text: 'Managing Wi-Fi, electricity and utility bills' },
-  { icon: Printer,  text: 'Handling printing, scanning and daily operations' },
-  { icon: Settings, text: 'Maintenance, housekeeping and administrative work' },
+  {
+    icon: MapPin,
+    text: 'Finding the right location in a competitive area',
+    image: '/images/classroom-standard.png',
+    alt: 'Air-conditioned furnished teaching cabin for rent in Gurugram with whiteboard and student desks',
+  },
+  {
+    icon: Home,
+    text: 'Paying large deposits and ongoing rent',
+    image: '/images/reception-lobby.png',
+    alt: 'Commercial reception and building entrance with administrative front desk',
+  },
+  {
+    icon: Package,
+    text: 'Setting up furniture and classroom infrastructure',
+    image: '/images/classroom-seminar.png',
+    alt: 'Spacious 24-seat classroom setup with ergonomic student desks and classroom furniture',
+  },
+  {
+    icon: Monitor,
+    text: 'Purchasing and installing digital boards and displays',
+    image: '/images/classroom-physics.png',
+    alt: 'Technology-equipped classroom with digital display wall and ceiling projector',
+  },
+  {
+    icon: Wifi,
+    text: 'Managing Wi-Fi, electricity and utility bills',
+    image: '/images/classroom-biology.png',
+    alt: 'Modern interactive classroom with high-speed internet and uninterrupted power backup',
+  },
+  {
+    icon: Printer,
+    text: 'Handling printing, scanning and daily operations',
+    image: '/images/facilities-lockers.png',
+    alt: 'Facilities storage lockers and operational front desk area',
+  },
+  {
+    icon: Settings,
+    text: 'Maintenance, housekeeping and administrative work',
+    image: '/images/terrace-balcony.png',
+    alt: 'Clean, maintained educator spaces and outdoor terrace at Mentors Studio',
+  },
 ];
 
 export function Problem() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    challenges.forEach((c) => {
+      const img = new Image();
+      img.src = c.image;
+    });
+  }, []);
+
   return (
     <section className="section-pad relative isolate overflow-hidden bg-gradient-to-br from-[#1A1A1A] via-[#231F1B] to-[#3E2F1F]">
       <div className="absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full bg-[#C9A96B]/10 blur-3xl pointer-events-none" />
@@ -27,20 +73,26 @@ export function Problem() {
             <div className="relative flex-1 min-h-[380px] sm:min-h-[480px] lg:min-h-[680px]">
               <div className="absolute -top-4 -left-4 w-28 h-28 border-t border-l border-[#C9A96B]/70 pointer-events-none" />
               <div className="absolute -bottom-4 -right-4 w-28 h-28 border-b border-r border-[#C9A96B]/70 pointer-events-none" />
-              <div className="absolute inset-0 overflow-hidden rounded-xl border border-[#C9A96B]/30 shadow-2xl shadow-black/30">
-                <img
-                  src="/images/classroom-standard.png"
-                  alt="Air-conditioned furnished teaching cabin for rent in Gurugram with whiteboard and student desks"
-                  className="h-full w-full object-cover object-center"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/85 via-[#1A1A1A]/10 to-[#1A1A1A]/10" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/20 to-transparent" />
-                <div className="absolute top-5 left-5 flex items-center gap-2 rounded-full border border-[#C9A96B]/40 bg-[#1A1A1A]/65 px-4 py-2 backdrop-blur-sm">
+              <div className="absolute inset-0 overflow-hidden rounded-xl border border-[#C9A96B]/30 shadow-2xl shadow-black/30 bg-[#1A1A1A]">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeIndex}
+                    src={challenges[activeIndex].image}
+                    alt={challenges[activeIndex].alt}
+                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  />
+                </AnimatePresence>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/85 via-[#1A1A1A]/10 to-[#1A1A1A]/10 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/20 to-transparent pointer-events-none" />
+                <div className="absolute top-5 left-5 flex items-center gap-2 rounded-full border border-[#C9A96B]/40 bg-[#1A1A1A]/65 px-4 py-2 backdrop-blur-sm pointer-events-none">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#C9A96B]" />
                   <span className="font-body text-[10px] font-semibold tracking-[0.18em] text-[#F7F2EA] uppercase">The challenge</span>
                 </div>
-                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8">
+                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 pointer-events-none">
                   <div className="mb-4 h-px w-14 bg-[#C9A96B]" />
                   <p className="font-display text-xl sm:text-2xl italic leading-snug text-[#F7F2EA]">
                     “Your expertise belongs in the classroom — not in maintenance and management.”
@@ -67,16 +119,42 @@ export function Problem() {
             </p>
 
             <StaggerContainer className="flex flex-col gap-2.5">
-              {challenges.map(({ icon: Icon, text }, i) => (
-                <StaggerItem key={i}>
-                  <div className="flex items-center gap-4 p-3.5 sm:p-4 border border-[#C9A96B]/30 rounded-lg hover:border-[#C9A96B]/70 hover:bg-[#C9A96B]/[.08] transition-all group bg-[#F7F2EA] shadow-lg shadow-black/10">
-                    <div className="w-9 h-9 bg-[#EADCC8] rounded-md flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96B]/25 transition-colors">
-                      <Icon size={16} className="text-[#8B6914]" />
+              {challenges.map(({ icon: Icon, text }, i) => {
+                const isActive = activeIndex === i;
+                return (
+                  <StaggerItem key={i}>
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onMouseEnter={() => setActiveIndex(i)}
+                      onClick={() => setActiveIndex(i)}
+                      onFocus={() => setActiveIndex(i)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setActiveIndex(i);
+                        }
+                      }}
+                      className={`flex items-center gap-4 p-3.5 sm:p-4 border rounded-lg transition-all group shadow-lg shadow-black/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C9A96B] ${
+                        isActive
+                          ? 'border-[#C9A96B] bg-[#C9A96B]/[.08]'
+                          : 'border-[#C9A96B]/30 bg-[#F7F2EA] hover:border-[#C9A96B]/70 hover:bg-[#C9A96B]/[.08]'
+                      }`}
+                    >
+                      <div
+                        className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 transition-colors ${
+                          isActive
+                            ? 'bg-[#C9A96B]/30'
+                            : 'bg-[#EADCC8] group-hover:bg-[#C9A96B]/25'
+                        }`}
+                      >
+                        <Icon size={16} className={isActive ? 'text-[#5C450C]' : 'text-[#8B6914]'} />
+                      </div>
+                      <span className="font-body text-[#3E2F1F] text-sm leading-relaxed font-medium">{text}</span>
                     </div>
-                    <span className="font-body text-[#3E2F1F] text-sm leading-relaxed font-medium">{text}</span>
-                  </div>
-                </StaggerItem>
-              ))}
+                  </StaggerItem>
+                );
+              })}
             </StaggerContainer>
           </AnimatedSection>
         </div>
