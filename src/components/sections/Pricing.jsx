@@ -72,16 +72,21 @@ function PkgCard({ pkg, eduType }) {
           <span className="font-body text-[#3E2F1F]">Rate / seat</span>
           <span className="font-mono text-[#1A1A1A] font-semibold">₹{disc}</span>
         </div>
-        <div className="flex justify-between text-xs pt-1 border-t border-[#DDD0B8]/60">
+        <div className="flex justify-between items-baseline text-xs pt-1.5 border-t border-[#DDD0B8]/60">
           <span className="font-body text-[#3E2F1F] font-medium">Security deposit</span>
-          <span className="font-mono text-xs font-bold text-[#8B6914]">
-            {pkg.depositPercent}%
-          </span>
+          <div className="text-right">
+            <span className="font-mono text-xs font-bold text-[#8B6914]">
+              {pkg.depositPercent}%
+            </span>
+            <span className="font-body text-[10px] text-[#5C450C] block -mt-0.5 font-medium">
+              of total amount
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="mt-4 pt-2 border-t border-[#DDD0B8] flex flex-col gap-1.5">
-        {['Pay after teaching', 'Min. 60% seats billed', `${(pkg.discount * 100).toFixed(0)}% package discount`].map((t) => (
+        {['Pay after teaching', 'Min. 60% seats billed', `${(pkg.discount * 100).toFixed(0)}% package discount`, `${pkg.depositPercent}% refundable deposit`].map((t) => (
           <div key={t} className="flex items-center gap-2 text-[10px] text-[#3E2F1F] font-medium">
             <Check size={11} className={isHL ? 'text-[#8B6914]' : 'text-[#5C450C]'} />
             {t}

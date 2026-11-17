@@ -104,6 +104,17 @@ export const TIME_SLOTS = [
     endTime: '19:25',
     sortOrder: 9,
   },
+  {
+    id: 'E5',
+    label: 'Session 5: 7:30 – 8:30 pm (kids)',
+    group: 'Evening',
+    shortTime: '7:30 – 8:30 PM',
+    sessionNum: 5,
+    duration: '60 min',
+    startTime: '19:30',
+    endTime: '20:30',
+    sortOrder: 10,
+  },
 ];
 
 export const MORNING_SLOTS = TIME_SLOTS.filter((s) => s.group === 'Morning');
@@ -135,7 +146,7 @@ export function findSlotByString(str) {
   if (byTime) return byTime;
 
   // 4. Session number + group match (e.g. "Session 2... evening")
-  const isEvening = s.includes('evening') || s.includes('pm') && (s.includes('3:30') || s.includes('4:') || s.includes('5:') || s.includes('6:') || s.includes('7:'));
+  const isEvening = s.includes('evening') || s.includes('pm') && (s.includes('3:10') || s.includes('4:') || s.includes('5:') || s.includes('6:') || s.includes('7:') || s.includes('8:'));
   for (let num = 1; num <= 5; num++) {
     if (s.includes(`session ${num}`) || s.includes(`session ${num}:`)) {
       const match = TIME_SLOTS.find(

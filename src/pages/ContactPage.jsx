@@ -36,6 +36,7 @@ const timeOpts = [
   'Kids 2: 4:15 – 5:15 pm',
   'Kids 3: 5:20 – 6:20 pm',
   'Kids 4: 6:25 – 7:25 pm',
+  'Kids 5: 7:30 – 8:30 pm',
 ];
 
 const cabinOpts = ['6 seats', '8 seats', '10 seats', '12 seats', '16 seats (Arts & Crafts)', '24 seats', 'Not sure yet'];
@@ -211,7 +212,7 @@ export function ContactPage() {
                 <p className="font-mono text-[10.5px] tracking-[0.15em] uppercase text-[#D4B87A] font-bold">Operating Hours</p>
               </div>
               <p className="font-display font-semibold text-[#F7F2EA] text-sm">Monday – Saturday</p>
-              <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">9:40 am – 7:25 pm</p>
+              <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">9:40 am – 8:30 pm</p>
               <p className="font-display font-semibold text-[#F7F2EA] text-sm mt-3">Three Sundays per month</p>
               <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">By prior scheduling with manager</p>
             </div>

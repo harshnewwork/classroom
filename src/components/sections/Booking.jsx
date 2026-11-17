@@ -40,6 +40,7 @@ const timeOptions = [
   'Kids 2: 4:15 – 5:15 pm',
   'Kids 3: 5:20 – 6:20 pm',
   'Kids 4: 6:25 – 7:25 pm',
+  'Kids 5: 7:30 – 8:30 pm',
 ];
 
 const cabinOptions = [

@@ -81,11 +81,16 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
           <span className="font-body text-[#A89880]">Rate / seat</span>
           <span className="font-mono text-[#F7F2EA]">₹{discounted}</span>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-baseline justify-between pt-1 border-t border-[#3A3228]">
           <span className="font-body text-[#DDD0B8]">Security deposit</span>
-          <span className="font-mono text-xs font-bold text-[#D4B87A]">
-            {pkg.depositPercent}%
-          </span>
+          <div className="text-right">
+            <span className="font-mono text-xs font-bold text-[#D4B87A]">
+              {pkg.depositPercent}%
+            </span>
+            <span className="font-body text-[10px] text-[#A89880] block -mt-0.5">
+              of total amount
+            </span>
+          </div>
         </div>
       </div>
 
@@ -94,6 +99,7 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
           'Pay after you teach',
           'Min. 60% seats billed',
           `${(pkg.discount * 100).toFixed(0)}% package discount`,
+          `${pkg.depositPercent}% refundable deposit`,
         ].map((item) => (
           <div key={item} className="flex items-center gap-2 text-xs text-[#EADCC8]">
             <Check size={11} className={isHighlighted ? 'text-[#D4B87A]' : 'text-[#C9A96B]'} />
@@ -284,8 +290,8 @@ export function PricingPage() {
   return (
     <div className="bg-premium-dark min-h-screen">
       <SEO
-        title="Classroom Rental Pricing — Pay Per Seat, No Deposit | Mentors Studio"
-        description="Transparent per-seat, per-session pricing for classroom rental in Gurugram. Pay-as-you-go or save up to 20% with Starter, Standard, Half-Yearly and Annual packages."
+        title="Classroom Rental Pricing — Pay Per Seat, Transparent Packages | Mentors Studio"
+        description="Transparent per-seat, per-session pricing for classroom rental in Gurugram. Save up to 20% with Starter, Standard, Half-Yearly and Annual packages."
         canonicalPath="/pricing"
         schema={schemas}
         breadcrumbs={[{ name: 'Pricing', path: '/pricing' }]}
@@ -384,7 +390,7 @@ export function PricingPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { icon: '📊', title: 'Minimum 60% billing', desc: 'Even if fewer students attend, you are billed for at least 60% of cabin capacity per session, rounded up.' },
-                { icon: '💳', title: 'Refundable deposit', desc: 'The Standard, Half-Yearly and Annual packages require a security deposit, returned 100% when you complete the term.' },
+                { icon: '💳', title: 'Refundable deposit', desc: 'All packages include a refundable security deposit (Starter 20%, Standard 15%, Half-Yearly 12.5%, Annual 10%), returned 100% when you complete the term.' },
                 { icon: '⏳', title: 'Session validity', desc: 'Package sessions remain valid across the allocated months (2, 3, 6, or 12 months) for predictable scheduling.' },
                 { icon: '📅', title: 'Monthly billing', desc: 'Receive a consolidated GST invoice at the end of each month. Collect from your students first, then pay.' },
               ].map((note) => (

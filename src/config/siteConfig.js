@@ -18,7 +18,7 @@ export const siteConfig = {
   tagline: 'You Bring the Knowledge. We Provide the Space.',
   brandTagline: 'Learn · Create · Grow',
   description:
-    'Furnished, managed classroom and teaching space rental for educators in Gurugram. 9 air-conditioned cabins from 6 to 24 seats on Golf Course Extension Road, Sector 57. Pay per seat, no deposit.',
+    'Furnished, managed classroom and teaching space rental for educators in Gurugram. 9 air-conditioned cabins from 6 to 24 seats on Golf Course Extension Road, Sector 57. Pay per seat, flexible monthly packages.',
 
   // NAP (Name, Address, Phone) & Contact
   contact: {
@@ -43,7 +43,7 @@ export const siteConfig = {
       longitude: '77.0827',
     },
     mapsUrl: 'https://maps.google.com/?q=Golf+Course+Extension+Road+Sector+57+Gurugram',
-    operatingHours: 'Monday–Saturday, 9:40 am – 7:25 pm',
+    operatingHours: 'Monday–Saturday, 9:40 am – 8:30 pm',
     sundayHours: 'Three Sundays a month by prior manager arrangement',
   },
 

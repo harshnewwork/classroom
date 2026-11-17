@@ -15,6 +15,7 @@ const kidsSessions = [
   { num: 2, time: '4:15 – 5:15 pm',    dur: '60 min session' },
   { num: 3, time: '5:20 – 6:20 pm',    dur: '60 min session' },
   { num: 4, time: '6:25 – 7:25 pm',    dur: '60 min session' },
+  { num: 5, time: '7:30 – 8:30 pm',    dur: '60 min session' },
 ];
 
 function SessionRow({ s, highlight }) {

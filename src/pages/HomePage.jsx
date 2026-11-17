@@ -21,7 +21,7 @@ export function HomePage() {
     <>
       <SEO
         title="Classroom & Teaching Space for Rent in Gurugram | Mentors Studio"
-        description="Furnished, AC classrooms for rent on Golf Course Extension Road, Sector 57, Gurugram. Pay per seat, no deposit. Built for tutors, coaches & trainers."
+        description="Furnished, AC classrooms for rent on Golf Course Extension Road, Sector 57, Gurugram. Pay per seat, flexible monthly packages. Built for tutors, coaches & trainers."
         canonicalPath="/"
         schema={getLocalBusinessSchema()}
       />
