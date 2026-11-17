@@ -1,16 +1,51 @@
-// ─── Exact pricing data from Mentors_Studio_Website.html ─────────────────────
+// ─── Mentors Studio Pricing Data & Configuration ─────────────────────
 
 export const EDUCATOR_TYPES = [
-  { id: 'adult',  label: 'Adult Educators',  ratePerSeat: 250, desc: '₹250 / seat / session (1 hour)' },
-  { id: 'school', label: 'School Educators', ratePerSeat: 200, desc: '₹200 / seat / session' },
+  { id: 'adult',  label: 'Adult Educators',  ratePerSeat: 250, desc: '₹250 / seat / session (60 min)' },
+  { id: 'school', label: 'School Educators', ratePerSeat: 200, desc: '₹200 / seat / session (60 min)' },
 ];
 
 export const PACKAGES = [
-  { id: 'payg',       label: 'Pay As You Go', sessions: 1,   months: null, discount: 0,    deposit: false },
-  { id: 'starter',    label: 'Starter',        sessions: 36,  months: 2,   discount: 0.05, deposit: false },
-  { id: 'standard',   label: 'Standard',        sessions: 72,  months: 3,   discount: 0.10, deposit: true  },
-  { id: 'halfyearly', label: 'Half-Yearly',     sessions: 144, months: 6,   discount: 0.15, deposit: true  },
-  { id: 'annual',     label: 'Annual',           sessions: 288, months: 12,  discount: 0.20, deposit: true  },
+  {
+    id: 'starter',
+    label: 'Starter',
+    sessions: 36,
+    months: 2,
+    discount: 0.05,
+    depositPercent: 20,
+    depositRate: 0.20,
+    depositLabel: '20% of total amount',
+  },
+  {
+    id: 'standard',
+    label: 'Standard',
+    sessions: 72,
+    months: 3,
+    discount: 0.10,
+    depositPercent: 15,
+    depositRate: 0.15,
+    depositLabel: '15% of total amount',
+  },
+  {
+    id: 'halfyearly',
+    label: 'Half-Yearly',
+    sessions: 144,
+    months: 6,
+    discount: 0.15,
+    depositPercent: 12.5,
+    depositRate: 0.125,
+    depositLabel: '12.5% of total amount',
+  },
+  {
+    id: 'annual',
+    label: 'Annual',
+    sessions: 288,
+    months: 12,
+    discount: 0.20,
+    depositPercent: 10,
+    depositRate: 0.10,
+    depositLabel: '10% of total amount',
+  },
 ];
 
 export const GST_RATE = 0.18;
@@ -27,19 +62,10 @@ export function getMinBillable(cabinCapacity) {
 
 /**
  * Calculate full pricing breakdown.
- *
- * Example from HTML:
- *   Adult, 6-seat cabin, 5 students, Standard (10% off, 72 sessions)
- *   Base: ₹250 → Discounted: ₹225
- *   Min billable: ceil(6×0.6) = 4 → actual students = 5 → seats billed = 5
- *   Per session: 5 × ₹225 = ₹1,125
- *   72 sessions: ₹81,000
- *   GST 18%: ₹14,580
- *   Total: ₹95,580
  */
 export function calculatePricing({ educatorType, cabinCapacity, packageId, numStudents }) {
-  const educator = EDUCATOR_TYPES.find(e => e.id === educatorType);
-  const pkg      = PACKAGES.find(p => p.id === packageId);
+  const educator = EDUCATOR_TYPES.find(e => e.id === educatorType) || EDUCATOR_TYPES[0];
+  const pkg      = PACKAGES.find(p => p.id === packageId) || PACKAGES[0];
   if (!educator || !pkg || !cabinCapacity) return null;
 
   const cap         = Number(cabinCapacity);
@@ -54,11 +80,11 @@ export function calculatePricing({ educatorType, cabinCapacity, packageId, numSt
   const perSession     = seatsForBilling * discountedRate;
   const costPerStudent = students > 0 ? perSession / students : 0;
 
-  // Pay-as-you-go shows cost of 1 session only
   const packageSessions = pkg.sessions;
   const packageTotal    = perSession * packageSessions;
   const gst             = packageTotal * GST_RATE;
   const totalWithGst    = packageTotal + gst;
+  const securityDeposit = packageTotal * pkg.depositRate;
 
   return {
     minBillable,
@@ -71,10 +97,11 @@ export function calculatePricing({ educatorType, cabinCapacity, packageId, numSt
     packageTotal,
     gst,
     totalWithGst,
-    discount:    pkg.discount,
-    hasDeposit:  pkg.deposit,
-    label:       pkg.label,
-    months:      pkg.months,
-    isPAYG:      pkg.id === 'payg',
+    securityDeposit,
+    depositPercent: pkg.depositPercent,
+    depositLabel:   pkg.depositLabel,
+    discount:       pkg.discount,
+    label:          pkg.label,
+    months:         pkg.months,
   };
 }

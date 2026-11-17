@@ -73,7 +73,7 @@ export function Solution() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         {/* Header */}
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-14">
-          <SectionLabel className="justify-center">The Solution</SectionLabel>
+          <SectionLabel className="justify-center" dark>The Solution</SectionLabel>
           <h2
             className="font-display font-bold text-[#F7F2EA] leading-[1.06] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.2rem, 4.2vw, 3.6rem)' }}
@@ -81,7 +81,7 @@ export function Solution() {
             Just Walk In.{' '}
             <span className="text-gradient italic">And Teach.</span>
           </h2>
-          <p className="font-body text-[#A89880] text-lg leading-relaxed font-light">
+          <p className="font-body text-[#EADCC8] text-lg leading-relaxed font-light">
             Mentors Studio eliminates every operational barrier between you and your students.
           </p>
         </AnimatedSection>
@@ -158,7 +158,7 @@ export function Solution() {
                         {f.title}
                       </h3>
                     </div>
-                    <p className="font-body text-[#7A6A50] text-xs leading-relaxed pl-6 font-light">{f.desc}</p>
+                    <p className="font-body text-[#DDD0B8] text-xs leading-relaxed pl-6 font-light">{f.desc}</p>
                   </div>
                 </StaggerItem>
               );

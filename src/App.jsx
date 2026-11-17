@@ -5,6 +5,7 @@ import { Navigation }       from './components/Navigation';
 import { Footer }           from './components/Footer';
 import { CustomCursor }     from './components/CustomCursor';
 import { StickyBookingCTA } from './components/StickyBookingCTA';
+import { LoadingScreen }    from './components/ui/LoadingScreen';
 
 import { HomePage }         from './pages/HomePage';
 import { SpacesPage }       from './pages/SpacesPage';
@@ -45,6 +46,7 @@ export function AppContent() {
 
   return (
     <>
+      <LoadingScreen />
       <CustomCursor />
       <Navigation />
 

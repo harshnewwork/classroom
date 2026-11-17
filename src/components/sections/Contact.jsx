@@ -1,6 +1,6 @@
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
-import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, Clock, ExternalLink } from 'lucide-react';
 import { siteConfig } from '../../config/siteConfig';
 
 const CONTACT = {
@@ -15,81 +15,103 @@ export function Contact() {
   return (
     <section id="contact" className="section-pad bg-[#F7F2EA] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
-          {/* Left */}
+          {/* Left: Contact Info */}
           <AnimatedSection direction="left">
             <SectionLabel>Get in Touch</SectionLabel>
-            <h2 className="font-display font-bold text-[#1A1A1A] leading-[1.06] tracking-tight mb-5"
-              style={{ fontSize: 'clamp(1.8rem, 2.8vw, 2.4rem)' }}>
-              Let's Build a Better Space{' '}
-              <span className="text-gradient italic">for Your Teaching.</span>
+            <h2
+              className="font-display font-bold text-[#1A1A1A] leading-[1.08] tracking-tight mb-5"
+              style={{ fontSize: 'clamp(2rem, 3.2vw, 2.8rem)' }}
+            >
+              The Right Space for{' '}
+              <span className="text-[#8B6914] italic">Every Teaching Ambition.</span>
             </h2>
-            <p className="font-body text-[#7A6A50] text-base leading-relaxed mb-8 font-light">
-              Visit us on Golf Course Extension Road, Sector 57, Gurugram. Walk in during operating hours, or reach out to the manager.
+            <p className="font-body text-[#3E2F1F] text-base leading-relaxed mb-8 font-normal">
+              Visit Mentors Studio at Golf Course Extension Road, Sector 57, Gurugram. Explore our furnished cabins and open spaces, and find the right setup for your teaching needs.
             </p>
 
             {/* Hours */}
-            <div className="p-5 border border-[#DDD0B8] rounded-sm bg-[#F7F2EA] mb-5">
+            <div className="p-5 border border-[#DDD0B8] rounded-sm bg-[#FFFDF9] mb-6 shadow-xs">
               <div className="flex items-center gap-2 mb-3">
-                <Clock size={13} className="text-[#C9A96B]" />
-                <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#7A6A50]">Operating Hours</p>
+                <Clock size={15} className="text-[#8B6914]" />
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] font-bold">
+                  Operating Hours
+                </p>
               </div>
-              <p className="font-display font-semibold text-[#1A1A1A] text-sm">Monday – Saturday</p>
-              <p className="font-mono text-xs text-[#7A6A50] mt-0.5">10:00 am – 8:29 pm</p>
-              <p className="font-display font-semibold text-[#1A1A1A] text-sm mt-3">Three Sundays a month</p>
-              <p className="font-mono text-xs text-[#7A6A50] mt-0.5">Schedule confirmed with manager</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="font-display font-bold text-[#1A1A1A] text-sm">Monday – Saturday</p>
+                  <p className="font-mono text-xs text-[#3E2F1F] mt-0.5 font-medium">9:40 am – 7:25 pm</p>
+                </div>
+                <div>
+                  <p className="font-display font-bold text-[#1A1A1A] text-sm">Three Sundays a month</p>
+                  <p className="font-mono text-xs text-[#3E2F1F] mt-0.5 font-medium">By prior manager scheduling</p>
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col gap-3">
               {[
-                { icon: Phone,         label: 'Phone',    value: CONTACT.phone,    ph: true },
-                { icon: MessageCircle, label: 'WhatsApp', value: CONTACT.whatsapp, ph: true },
-                { icon: Mail,          label: 'Email',    value: CONTACT.email,    ph: true },
-                { icon: MapPin,        label: 'Location', value: CONTACT.address,  ph: false },
-              ].map(({ icon: Icon, label, value, ph }) => (
-                <div key={label} className={`flex items-start gap-4 p-4 border border-[#DDD0B8] rounded-sm bg-[#F7F2EA] transition-all ${ph ? 'opacity-60' : 'hover:border-[#C9A96B]/40'}`}>
-                  <div className="w-9 h-9 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm flex items-center justify-center flex-shrink-0">
-                    <Icon size={14} className="text-[#C9A96B]" />
+                { icon: Phone,         label: 'Phone',    value: CONTACT.phone,    href: `tel:${CONTACT.phone.replace(/[^\d+]/g, '')}` },
+                { icon: MessageCircle, label: 'WhatsApp', value: '+91 99900 35865', href: `https://wa.me/${CONTACT.whatsapp}` },
+                { icon: Mail,          label: 'Email',    value: CONTACT.email,    href: `mailto:${CONTACT.email}` },
+                { icon: MapPin,        label: 'Location', value: 'Golf Course Extension Road, Sector 57, Gurugram, Haryana — 122003', href: CONTACT.mapsUrl },
+              ].map(({ icon: Icon, label, value, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={label === 'Phone' || label === 'Email' ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3.5 p-4 border border-[#DDD0B8] rounded-sm bg-[#F7F2EA] transition-all hover:border-[#8B6914] group shadow-xs"
+                >
+                  <div className="w-9 h-9 bg-[#EADCC8] border border-[#DDD0B8] rounded-xs flex items-center justify-center flex-shrink-0 group-hover:bg-[#8B6914] transition-colors">
+                    <Icon size={15} className="text-[#8B6914] group-hover:text-white transition-colors" />
                   </div>
                   <div>
-                    <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#7A6A50]">{label}{ph && ' — to be updated'}</p>
-                    <p className="font-body text-sm text-[#1A1A1A] mt-0.5 leading-relaxed">{value}</p>
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] font-bold">
+                      {label}
+                    </p>
+                    <p className="font-body text-sm text-[#1A1A1A] mt-0.5 leading-relaxed font-semibold group-hover:text-[#8B6914] transition-colors">{value}</p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </AnimatedSection>
 
-          {/* Right: Map placeholder */}
+          {/* Right: Embedded Interactive Google Map per Section 14 */}
           <AnimatedSection direction="right">
-            <div className="border border-[#DDD0B8] rounded-sm overflow-hidden bg-[#F7F2EA] h-[500px] flex flex-col shadow-lg shadow-[#C9A96B]/6">
-              <div className="flex-1 bg-[#F7F2EA] flex flex-col items-center justify-center gap-5 relative">
-                <div className="absolute inset-0 pointer-events-none" style={{
-                  backgroundImage: 'radial-gradient(circle, #C9A96B22 1px, transparent 1px)',
-                  backgroundSize: '32px 32px',
-                }} />
-                <div className="relative z-10 text-center">
-                  <div className="w-16 h-16 bg-[#F7F2EA] border-2 border-[#C9A96B]/40 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <MapPin size={26} className="text-[#C9A96B]" />
-                  </div>
-                  <p className="font-display font-bold text-[#1A1A1A] text-lg mb-1">Mentors Studio</p>
-                  <p className="font-body text-[#7A6A50] text-sm leading-relaxed max-w-[220px] text-center font-light">
-                    Golf Course Extension Road<br />Sector 57, Gurugram<br />Haryana — 122003
+            <div className="border border-[#DDD0B8] rounded-sm overflow-hidden bg-[#F7F2EA] h-[540px] flex flex-col shadow-lg shadow-[#C9A96B]/6">
+              <iframe
+                src="https://maps.google.com/maps?q=Golf+Course+Extension+Road+Sector+57+Gurugram&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                className="w-full flex-1 border-0"
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Mentors Studio Location Map"
+              />
+              <div className="border-t border-[#DDD0B8] p-4 bg-[#FFFDF9] flex items-center justify-between">
+                <div>
+                  <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-[#5C450C] font-bold mb-0.5">
+                    Interactive Map
+                  </p>
+                  <p className="font-body text-xs sm:text-sm text-[#1A1A1A] font-semibold">
+                    Golf Course Extension Road, Sector 57, Gurugram
                   </p>
                 </div>
-                <a href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer"
-                  className="relative z-10 flex items-center gap-2 px-5 py-2.5 border border-[#C9A96B]/50 text-[#3E2F1F] font-mono text-[10px] rounded-sm hover:bg-[#C9A96B]/10 transition-colors">
-                  <MapPin size={11} />Open in Google Maps
+                <a
+                  href={CONTACT.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#8B6914] text-xs font-mono uppercase tracking-wider rounded-xs transition-colors font-bold"
+                >
+                  <ExternalLink size={12} />
+                  Open in Maps
                 </a>
-              </div>
-              <div className="border-t border-[#DDD0B8] p-4 bg-[#F7F2EA]">
-                <p className="font-mono text-[9px] tracking-[0.15em] uppercase text-[#7A6A50] mb-1">Exact address</p>
-                <p className="font-body text-sm text-[#1A1A1A]">[Floor and Unit], [Mall Name]<br />Golf Course Extension Road, Sector 57, Gurugram</p>
-                <p className="font-mono text-[9px] text-[#C9A96B] mt-1">Address to be confirmed — placeholder shown</p>
               </div>
             </div>
           </AnimatedSection>
+
         </div>
       </div>
     </section>

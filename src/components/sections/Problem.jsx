@@ -2,48 +2,48 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
-import { MapPin, Home, Package, Monitor, Wifi, Printer, Settings } from 'lucide-react';
+import { MapPin, Building, Package, Monitor, Wifi, Printer, Wrench } from 'lucide-react';
 
 const challenges = [
   {
     icon: MapPin,
-    text: 'Finding the right location in a competitive area',
+    text: 'Finding the right location',
     image: '/images/classroom-standard.png',
     alt: 'Air-conditioned furnished teaching cabin for rent in Gurugram with whiteboard and student desks',
   },
   {
-    icon: Home,
-    text: 'Paying large deposits and ongoing rent',
+    icon: Building,
+    text: 'Paying high deposits and rent',
     image: '/images/reception-lobby.png',
     alt: 'Commercial reception and building entrance with administrative front desk',
   },
   {
     icon: Package,
-    text: 'Setting up furniture and classroom infrastructure',
+    text: 'Setting up classrooms and furniture',
     image: '/images/classroom-seminar.png',
     alt: 'Spacious 24-seat classroom setup with ergonomic student desks and classroom furniture',
   },
   {
     icon: Monitor,
-    text: 'Purchasing and installing digital boards and displays',
+    text: 'Installing digital boards and displays',
     image: '/images/classroom-physics.png',
     alt: 'Technology-equipped classroom with digital display wall and ceiling projector',
   },
   {
     icon: Wifi,
-    text: 'Managing Wi-Fi, electricity and utility bills',
+    text: 'Managing utilities and Wi-Fi',
     image: '/images/classroom-biology.png',
     alt: 'Modern interactive classroom with high-speed internet and uninterrupted power backup',
   },
   {
     icon: Printer,
-    text: 'Handling printing, scanning and daily operations',
+    text: 'Handling printing and daily operations',
     image: '/images/facilities-lockers.png',
     alt: 'Facilities storage lockers and operational front desk area',
   },
   {
-    icon: Settings,
-    text: 'Maintenance, housekeeping and administrative work',
+    icon: Wrench,
+    text: 'Managing maintenance and housekeeping',
     image: '/images/terrace-balcony.png',
     alt: 'Clean, maintained educator spaces and outdoor terrace at Mentors Studio',
   },
@@ -68,12 +68,12 @@ export function Problem() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid lg:grid-cols-[1.12fr_0.88fr] gap-12 lg:gap-16 items-stretch">
 
-          {/* Left: Image */}
+          {/* Left: Image Showcase */}
           <AnimatedSection direction="left" className="flex">
-            <div className="relative flex-1 min-h-[380px] sm:min-h-[480px] lg:min-h-[680px]">
-              <div className="absolute -top-4 -left-4 w-28 h-28 border-t border-l border-[#C9A96B]/70 pointer-events-none" />
-              <div className="absolute -bottom-4 -right-4 w-28 h-28 border-b border-r border-[#C9A96B]/70 pointer-events-none" />
-              <div className="absolute inset-0 overflow-hidden rounded-xl border border-[#C9A96B]/30 shadow-2xl shadow-black/30 bg-[#1A1A1A]">
+            <div className="relative flex-1 min-h-[380px] sm:min-h-[480px] lg:min-h-[640px]">
+              <div className="absolute -top-4 -left-4 w-28 h-28 border-t-2 border-l-2 border-[#C9A96B] pointer-events-none" />
+              <div className="absolute -bottom-4 -right-4 w-28 h-28 border-b-2 border-r-2 border-[#C9A96B] pointer-events-none" />
+              <div className="absolute inset-0 overflow-hidden rounded-xl border border-[#C9A96B]/40 shadow-2xl shadow-black/40 bg-[#1A1A1A]">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeIndex}
@@ -83,17 +83,18 @@ export function Problem() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.35 }}
                   />
                 </AnimatePresence>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/85 via-[#1A1A1A]/10 to-[#1A1A1A]/10 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A]/20 to-transparent pointer-events-none" />
-                <div className="absolute top-5 left-5 flex items-center gap-2 rounded-full border border-[#C9A96B]/40 bg-[#1A1A1A]/65 px-4 py-2 backdrop-blur-sm pointer-events-none">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#C9A96B]" />
-                  <span className="font-body text-[10px] font-semibold tracking-[0.18em] text-[#F7F2EA] uppercase">The challenge</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/20 to-[#1A1A1A]/10 pointer-events-none" />
+                <div className="absolute top-5 left-5 flex items-center gap-2 rounded-full border border-[#D4B87A] bg-[#1A1A1A]/85 px-4 py-1.5 backdrop-blur-sm pointer-events-none shadow-md">
+                  <span className="h-2 w-2 rounded-full bg-[#D4B87A]" />
+                  <span className="font-body text-[11px] font-bold tracking-[0.2em] text-[#F7F2EA] uppercase">
+                    The Challenge
+                  </span>
                 </div>
                 <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 pointer-events-none">
-                  <div className="mb-4 h-px w-14 bg-[#C9A96B]" />
+                  <div className="mb-4 h-[2px] w-14 bg-[#C9A96B]" />
                   <p className="font-display text-xl sm:text-2xl italic leading-snug text-[#F7F2EA]">
                     “Your expertise belongs in the classroom — not in maintenance and management.”
                   </p>
@@ -104,18 +105,16 @@ export function Problem() {
 
           {/* Right: Content */}
           <AnimatedSection direction="right" className="flex flex-col justify-center py-4 lg:py-8">
-            <SectionLabel>The Challenge</SectionLabel>
+            <SectionLabel dark>The Challenge</SectionLabel>
             <h2
-              className="font-display font-medium text-[#F7F2EA] leading-[1.1] tracking-tight mb-6"
-              style={{ fontSize: 'clamp(1.9rem, 3.2vw, 2.8rem)' }}
+              className="font-display font-medium text-[#F7F2EA] leading-[1.12] tracking-tight mb-5"
+              style={{ fontSize: 'clamp(2rem, 3.4vw, 2.9rem)' }}
             >
-              Great Teachers Shouldn't Have to Become{' '}
-              <span className="text-[#D4B87A] italic">Property Managers.</span>
+              Great Teaching Shouldn’t Come with the{' '}
+              <span className="text-[#D4B87A] italic">Burden of Setup.</span>
             </h2>
-            <p className="font-body text-[#EADCC8]/85 text-base leading-relaxed mb-8 font-light">
-              Every educator who starts a coaching journey faces the same wall — a mountain of
-              operational work that has nothing to do with teaching. Setting up a space takes
-              months, eats savings, and drains the energy that should go into your craft.
+            <p className="font-body text-[#EADCC8] text-base leading-relaxed mb-7 font-light">
+              Setting up a space takes months, eats savings, and drains the energy that should go into your students.
             </p>
 
             <StaggerContainer className="flex flex-col gap-2.5">
@@ -135,22 +134,24 @@ export function Problem() {
                           setActiveIndex(i);
                         }
                       }}
-                      className={`flex items-center gap-4 p-3.5 sm:p-4 border rounded-lg transition-all group shadow-lg shadow-black/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C9A96B] ${
+                      className={`flex items-center gap-3.5 p-3.5 sm:p-4 border rounded-md transition-all group cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C9A96B] ${
                         isActive
-                          ? 'border-[#C9A96B] bg-[#C9A96B]/[.08]'
-                          : 'border-[#C9A96B]/30 bg-[#F7F2EA] hover:border-[#C9A96B]/70 hover:bg-[#C9A96B]/[.08]'
+                          ? 'border-[#D4B87A] bg-[#C9A96B]/20 shadow-md'
+                          : 'border-[#3A3228] bg-[#231F1B]/90 hover:border-[#C9A96B]/60 hover:bg-[#C9A96B]/10'
                       }`}
                     >
                       <div
                         className={`w-9 h-9 rounded-md flex items-center justify-center flex-shrink-0 transition-colors ${
                           isActive
-                            ? 'bg-[#C9A96B]/30'
-                            : 'bg-[#EADCC8] group-hover:bg-[#C9A96B]/25'
+                            ? 'bg-[#C9A96B] text-[#1A1A1A]'
+                            : 'bg-[#3E2F1F] text-[#D4B87A] group-hover:bg-[#C9A96B] group-hover:text-[#1A1A1A]'
                         }`}
                       >
-                        <Icon size={16} className={isActive ? 'text-[#5C450C]' : 'text-[#8B6914]'} />
+                        <Icon size={16} />
                       </div>
-                      <span className="font-body text-[#3E2F1F] text-sm leading-relaxed font-medium">{text}</span>
+                      <span className="font-body text-[#F7F2EA] text-sm leading-relaxed font-medium">
+                        {text}
+                      </span>
                     </div>
                   </StaggerItem>
                 );

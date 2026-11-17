@@ -19,13 +19,13 @@ export const FAQS = [
     id: 'deposit',
     category: 'Pricing & Billing',
     question: 'Is there a deposit to start teaching?',
-    answer: 'There is zero security deposit and no upfront lock-in for our Pay As You Go and Starter packages — you only pay monthly for the sessions you teach. For multi-month packages (Standard, Half-Yearly, and Annual) that secure preferred recurring slots and volume discounts, a modest security deposit is required and is 100% refundable upon completing your package term.',
+    answer: 'Every package includes a clear, modest security deposit (Starter: 20%, Standard: 15%, Half-Yearly: 12.5%, Annual: 10%), which is 100% refundable upon completing your package term. Sessions are billed monthly based on student collections.',
   },
   {
     id: 'booking-options',
     category: 'Booking & Commitment',
     question: 'Can I rent a classroom by the session, or only in monthly packages?',
-    answer: 'You can rent by individual sessions under our Pay As You Go model, with a recommended minimum commitment of at least 3 teaching days per week and 2 sessions per day to maintain continuity for your learners. For established educators running consistent batches, structured packages (36 to 288 sessions) offer substantial discounts and guaranteed room reservations.',
+    answer: 'Classroom packages are structured from 36 to 288 sessions (Starter, Standard, Half-Yearly, and Annual) with a recommended commitment of at least 3 teaching days per week and 2 sessions per day. Packages offer volume savings, guaranteed recurring slots on the studio calendar, and flexible monthly billing.',
   },
   {
     id: 'inclusions',
@@ -43,7 +43,7 @@ export const FAQS = [
     id: 'age-groups-subjects',
     category: 'Programmes & Rules',
     question: 'What age groups and subjects are allowed in the classrooms?',
-    answer: 'We welcome adult learners of all ages during morning and afternoon slots (10:00 am to 3:28 pm) for programmes like IELTS/TOEFL, spoken English, coding, AutoCAD, digital marketing, and professional skills. Evening slots (from 3:30 pm) and weekends cater to school students from Grade 5 and above for academic tuition, board exam prep, and arts/botany. To ensure a focused academic atmosphere, dance, loud music, and pre-nursery programmes are not accommodated.',
+    answer: 'We welcome adult learners during morning and midday slots (9:40 am to 3:00 pm, 60-min sessions) for programmes like IELTS/TOEFL, spoken English, coding, AutoCAD, digital marketing, and professional skills. Evening slots (3:10 pm to 7:25 pm, 60-min sessions) and scheduled Sundays cater to school students from Grade 5 and above for academic tuition, board exam prep, and arts/botany. To ensure a focused academic atmosphere, dance, loud music, and pre-nursery programmes are not accommodated.',
   },
   {
     id: 'recording-classes',
@@ -79,7 +79,7 @@ export const FAQS = [
     id: 'sunday-classes',
     category: 'Booking & Commitment',
     question: 'Are Sunday classes possible?',
-    answer: 'Yes. Mentors Studio operates Monday through Saturday from 10:00 am to 8:29 pm, and is open for teaching sessions on three designated Sundays per calendar month by prior scheduling arrangement with the facility manager. This is ideal for weekend crash courses, mock test drives, and executive workshops.',
+    answer: 'Yes. Mentors Studio operates Monday through Saturday (9:40 am to 7:25 pm), and is open for teaching sessions on three designated Sundays per calendar month by prior scheduling arrangement with the facility manager. This is ideal for weekend crash courses, mock test drives, and executive workshops.',
   },
   {
     id: 'legal-operations',

@@ -193,8 +193,8 @@ export function FacilitiesPage() {
 
       <PageHero
         label="Facilities & Amenities"
-        title="Everything Included With Your Classroom Rental"
-        subtitle="Every seat at Mentors Studio comes with turnkey teaching infrastructure on Golf Course Extension Road, Sector 57, Gurugram. From climate-controlled AC and fiber Wi-Fi to display technology and on-site staff — no setup costs, no separate bills."
+        title="Everything You Need to Teach, Already in Place."
+        subtitle="Step into fully equipped teaching spaces with air-conditioning, high-speed Wi-Fi, digital displays, whiteboards and dedicated on-site support. No setup hassles or separate utility bills."
         image="/images/reception-lobby.png"
         cta={{ label: 'Schedule a Visit', to: '/contact' }}
       />
@@ -203,51 +203,20 @@ export function FacilitiesPage() {
 
       {/* What's always included — quick list */}
       <div className="bg-[#F7F2EA] border-b border-[#DDD0B8]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <AnimatedSection>
-            <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#7A6A50] mb-5">Included in every seat, every session</p>
+            <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] font-bold mb-4">Included in every seat, every session</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {['AC + Furniture', 'In-Cabin Laptop', 'TV / Projector', 'Broadband Wi-Fi', 'Floor Manager', 'Housekeeping'].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm bg-white/40 p-2.5 rounded-sm border border-[#DDD0B8]/60">
-                  <CheckCircle2 size={14} className="text-[#C9A96B] flex-shrink-0" />
-                  <span className="font-body text-[#1A1A1A] font-medium text-xs sm:text-sm">{item}</span>
+                <div key={item} className="flex items-center gap-2 text-sm bg-white/70 p-2.5 rounded-xs border border-[#DDD0B8]/80 shadow-xs">
+                  <CheckCircle2 size={15} className="text-[#8B6914] flex-shrink-0" />
+                  <span className="font-body text-[#1A1A1A] font-semibold text-xs sm:text-sm">{item}</span>
                 </div>
               ))}
             </div>
           </AnimatedSection>
         </div>
       </div>
-
-      {/* Content Depth: Infrastructure Specification (150-300 words) */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 pb-4">
-        <div className="bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm p-6 lg:p-8">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles size={16} className="text-[#C9A96B]" />
-            <h2 className="font-display font-bold text-[#1A1A1A] text-xl">
-              Turnkey Infrastructure Without Capital Expenditure or Commercial Leases
-            </h2>
-          </div>
-          <p className="font-body text-[#7A6A50] text-sm lg:text-base leading-relaxed font-light mb-4">
-            Setting up a standalone coaching center in Gurugram typically demands significant capital: commercial security deposits, high-tonnage HVAC installations, display hardware, commercial electricity meters, and full-time administrative staff. Mentors Studio completely eliminates this financial burden. Every educator renting a cabin gains immediate access to a fully operational, premium academic infrastructure funded and maintained entirely by us.
-          </p>
-          <p className="font-body text-[#7A6A50] text-sm lg:text-base leading-relaxed font-light mb-4">
-            Our facility is connected via dual-band commercial optical fiber with automated power backup, ensuring your digital presentations, live code compilations, and online lectures never face interruption. Common corridors are monitored by high-definition CCTV to ensure the highest standard of student safety, while the interiors of teaching cabins remain strictly unrecorded to honor educator privacy and proprietary pedagogy.
-          </p>
-          <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono">
-            <Link to="/spaces" className="text-[#C9A96B] hover:text-[#3E2F1F] font-semibold inline-flex items-center gap-1">
-              View cabin sizes from 6 to 24 seats <ArrowRight size={12} />
-            </Link>
-            <span className="text-[#DDD0B8]">·</span>
-            <Link to="/pricing" className="text-[#C9A96B] hover:text-[#3E2F1F] font-semibold inline-flex items-center gap-1">
-              Check per-seat session packages <ArrowRight size={12} />
-            </Link>
-            <span className="text-[#DDD0B8]">·</span>
-            <Link to="/faq" className="text-[#C9A96B] hover:text-[#3E2F1F] font-semibold inline-flex items-center gap-1">
-              Frequently asked facility questions <ArrowRight size={12} />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Detailed facility cards */}
       <section className="bg-warm-stone">
@@ -267,16 +236,16 @@ export function FacilitiesPage() {
                 <AnimatedSection key={f.title} direction={isReversed ? 'right' : 'left'}>
                   <div className={`grid lg:grid-cols-2 gap-8 items-center p-6 lg:p-0 border border-[#DDD0B8] lg:border-0 rounded-sm lg:rounded-none bg-[#F7F2EA] lg:bg-transparent ${isReversed ? 'lg:direction-rtl' : ''}`}>
                     {/* Image */}
-                    <div className={`relative overflow-hidden rounded-sm ${isReversed ? 'lg:order-2' : ''}`}>
+                    <div className={`relative overflow-hidden rounded-sm shadow-sm ${isReversed ? 'lg:order-2' : ''}`}>
                       <img
                         src={f.image}
                         alt={`${f.title} — Premium classroom rental amenity at Mentors Studio Gurugram`}
                         className="w-full h-64 lg:h-80 object-cover"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/30 to-transparent" />
                       {f.highlight && (
-                        <div className="absolute top-4 left-4 px-3 py-1.5 bg-[#C9A96B] text-[#1A1A1A] font-mono text-[10px] tracking-wide rounded-sm font-bold shadow-md">
+                        <div className="absolute top-4 left-4 px-3 py-1.5 bg-[#8B6914] text-white font-mono text-[10px] tracking-wide rounded-xs font-bold shadow-md">
                           Highlighted Amenity
                         </div>
                       )}
@@ -284,16 +253,16 @@ export function FacilitiesPage() {
 
                     {/* Content */}
                     <div className={`${isReversed ? 'lg:order-1' : ''}`}>
-                      <div className={`w-11 h-11 rounded-sm flex items-center justify-center mb-5 ${f.highlight ? 'bg-[#C9A96B]/15' : 'bg-[#DDD0B8]/50'}`}>
-                        <Icon size={20} className={f.highlight ? 'text-[#C9A96B]' : 'text-[#7A6A50]'} />
+                      <div className="w-11 h-11 rounded-xs flex items-center justify-center mb-5 bg-[#EADCC8] border border-[#DDD0B8]">
+                        <Icon size={20} className="text-[#8B6914]" />
                       </div>
-                      <h3 className="font-display font-bold text-[#1A1A1A] text-xl mb-2">{f.title}</h3>
-                      <p className="font-body text-[#C9A96B] text-sm mb-5 italic">{f.summary}</p>
+                      <h3 className="font-display font-bold text-[#1A1A1A] text-xl mb-1.5">{f.title}</h3>
+                      <p className="font-body text-[#8B6914] text-sm mb-4 font-semibold italic">{f.summary}</p>
                       <ul className="flex flex-col gap-2">
                         {f.details.map((d, j) => (
                           <li key={j} className="flex items-start gap-3">
-                            <CheckCircle2 size={14} className="text-[#C9A96B] flex-shrink-0 mt-0.5" />
-                            <span className="font-body font-light text-[#7A6A50] text-sm leading-relaxed">{d}</span>
+                            <CheckCircle2 size={15} className="text-[#8B6914] flex-shrink-0 mt-0.5" />
+                            <span className="font-body font-normal text-[#3E2F1F] text-sm leading-relaxed">{d}</span>
                           </li>
                         ))}
                       </ul>
@@ -307,16 +276,44 @@ export function FacilitiesPage() {
         </div>
       </section>
 
+      {/* Closing Turnkey Infrastructure Section per Section 18 */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        <div className="bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm p-6 lg:p-10 shadow-sm">
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles size={18} className="text-[#8B6914]" />
+            <h2 className="font-display font-bold text-[#1A1A1A] text-xl sm:text-2xl">
+              Everything You Need to Teach, Without the Setup Hassle.
+            </h2>
+          </div>
+          <p className="font-body text-[#3E2F1F] text-base leading-relaxed font-normal mb-6">
+            Setting up your own coaching centre involves significant investment in infrastructure, technology and daily operations. Mentors Studio takes care of it all with fully equipped teaching cabins, high-speed internet, power backup, secure common areas and dedicated on-site support. Simply choose your space and focus on teaching while we take care of the rest.
+          </p>
+          <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
+            <Link to="/spaces" className="text-[#8B6914] hover:text-[#5C450C] font-bold inline-flex items-center gap-1.5 transition-colors">
+              View cabin sizes from 6 to 24 seats <ArrowRight size={13} />
+            </Link>
+            <span className="text-[#DDD0B8]">|</span>
+            <Link to="/pricing" className="text-[#8B6914] hover:text-[#5C450C] font-bold inline-flex items-center gap-1.5 transition-colors">
+              Check per-seat session packages <ArrowRight size={13} />
+            </Link>
+            <span className="text-[#DDD0B8]">|</span>
+            <Link to="/faq" className="text-[#8B6914] hover:text-[#5C450C] font-bold inline-flex items-center gap-1.5 transition-colors">
+              Frequently asked facility questions <ArrowRight size={13} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <AnimatedSection className="max-w-7xl mx-auto px-6 lg:px-8 pb-20">
         <div className="bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm p-8 lg:p-12 text-center shadow-sm">
           <h3 className="font-display font-bold text-[#1A1A1A] text-2xl mb-3">Ready to experience the space firsthand?</h3>
-          <p className="font-body font-light text-[#7A6A50] text-base mb-8 max-w-md mx-auto">
+          <p className="font-body font-normal text-[#3E2F1F] text-base mb-8 max-w-lg mx-auto">
             Schedule a walkthrough on Golf Course Extension Road, Sector 57. Bring your students for a complimentary demo session before committing.
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#1A1A1A] text-[#F7F2EA] font-display font-bold text-base rounded-sm hover:bg-[#3E2F1F] transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#1A1A1A] text-[#F7F2EA] font-display font-bold text-sm tracking-wider uppercase rounded-xs hover:bg-[#8B6914] transition-colors"
           >
             Book a Facility Visit
             <ArrowRight size={16} />

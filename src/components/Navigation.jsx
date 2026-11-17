@@ -16,16 +16,8 @@ const navLinks = [
 ];
 
 export function Navigation() {
-  const [scrolled,   setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === '/';
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 12);
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
-  }, []);
 
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [location.pathname]);
@@ -39,40 +31,38 @@ export function Navigation() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isHome
-            ? 'bg-[#1A1A1A]/90 backdrop-blur-md shadow-md shadow-black/20'
-            : scrolled ? 'bg-[#F7F2EA]/97 backdrop-blur-md shadow-md' : 'bg-[#F7F2EA]'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#F7F2EA]/96 backdrop-blur-md border-b border-[#DDD0B8] shadow-xs"
       >
         {/* Top gold line */}
         <div className="h-[3px] bg-gradient-to-r from-[#8B6914] via-[#C9A96B] to-[#8B6914]" />
 
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <nav className="flex items-center justify-between h-[66px] gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav className="flex items-center justify-between h-[68px] gap-4">
 
-            {/* Logo */}
-            <Link to="/" className="group flex-shrink-0">
-              <NavLogo light={isHome} />
+            {/* Logo — clean, transparent, single instance */}
+            <Link to="/" className="group flex-shrink-0" aria-label="Mentors Studio Home">
+              <NavLogo light={false} />
             </Link>
 
-            {/* Desktop nav */}
-            <div className="hidden lg:flex items-center justify-center flex-1 gap-0">
+            {/* Desktop navigation tabs — consistent palette with explicit legible hover colors */}
+            <div className="hidden lg:flex items-center justify-center flex-1 gap-1">
               {navLinks.map((link) => {
                 const active = isActive(link);
                 return (
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`relative px-2.5 py-2 font-body text-[10.5px] tracking-[0.12em] font-semibold uppercase
-                      transition-colors duration-200 whitespace-nowrap
-                      ${active ? 'text-[#C9A96B]' : isHome ? 'text-[#F7F2EA] hover:text-[#C9A96B]' : 'text-[#3E2F1F] hover:text-[#C9A96B]'}`}
+                    className={`relative px-3 py-2 font-body text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 whitespace-nowrap ${
+                      active
+                        ? 'text-[#8B6914] font-bold'
+                        : 'text-[#1A1A1A] hover:text-[#8B6914] font-semibold'
+                    }`}
                   >
                     {link.label}
                     {active && (
                       <motion.span
                         layoutId="nav-active-line"
-                        className="absolute bottom-0 left-1 right-1 h-[2px] bg-[#C9A96B] rounded-full"
+                        className="absolute bottom-0 left-2 right-2 h-[2.5px] bg-[#C9A96B] rounded-full"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -89,9 +79,7 @@ export function Navigation() {
             >
               <Link
                 to="/contact"
-                className={`px-5 py-2.5 font-body font-bold text-[10px] tracking-[0.2em] uppercase rounded-sm transition-colors shadow-sm ${
-                  isHome ? 'bg-[#C9A96B] text-[#1A1A1A] hover:bg-[#D4B87A]' : 'bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#3E2F1F]'
-                }`}
+                className="px-5 py-2.5 font-body font-bold text-[10px] tracking-[0.2em] uppercase rounded-sm transition-colors shadow-sm bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#8B6914] hover:text-white"
               >
                 BOOK YOUR SPACE
               </Link>
@@ -99,7 +87,7 @@ export function Navigation() {
 
             {/* Mobile hamburger */}
             <button
-              className={`lg:hidden p-2 hover:text-[#C9A96B] transition-colors ml-auto ${isHome ? 'text-[#F7F2EA]' : 'text-[#1A1A1A]'}`}
+              className="lg:hidden p-2 text-[#1A1A1A] hover:text-[#8B6914] transition-colors ml-auto cursor-pointer"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label="Toggle navigation"
             >
@@ -107,9 +95,6 @@ export function Navigation() {
             </button>
           </nav>
         </div>
-
-        {/* Bottom gold separator */}
-        <div className="h-px bg-gradient-to-r from-transparent via-[#C9A96B]/40 to-transparent" />
       </motion.header>
 
       {/* Mobile drawer */}
@@ -120,9 +105,7 @@ export function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className={`fixed top-[72px] left-0 right-0 z-40 border-b-2 border-[#C9A96B] shadow-2xl lg:hidden ${
-              isHome ? 'bg-[#1A1A1A]' : 'bg-[#F7F2EA]'
-            }`}
+            className="fixed top-[71px] left-0 right-0 z-40 border-b-2 border-[#C9A96B] shadow-2xl lg:hidden bg-[#F7F2EA]"
           >
             <nav className="max-w-7xl mx-auto px-5 py-3 flex flex-col">
               {navLinks.map((link, i) => {
@@ -132,25 +115,27 @@ export function Navigation() {
                     key={link.to}
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.035 }}
+                    transition={{ delay: i * 0.03 }}
                   >
                     <Link
                       to={link.to}
-                      className={`flex items-center justify-between py-3.5 border-b ${isHome ? 'border-[#3A3228]' : 'border-[#DDD0B8]'}
-                        font-body text-xs tracking-[0.15em] font-semibold uppercase transition-colors
-                        ${active ? 'text-[#C9A96B]' : isHome ? 'text-[#F7F2EA] hover:text-[#C9A96B]' : 'text-[#3E2F1F] hover:text-[#C9A96B]'}`}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center justify-between py-3.5 border-b border-[#DDD0B8] font-body text-xs tracking-[0.15em] uppercase transition-colors ${
+                        active
+                          ? 'text-[#8B6914] font-bold'
+                          : 'text-[#1A1A1A] hover:text-[#8B6914] font-semibold'
+                      }`}
                     >
                       {link.label}
-                      {active && <span className="w-1.5 h-1.5 rounded-full bg-[#C9A96B] flex-shrink-0" />}
+                      {active && <span className="w-2 h-2 rounded-full bg-[#C9A96B] flex-shrink-0" />}
                     </Link>
                   </motion.div>
                 );
               })}
               <Link
                 to="/contact"
-                className={`mt-4 mb-1 flex items-center justify-center py-3.5 font-body font-bold text-xs tracking-[0.2em] uppercase rounded-sm transition-colors ${
-                  isHome ? 'bg-[#C9A96B] text-[#1A1A1A] hover:bg-[#D4B87A]' : 'bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#3E2F1F]'
-                }`}
+                onClick={() => setMobileOpen(false)}
+                className="mt-4 mb-2 flex items-center justify-center py-3.5 font-body font-bold text-xs tracking-[0.2em] uppercase rounded-sm transition-colors bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#8B6914] hover:text-white"
               >
                 BOOK YOUR SPACE
               </Link>

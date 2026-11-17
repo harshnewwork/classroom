@@ -5,14 +5,13 @@ import { kits } from '../../data/kits';
 import { ShoppingBag } from 'lucide-react';
 
 const categories = ['All', 'School', 'Adult', 'Arts', 'Botany'];
-const catAccent  = { School: '#3E2F1F', Adult: '#1A1A1A', Arts: '#5A4A2A', Botany: '#2A3A20' };
 
 export function Kits() {
   const [active, setActive] = useState('All');
-  const filtered = active === 'All' ? kits : kits.filter(k => k.category === active);
+  const filtered = active === 'All' ? kits : kits.filter((k) => k.category === active);
 
   return (
-    <section className="section-pad bg-[#1A1A1A] relative overflow-hidden">
+    <section className="section-pad bg-warm-stone relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A96B]/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
@@ -20,46 +19,74 @@ export function Kits() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
               <SectionLabel>Stationery & Kits</SectionLabel>
-              <h2 className="font-display font-bold text-[#F7F2EA] leading-[1.1] tracking-tight"
-                style={{ fontSize: 'clamp(1.9rem, 3.2vw, 2.8rem)' }}>
+              <h2
+                className="font-display font-bold text-[#1A1A1A] leading-[1.08] tracking-tight"
+                style={{ fontSize: 'clamp(2rem, 3.4vw, 2.9rem)' }}
+              >
                 Everything Your{' '}
-                <span className="text-gradient italic">Classroom Needs.</span>
+                <span className="text-[#8B6914] italic">Classroom Needs.</span>
               </h2>
             </div>
-            <p className="font-body text-[#7A6A50] text-sm max-w-sm leading-relaxed font-light">
-              Order kits for your whole batch at the front desk. All prices exclude GST.
+            <p className="font-body text-[#3E2F1F] text-sm max-w-sm leading-relaxed font-normal">
+              Order kits for your batch directly at the front desk. Essential supplies ready when your students arrive.
             </p>
           </div>
+
+          {/* Category filter tabs */}
           <div className="flex gap-2 mt-8 flex-wrap">
-            {categories.map(cat => (
-              <button key={cat} onClick={() => setActive(cat)}
-                className={`px-4 py-2 rounded-sm font-mono text-[10px] tracking-[0.15em] uppercase transition-all ${
-                  active === cat ? 'bg-[#C9A96B] text-[#1A1A1A]' : 'border border-[#3A3228] text-[#7A6A50] hover:border-[#C9A96B]/50 hover:text-[#EADCC8]'
-                }`}>
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`px-4 py-2 rounded-sm font-mono text-[10.5px] tracking-[0.15em] uppercase font-bold transition-all cursor-pointer ${
+                  active === cat
+                    ? 'bg-[#1A1A1A] text-[#F7F2EA] shadow-xs'
+                    : 'bg-[#F7F2EA] border border-[#DDD0B8] text-[#3E2F1F] hover:border-[#8B6914] hover:text-[#8B6914]'
+                }`}
+              >
                 {cat}
               </button>
             ))}
           </div>
         </AnimatedSection>
 
-        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4" key={active}>
-          {filtered.map(kit => (
+        {/* Product grid — Headlines and relevant images only per Section 13 */}
+        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" key={active}>
+          {filtered.map((kit) => (
             <StaggerItem key={kit.id}>
-              <div className="h-full flex flex-col border border-[#3A3228] rounded-sm overflow-hidden hover:border-[#C9A96B]/40 transition-all group bg-[#231F1B]">
-                <div className="h-1.5 flex-shrink-0" style={{ background: catAccent[kit.category] || '#3A3228' }} />
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-2.5 py-1 rounded-sm font-mono text-[9px] tracking-wide border border-[#3A3228] text-[#7A6A50]">{kit.category}</span>
-                    <ShoppingBag size={13} className="text-[#3A3228]" />
+              <div className="h-full flex flex-col border border-[#DDD0B8] rounded-sm overflow-hidden hover:border-[#8B6914] hover:shadow-md transition-all group bg-[#F7F2EA]">
+                {/* Product Image */}
+                <div className="aspect-[4/3] w-full overflow-hidden bg-[#EADCC8] relative border-b border-[#DDD0B8]">
+                  <img
+                    src={kit.image}
+                    alt={kit.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-xs font-mono text-[9px] uppercase tracking-wider bg-[#1A1A1A]/80 text-[#F7F2EA] font-semibold backdrop-blur-xs">
+                    {kit.category}
+                  </span>
+                </div>
+
+                {/* Headlines only */}
+                <div className="p-4 flex flex-col flex-1 justify-between">
+                  <div className="mb-3">
+                    <h3 className="font-display font-bold text-[#1A1A1A] text-sm leading-snug group-hover:text-[#8B6914] transition-colors">
+                      {kit.name}
+                    </h3>
+                    <p className="font-mono text-[10px] text-[#5C450C] uppercase tracking-wider font-medium mt-1">
+                      {kit.ageGroup}
+                    </p>
                   </div>
-                  <h3 className="font-display font-bold text-[#F7F2EA] text-sm mb-2 leading-snug">{kit.name}</h3>
-                  <p className="font-body text-[#7A6A50] text-xs leading-relaxed mb-4 flex-1 font-light">{kit.description}</p>
-                  <div className="mt-auto border-t border-[#3A3228] pt-3 flex items-center justify-between">
+
+                  <div className="border-t border-[#DDD0B8]/80 pt-3 flex items-center justify-between">
                     <div>
-                      <p className="font-display font-bold text-[#C9A96B] text-lg leading-none italic">₹{kit.price.toLocaleString('en-IN')}</p>
-                      <p className="font-mono text-[9px] text-[#7A6A50] mt-0.5">excl. GST</p>
+                      <p className="font-display font-bold text-[#8B6914] text-lg leading-none italic">
+                        ₹{kit.price.toLocaleString('en-IN')}
+                      </p>
+                      <p className="font-mono text-[9px] text-[#5C450C] font-semibold mt-0.5">excl. GST</p>
                     </div>
-                    <span className="font-mono text-[9px] text-[#3A3228] text-right">{kit.ageGroup}</span>
+                    <ShoppingBag size={14} className="text-[#8B6914]" />
                   </div>
                 </div>
               </div>

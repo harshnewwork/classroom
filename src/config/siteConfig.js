@@ -10,8 +10,8 @@ import { EDUCATOR_TYPES, PACKAGES } from '../data/pricing';
  */
 
 export const siteConfig = {
-  domain: '[YOUR_DOMAIN]',
-  siteUrl: 'https://[YOUR_DOMAIN]',
+  domain: 'mentorsstudio.co.in',
+  siteUrl: 'https://mentorsstudio.co.in',
   name: 'Mentors Studio',
   alternateName: 'Mentors Studio by The Vensej',
   brandLine: 'by The Vensej',
@@ -20,16 +20,17 @@ export const siteConfig = {
   description:
     'Furnished, managed classroom and teaching space rental for educators in Gurugram. 9 air-conditioned cabins from 6 to 24 seats on Golf Course Extension Road, Sector 57. Pay per seat, no deposit.',
 
-  // NAP (Name, Address, Phone) & Contact placeholders
+  // NAP (Name, Address, Phone) & Contact
   contact: {
-    phone: '[PHONE_NUMBER]',
-    phoneDisplay: '[PHONE_NUMBER]',
-    whatsapp: '[WHATSAPP_NUMBER]',
-    email: '[EMAIL_ADDRESS]',
+    phone: '+91 99900 35865',
+    phoneDisplay: '+91 99900 35865',
+    whatsapp: '919990035865',
+    whatsappDisplay: '+91 99900 35865',
+    email: 'info@mentorsstudio.co.in',
     address: {
-      floorUnit: '[FLOOR_UNIT]',
-      mallName: '[MALL_NAME]',
-      street: '[FLOOR_UNIT], [MALL_NAME], Golf Course Extension Road, Sector 57',
+      floorUnit: 'Unit 204, Second Floor',
+      mallName: 'Hong Kong Bazaar Mall',
+      street: 'Golf Course Extension Road, Sector 57',
       locality: 'Sector 57, Golf Course Extension Road',
       city: 'Gurugram',
       region: 'Haryana',
@@ -38,11 +39,11 @@ export const siteConfig = {
       countryName: 'India',
     },
     geo: {
-      latitude: '[LATITUDE]',
-      longitude: '[LONGITUDE]',
+      latitude: '28.4239',
+      longitude: '77.0827',
     },
     mapsUrl: 'https://maps.google.com/?q=Golf+Course+Extension+Road+Sector+57+Gurugram',
-    operatingHours: 'Monday–Saturday, 10:00 am – 8:29 pm',
+    operatingHours: 'Monday–Saturday, 9:40 am – 7:25 pm',
     sundayHours: 'Three Sundays a month by prior manager arrangement',
   },
 

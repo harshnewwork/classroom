@@ -82,9 +82,9 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
           <span className="font-mono text-[#F7F2EA]">₹{discounted}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="font-body text-[#A89880]">Security deposit</span>
-          <span className={`font-mono text-xs ${pkg.deposit ? 'text-[#C9A96B]' : 'text-[#A89880]'}`}>
-            {pkg.deposit ? 'Refundable' : 'None'}
+          <span className="font-body text-[#DDD0B8]">Security deposit</span>
+          <span className="font-mono text-xs font-bold text-[#D4B87A]">
+            {pkg.depositPercent}%
           </span>
         </div>
       </div>
@@ -93,10 +93,10 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
         {[
           'Pay after you teach',
           'Min. 60% seats billed',
-          pkg.discount > 0 ? `${(pkg.discount * 100).toFixed(0)}% discount` : 'No lock-in',
+          `${(pkg.discount * 100).toFixed(0)}% package discount`,
         ].map((item) => (
-          <div key={item} className="flex items-center gap-2 text-xs text-[#A89880]">
-            <Check size={11} className={isHighlighted ? 'text-[#C9A96B]' : 'text-[#A89880]'} />
+          <div key={item} className="flex items-center gap-2 text-xs text-[#EADCC8]">
+            <Check size={11} className={isHighlighted ? 'text-[#D4B87A]' : 'text-[#C9A96B]'} />
             {item}
           </div>
         ))}
@@ -127,12 +127,13 @@ function Calculator({ defaultPackage }) {
   const rows = result ? [
     { label: 'Seats billed / session', value: `${result.seatsForBilling} seats`, note: result.seatsForBilling > numStudents ? `Min. billing of ${result.minBillable} seats applied` : null },
     { label: 'Base rate / seat', value: `₹${result.baseRate}` },
-    { label: 'Discount', value: result.discount > 0 ? `${(result.discount * 100).toFixed(0)}%` : 'None' },
+    { label: 'Discount', value: `${(result.discount * 100).toFixed(0)}%` },
     { label: 'Discounted rate / seat', value: fmtD(result.discountedRate) },
     { label: 'Cost per session', value: fmt(result.perSession) },
     { label: 'Your cost per student', value: fmtD(result.costPerStudent) },
-    { label: `Subtotal (${result.packageSessions} session${result.packageSessions > 1 ? 's' : ''}, excl. GST)`, value: fmt(result.packageTotal), bold: true },
+    { label: `Subtotal (${result.packageSessions} sessions, excl. GST)`, value: fmt(result.packageTotal), bold: true },
     { label: 'GST at 18%', value: fmt(result.gst) },
+    { label: `Security deposit (${result.depositPercent}%)`, value: fmt(result.securityDeposit), note: 'Refundable on term completion' },
   ] : [];
 
   return (
@@ -244,23 +245,22 @@ function Calculator({ defaultPackage }) {
             ))}
 
             {/* Grand total */}
-            <div className="mt-4 p-4 bg-[#C9A96B]/8 border border-[#C9A96B]/30 rounded-sm">
+            <div className="mt-4 p-4 bg-[#C9A96B]/15 border border-[#C9A96B]/40 rounded-sm">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-display font-bold text-[#F7F2EA] text-base">Total with GST</p>
-                  <p className="font-mono text-[10px] text-[#A89880] mt-0.5">
-                    {result.packageSessions > 1 ? `${result.packageSessions} sessions · ${result.months} months` : '1 session'}
-                    {result.hasDeposit ? ' · refundable deposit required' : ''}
+                  <p className="font-mono text-[10px] text-[#DDD0B8] mt-0.5">
+                    {result.packageSessions} sessions · {result.months} months · {result.depositPercent}% security deposit
                   </p>
                 </div>
-                <span className="font-display font-bold text-[#C9A96B] text-3xl">{fmt(result.totalWithGst)}</span>
+                <span className="font-display font-bold text-[#D4B87A] text-3xl">{fmt(result.totalWithGst)}</span>
               </div>
             </div>
 
-            <div className="flex items-start gap-2 mt-3">
-              <Info size={12} className="text-[#A89880] flex-shrink-0 mt-0.5" />
-              <p className="font-mono text-[10px] text-[#A89880] leading-relaxed">
-                Billed monthly after teaching. Unused sessions lapse at end of validity. Deposit is refundable.
+            <div className="flex items-start gap-2.5 mt-3 p-3 bg-[#231F1B] border border-[#3A3228] rounded-xs">
+              <Info size={13} className="text-[#D4B87A] flex-shrink-0 mt-0.5" />
+              <p className="font-mono text-[10.5px] text-[#EADCC8] leading-relaxed font-medium">
+                Billed monthly after teaching. Security deposit is refundable upon term completion. Unused sessions lapse at end of validity.
               </p>
             </div>
           </div>

@@ -12,63 +12,55 @@ import { FAQS } from '../data/faqs';
 const steps = [
   {
     num: '01',
-    title: 'Tell Us What You Teach',
-    tagline: 'No paperwork. No upfront deposit.',
-    desc: 'Start by reaching out to the Mentors Studio facility manager with a brief overview of what you teach, the grade or age group of your students, and your expected batch size.',
+    title: 'Share Your Requirements',
+    tagline: 'Tell us your subject, batch size and preferred timings.',
+    desc: 'Share your subject focus, batch size, and preferred days and times. Our manager will help identify the ideal cabin for your learners.',
     details: [
-      'Share your subject focus — IELTS, coding, school tuition, language, or creative arts',
-      'Specify your learners — adult professionals or school students (Grade 5 and above)',
-      'Share your typical batch size (helps us recommend an optimal 6, 8, 10, 12 or 24-seat cabin)',
-      'Indicate your preferred days and time slots across morning, afternoon, or evening shifts',
-      'No paperwork or upfront security deposit required to initiate booking discussions',
+      'Share your subject and learner group (school or adult)',
+      'Specify your expected batch size (6 to 24 students)',
+      'Indicate preferred session timings and recurring days',
     ],
     image: '/images/reception-lobby.png',
-    color: '#C9A96B',
+    color: '#8B6914',
   },
   {
     num: '02',
-    title: 'Visit a Cabin & Test the Technology',
-    tagline: 'Touch the technology. Test the layout.',
-    desc: 'Visit Mentors Studio directly on Golf Course Extension Road, Sector 57, Gurugram. Tour all 9 cabins, test the in-cabin displays and projectors, and run a complimentary demo session with your students.',
+    title: 'Visit & Choose',
+    tagline: 'Explore the space and select your cabin.',
+    desc: 'Visit Mentors Studio on Golf Course Extension Road, Sector 57, Gurugram. Tour all 9 cabins, test the digital displays, and select the room that fits your style.',
     details: [
-      'Inspect all available cabin capacities from 6-seat tutoring suites to 24-seat lecture halls',
-      'Connect your laptop to test HDMI projection, audio, and wireless screencasting',
-      'Bring a small group of students for a free, complimentary demo teaching class',
-      'Experience our climate control, acoustic isolation, and ergonomic classroom seating',
-      'Clarify scheduling, timing, and billing parameters directly with the on-site floor manager',
+      'Inspect classroom layouts and ergonomic furniture',
+      'Test display screens, projectors and high-speed Wi-Fi',
+      'Confirm room acoustics and air-conditioning comfort',
     ],
     image: '/images/classroom-physics.png',
-    color: '#C9A96B',
+    color: '#8B6914',
   },
   {
     num: '03',
-    title: 'Manager Confirms Your Recurring Slots',
-    tagline: 'Structured scheduling. No double bookings.',
-    desc: 'Once you select your preferred cabin, your recurring weekly timetable is locked into the studio calendar by the manager. Our calendar system prevents double bookings across all 11 teaching spaces.',
+    title: 'Confirm Your Slot',
+    tagline: 'Our manager schedules your sessions.',
+    desc: 'Our facility manager reserves your recurring weekly timetable on the master studio calendar to prevent any scheduling conflicts.',
     details: [
-      'The manager registers your recurring timetable (e.g., Mon/Wed/Fri 4:31–5:26 pm)',
-      'Your slot is secured on the official shared Mentors Studio master schedule',
-      'You receive confirmation of your reserved teaching cabin and schedule',
-      'Strict single-occupancy management guarantees zero room overlap or waiting delays',
-      'Flexible rescheduling or batch expansions can be coordinated with the manager',
+      'Your timetable is confirmed on the shared calendar',
+      'Guaranteed cabin reservation for every session',
+      'Dedicated on-site manager and IT support assigned',
     ],
     image: '/images/facilities-lockers.png',
-    color: '#C9A96B',
+    color: '#8B6914',
   },
   {
     num: '04',
-    title: 'Teach, Then Pay Monthly in Arrears',
-    tagline: 'Monthly billing. Collect from students first.',
-    desc: 'Deliver your classes in a turnkey academic environment. At the end of each calendar month, you receive a single consolidated invoice reflecting sessions taught. Pay after you collect tuition fees from your students.',
+    title: 'Teach & Pay',
+    tagline: 'Conduct your classes. Pay monthly based on student collections.',
+    desc: 'Deliver your classes in a fully managed environment. At the end of the month, receive a consolidated bill based on sessions taught.',
     details: [
-      'Teach your scheduled batches throughout the month with full IT and housekeeping support',
-      'Receive a transparent monthly tax invoice based strictly on sessions conducted',
-      'Collect your fees from students first throughout the month, eliminating cashflow pressure',
-      'Enjoy volume discounts up to 20% by enrolling in structured multi-month packages',
-      'Zero cancellation penalties for Pay As You Go members',
+      'Focus purely on teaching while we manage operations',
+      'Collect your student tuition fees first during the month',
+      'Transparent monthly billing with volume package savings',
     ],
     image: '/images/classroom-seminar.png',
-    color: '#C9A96B',
+    color: '#8B6914',
   },
 ];
 
@@ -170,20 +162,20 @@ export function HowItWorksPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 10:00 am to 8:29 pm.' },
+              { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 9:40 am to 7:25 pm.' },
               { icon: Clock,    title: 'Recommended Commitment', desc: 'At least 2 sessions per day, and at least 3 days per week to ensure learning continuity for students.' },
               { icon: Users,    title: 'Multiple Batches', desc: 'Run multiple batches across different time slots or cabin capacities. Easily coordinate with the manager.' },
-              { icon: Clock,    title: 'Adult Timetable', desc: '5 morning and midday slots Monday–Friday, each 60 minutes long. Running from 10:00 am to 3:28 pm.' },
-              { icon: Clock,    title: 'School Timetable', desc: '5 evening slots, each 55 minutes long. Running from 3:30 pm to 8:29 pm, with full weekend availability.' },
-              { icon: Calendar, title: 'Monthly Billing', desc: 'Consolidated tax invoice issued at month-end for sessions taught. Zero advance session payments.' },
+              { icon: Clock,    title: 'Adult Timetable', desc: '5 sessions (60 min each, 5-min clean): 9:40–10:40, 10:45–11:45, 11:50–12:50, 12:55–1:55, 2:00–3:00 (10-min deep clean 3:00–3:10).' },
+              { icon: Clock,    title: 'School Timetable', desc: '4 sessions (60 min each, 5-min clean): 3:10–4:10, 4:15–5:15, 5:20–6:20, 6:25–7:25.' },
+              { icon: Calendar, title: 'Monthly Billing', desc: 'Consolidated invoice issued monthly based on student collections, with transparent package rates and security deposits.' },
             ].map(({ icon: Icon, title, desc }) => (
               <AnimatedSection key={title}>
-                <div className="p-5 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm hover:border-[#C9A96B]/40 transition-colors h-full">
-                  <div className="w-9 h-9 bg-[#C9A96B]/10 rounded-sm flex items-center justify-center mb-4">
-                    <Icon size={16} className="text-[#C9A96B]" />
+                <div className="p-5 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm hover:border-[#8B6914]/40 transition-colors h-full">
+                  <div className="w-9 h-9 bg-[#EADCC8] rounded-sm flex items-center justify-center mb-4">
+                    <Icon size={16} className="text-[#8B6914]" />
                   </div>
                   <h3 className="font-display font-semibold text-[#1A1A1A] text-sm mb-2">{title}</h3>
-                  <p className="font-body font-light text-[#7A6A50] text-sm leading-relaxed">{desc}</p>
+                  <p className="font-body font-normal text-[#3E2F1F] text-sm leading-relaxed">{desc}</p>
                 </div>
               </AnimatedSection>
             ))}

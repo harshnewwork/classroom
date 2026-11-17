@@ -24,7 +24,7 @@ export function StickyBookingCTA() {
         >
           <Link
             to="/contact"
-            className="flex items-center gap-2 px-5 py-3 bg-[#C9A96B] text-[#1A1A1A] font-display font-bold text-sm rounded-sm shadow-2xl shadow-[#C9A96B]/20"
+            className="flex items-center gap-2 px-5 py-3.5 bg-[#D4B87A] text-[#1A1A1A] font-display font-bold text-xs tracking-wider uppercase rounded-xs shadow-2xl shadow-black/50 border border-[#8B6914] active:scale-95 transition-transform"
             aria-label="Book your space"
           >
             <MessageCircle size={16} />

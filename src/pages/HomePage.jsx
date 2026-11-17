@@ -28,20 +28,6 @@ export function HomePage() {
 
       <Hero />
 
-      {/* Brand Identity Showcase */}
-      <section className="bg-[#141414] py-6 sm:py-9 border-y border-[#C9A96B]/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C9A96B]/5 to-transparent pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="bg-[#F7F2EA] rounded-md p-3 sm:p-5 border border-[#C9A96B]/50 shadow-2xl shadow-black/60 flex items-center justify-center">
-            <img
-              src="/brand/logo-banner.png"
-              alt="Mentors Studio by The Vensej — Learn, Grow, Create, Move — Classroom rental for educators in Gurugram"
-              className="w-full max-h-14 sm:max-h-20 object-contain"
-            />
-          </div>
-        </div>
-      </section>
-
       <Problem />
       <Solution />
       <Spaces onCabinSelect={setSelectedCapacity} />

@@ -4,52 +4,52 @@ import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
-import { CheckCircle2, XCircle, ArrowRight, Clock, BookOpen, GraduationCap, Code2, Globe2, Palette, Sparkles } from 'lucide-react';
+import { CheckCircle2, XCircle, ArrowRight, Clock, BookOpen, GraduationCap, Code2, Globe2, Palette, Sparkles, Target, Award, ClipboardCheck, Briefcase, Video } from 'lucide-react';
 
 const educatorProfiles = [
   {
     label: 'Teachers',
-    emoji: '📚',
+    icon: GraduationCap,
     desc: 'School subject teachers running additional batches or private tuitions for Grade 5 and above students.',
   },
   {
     label: 'Tutors',
-    emoji: '✏️',
+    icon: BookOpen,
     desc: 'Independent tutors who need a professional, well-equipped space without the overhead of running their own centre.',
   },
   {
     label: 'Mentors',
-    emoji: '🎯',
+    icon: Target,
     desc: 'Career mentors, academic coaches and guidance professionals who work with students on academic and professional development.',
   },
   {
     label: 'Trainers',
-    emoji: '🏆',
+    icon: Award,
     desc: 'Corporate trainers and skills development professionals who need a focused, professional classroom environment.',
   },
   {
     label: 'Language Coaches',
-    emoji: '🌐',
+    icon: Globe2,
     desc: 'IELTS, TOEFL, Spoken English, Business English and other language programme coaches.',
   },
   {
     label: 'Test-Prep Educators',
-    emoji: '📋',
+    icon: ClipboardCheck,
     desc: 'Educators running competitive exam preparation — from school board exams to professional certification programmes.',
   },
   {
     label: 'Skill Instructors',
-    emoji: '⚙️',
+    icon: Code2,
     desc: 'AutoCAD, Advanced Excel, Canva, Digital Marketing, AI and other skill-based instructors teaching professionals.',
   },
   {
     label: 'Professional Coaches',
-    emoji: '💼',
+    icon: Briefcase,
     desc: 'Business English, social media marketing, accounting and finance coaches working with adult learners.',
   },
   {
     label: 'Educational Creators',
-    emoji: '🎬',
+    icon: Video,
     desc: 'Educators who teach and create content simultaneously — our recording facility supports both activities.',
   },
 ];
@@ -200,17 +200,22 @@ export function EducatorsPage() {
           </AnimatedSection>
 
           <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {educatorProfiles.map((ep) => (
-              <StaggerItem key={ep.label}>
-                <div className="h-full p-5 border border-[#3A3228] rounded-sm bg-[#1A1A1A] hover:border-[#C9A96B]/30 hover:bg-[#C9A96B]/3 transition-all group">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-3xl">{ep.emoji}</span>
-                    <h3 className="font-display font-bold text-[#F7F2EA] text-base group-hover:text-[#C9A96B] transition-colors">{ep.label}</h3>
+            {educatorProfiles.map((ep) => {
+              const Icon = ep.icon;
+              return (
+                <StaggerItem key={ep.label}>
+                  <div className="h-full p-5 border border-[#3A3228] rounded-sm bg-[#1A1A1A] hover:border-[#C9A96B]/50 hover:bg-[#C9A96B]/5 transition-all group">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-sm bg-[#3E2F1F] flex items-center justify-center text-[#D4B87A] group-hover:bg-[#C9A96B] group-hover:text-[#1A1A1A] transition-colors flex-shrink-0">
+                        <Icon size={18} />
+                      </div>
+                      <h3 className="font-display font-bold text-[#F7F2EA] text-base group-hover:text-[#D4B87A] transition-colors">{ep.label}</h3>
+                    </div>
+                    <p className="font-body text-[#DDD0B8] text-sm leading-relaxed">{ep.desc}</p>
                   </div>
-                  <p className="font-body text-[#A89880] text-sm leading-relaxed">{ep.desc}</p>
-                </div>
-              </StaggerItem>
-            ))}
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>
