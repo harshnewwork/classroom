@@ -43,7 +43,7 @@ export const FAQS = [
     id: 'age-groups-subjects',
     category: 'Programmes & Rules',
     question: 'What age groups and subjects are allowed in the classrooms?',
-    answer: 'We welcome adult learners during morning and midday slots (9:40 am to 3:00 pm, 60-min sessions) for programmes like IELTS/TOEFL, spoken English, coding, AutoCAD, digital marketing, and professional skills. Evening slots (3:10 pm to 8:30 pm, 60-min sessions) and scheduled Sundays cater to school students from Grade 5 and above for academic tuition, board exam prep, and arts/botany. To ensure a focused academic atmosphere, dance, loud music, and pre-nursery programmes are not accommodated.',
+    answer: 'We welcome adult learners during morning and midday slots (10:00 am to 3:20 pm, 60-min sessions) for programmes like IELTS/TOEFL, spoken English, coding, AutoCAD, digital marketing, and professional skills. Evening slots (3:30 pm to 8:25 pm, 55-min sessions) and scheduled Sundays cater to school students from Grade 5 and above for academic tuition, board exam prep, and arts/botany. To ensure a focused academic atmosphere, dance, loud music, and pre-nursery programmes are not accommodated.',
   },
   {
     id: 'recording-classes',
@@ -79,7 +79,7 @@ export const FAQS = [
     id: 'sunday-classes',
     category: 'Booking & Commitment',
     question: 'Are Sunday classes possible?',
-    answer: 'Yes. Mentors Studio operates Monday through Saturday (9:40 am to 8:30 pm), and is open for teaching sessions on three designated Sundays per calendar month by prior scheduling arrangement with the facility manager. This is ideal for weekend crash courses, mock test drives, and executive workshops.',
+    answer: 'Yes. Mentors Studio operates Monday through Saturday (10:00 am to 8:25 pm), and is open for teaching sessions on three designated Sundays per calendar month by prior scheduling arrangement with the facility manager. This is ideal for weekend crash courses, mock test drives, and executive workshops.',
   },
   {
     id: 'legal-operations',

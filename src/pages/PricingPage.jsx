@@ -368,7 +368,7 @@ export function PricingPage() {
                     <span className="font-display font-bold text-[#F7F2EA] text-4xl">₹{et.baseRate}</span>
                     <span className="font-body text-[#A89880] text-sm">/ seat base rate</span>
                   </div>
-                  <p className="font-mono text-xs text-[#A89880] mt-1">60 min · excl. GST</p>
+                  <p className="font-mono text-xs text-[#A89880] mt-1">{et.id === 'school' ? '55 min' : '60 min'} · excl. GST</p>
                 </div>
               ))}
             </div>

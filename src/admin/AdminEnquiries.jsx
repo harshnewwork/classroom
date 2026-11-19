@@ -1335,7 +1335,7 @@ export function AdminEnquiries({ rooms = [], user, showToast, onNavigateToCalend
                               </option>
                             ))}
                           </optgroup>
-                          <optgroup label="Evening Sessions (60 mins)">
+                          <optgroup label="Evening Sessions (55 mins)">
                             {TIME_SLOTS.filter((s) => s.group === 'Evening').map((s) => (
                               <option key={s.id} value={s.id}>
                                 [{s.id}] {s.shortTime} — {s.duration}

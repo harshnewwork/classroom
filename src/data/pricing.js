@@ -2,7 +2,7 @@
 
 export const EDUCATOR_TYPES = [
   { id: 'adult',  label: 'Adult Educators',  baseRate: 250, desc: 'Starting from ₹212.50 to ₹250 / seat / session (60 min)' },
-  { id: 'school', label: 'School Educators', baseRate: 200, desc: 'Starting from ₹170 to ₹200 / seat / session (60 min)' },
+  { id: 'school', label: 'School Educators', baseRate: 200, desc: 'Starting from ₹170 to ₹200 / seat / session (55 min)' },
 ];
 
 export const PACKAGES = [

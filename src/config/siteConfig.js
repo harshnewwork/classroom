@@ -43,7 +43,7 @@ export const siteConfig = {
       longitude: '77.0827',
     },
     mapsUrl: 'https://maps.google.com/?q=Golf+Course+Extension+Road+Sector+57+Gurugram',
-    operatingHours: 'Monday–Saturday, 9:40 am – 8:30 pm',
+    operatingHours: 'Monday–Saturday, 10:00 am – 8:25 pm',
     sundayHours: 'Three Sundays a month by prior manager arrangement',
   },
 

@@ -75,7 +75,7 @@ const facilitiesDetailed = [
       'Dedicated manager handles the shared booking calendar',
       'Prevents double bookings across all 9 cabins and 2 open areas',
       'Assists with educator onboarding and student reception',
-      'Available on the floor throughout all 9:40 am to 8:30 pm hours',
+      'Available on the floor throughout all 10:00 am to 8:25 pm hours',
       'Single point of contact for schedule adjustments and batch extensions',
     ],
     image: '/images/reception-lobby.png',

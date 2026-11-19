@@ -104,7 +104,7 @@ export function Educators() {
                     Adult Programmes
                   </span>
                   <p className="font-body text-[#3E2F1F] text-xs mt-1 font-medium">
-                    Monday to Friday · 9:40 am – 3:00 pm
+                    Monday to Friday · 10:00 am – 3:20 pm
                   </p>
                 </div>
                 <span className="font-mono text-[10px] px-2.5 py-1 bg-[#EADCC8] text-[#3E2F1F] rounded-xs font-bold uppercase">

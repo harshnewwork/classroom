@@ -6,19 +6,19 @@ import { SectionLabel } from '../ui/SectionLabel';
 import { Clock, Calendar, Sparkles, Check, ArrowRight } from 'lucide-react';
 
 const adultSessions = [
-  { id: 'adult-1', num: 1, time: '9:40 – 10:40 am',     dur: '60 MIN SESSION', bookingTime: 'Adult 1: 9:40 – 10:40 am', shift: 'Adults' },
-  { id: 'adult-2', num: 2, time: '10:45 – 11:45 am',    dur: '60 MIN SESSION', bookingTime: 'Adult 2: 10:45 – 11:45 am', shift: 'Adults' },
-  { id: 'adult-3', num: 3, time: '11:50 am – 12:50 pm', dur: '60 MIN SESSION', bookingTime: 'Adult 3: 11:50 am – 12:50 pm', shift: 'Adults' },
-  { id: 'adult-4', num: 4, time: '12:55 – 1:55 pm',     dur: '60 MIN SESSION', bookingTime: 'Adult 4: 12:55 – 1:55 pm', shift: 'Adults' },
-  { id: 'adult-5', num: 5, time: '2:00 – 3:00 pm',      dur: '60 MIN SESSION', bookingTime: 'Adult 5: 2:00 – 3:00 pm', shift: 'Adults' },
+  { id: 'adult-1', num: 1, time: '10:00 – 11:00 am',    dur: '60 MIN SESSION', bookingTime: 'Adult 1: 10:00 – 11:00 am', shift: 'Adults' },
+  { id: 'adult-2', num: 2, time: '11:05 am – 12:05 pm', dur: '60 MIN SESSION', bookingTime: 'Adult 2: 11:05 am – 12:05 pm', shift: 'Adults' },
+  { id: 'adult-3', num: 3, time: '12:10 – 1:10 pm',     dur: '60 MIN SESSION', bookingTime: 'Adult 3: 12:10 – 1:10 pm', shift: 'Adults' },
+  { id: 'adult-4', num: 4, time: '1:15 – 2:15 pm',      dur: '60 MIN SESSION', bookingTime: 'Adult 4: 1:15 – 2:15 pm', shift: 'Adults' },
+  { id: 'adult-5', num: 5, time: '2:20 – 3:20 pm',      dur: '60 MIN SESSION', bookingTime: 'Adult 5: 2:20 – 3:20 pm', shift: 'Adults' },
 ];
 
 const kidsSessions = [
-  { id: 'kids-1', num: 1, time: '3:10 – 4:10 pm', dur: '60 MIN SESSION', bookingTime: 'Kids 1: 3:10 – 4:10 pm', shift: 'Kids' },
-  { id: 'kids-2', num: 2, time: '4:15 – 5:15 pm', dur: '60 MIN SESSION', bookingTime: 'Kids 2: 4:15 – 5:15 pm', shift: 'Kids' },
-  { id: 'kids-3', num: 3, time: '5:20 – 6:20 pm', dur: '60 MIN SESSION', bookingTime: 'Kids 3: 5:20 – 6:20 pm', shift: 'Kids' },
-  { id: 'kids-4', num: 4, time: '6:25 – 7:25 pm', dur: '60 MIN SESSION', bookingTime: 'Kids 4: 6:25 – 7:25 pm', shift: 'Kids' },
-  { id: 'kids-5', num: 5, time: '7:30 – 8:30 pm', dur: '60 MIN SESSION', bookingTime: 'Kids 5: 7:30 – 8:30 pm', shift: 'Kids' },
+  { id: 'kids-1', num: 1, time: '3:30 – 4:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 1: 3:30 – 4:25 pm', shift: 'Kids' },
+  { id: 'kids-2', num: 2, time: '4:30 – 5:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 2: 4:30 – 5:25 pm', shift: 'Kids' },
+  { id: 'kids-3', num: 3, time: '5:30 – 6:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 3: 5:30 – 6:25 pm', shift: 'Kids' },
+  { id: 'kids-4', num: 4, time: '6:30 – 7:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 4: 6:30 – 7:25 pm', shift: 'Kids' },
+  { id: 'kids-5', num: 5, time: '7:30 – 8:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 5: 7:30 – 8:25 pm', shift: 'Kids' },
 ];
 
 function InteractiveSessionRow({ s, isSelected, onToggle }) {
@@ -115,7 +115,7 @@ export function Timings() {
                   <div>
                     <h3 className="font-display font-bold text-[#1A1A1A] text-base">Adults</h3>
                     <p className="font-mono text-[10px] text-[#5C450C] uppercase tracking-wide font-semibold">
-                      9:40 am – 3:00 pm · 60 min sessions · 5-min clean
+                      10:00 am – 3:20 pm · 60 min sessions · 5-min clean
                     </p>
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export function Timings() {
                 <div className="mt-2 p-2.5 bg-[#FFFDF9] border border-[#DDD0B8] rounded-sm flex items-center gap-2">
                   <Sparkles size={13} className="text-[#8B6914] flex-shrink-0" />
                   <p className="font-mono text-[10.5px] text-[#3E2F1F] font-medium">
-                    <strong className="text-[#1A1A1A]">3:00 – 3:10 pm:</strong> 10-min deep clean & room reset
+                    <strong className="text-[#1A1A1A]">3:20 – 3:30 pm:</strong> 10-min deep clean & room reset
                   </p>
                 </div>
               </div>
@@ -157,7 +157,7 @@ export function Timings() {
                   <div>
                     <h3 className="font-display font-bold text-[#1A1A1A] text-base">Kids</h3>
                     <p className="font-mono text-[10px] text-[#5C450C] uppercase tracking-wide font-semibold">
-                      3:10 pm – 8:30 pm · 60 min sessions · 5-min clean
+                      3:30 pm – 8:25 pm · 55 min sessions · 5-min clean
                     </p>
                   </div>
                 </div>

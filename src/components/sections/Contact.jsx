@@ -42,7 +42,7 @@ export function Contact() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-display font-bold text-[#1A1A1A] text-sm">Monday – Saturday</p>
-                  <p className="font-mono text-xs text-[#3E2F1F] mt-0.5 font-medium">9:40 am – 8:30 pm</p>
+                  <p className="font-mono text-xs text-[#3E2F1F] mt-0.5 font-medium">10:00 am – 8:25 pm</p>
                 </div>
                 <div>
                   <p className="font-display font-bold text-[#1A1A1A] text-sm">Three Sundays a month</p>

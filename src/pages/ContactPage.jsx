@@ -28,16 +28,16 @@ const initial = {
 const studentTypes = ['School students (Grade 5 and above)', 'Adults', 'Mixed ages (Grade 5 and above)'];
 
 const timeOpts = [
-  'Adult 1: 9:40 – 10:40 am',
-  'Adult 2: 10:45 – 11:45 am',
-  'Adult 3: 11:50 am – 12:50 pm',
-  'Adult 4: 12:55 – 1:55 pm',
-  'Adult 5: 2:00 – 3:00 pm',
-  'Kids 1: 3:10 – 4:10 pm',
-  'Kids 2: 4:15 – 5:15 pm',
-  'Kids 3: 5:20 – 6:20 pm',
-  'Kids 4: 6:25 – 7:25 pm',
-  'Kids 5: 7:30 – 8:30 pm',
+  'Adult 1: 10:00 – 11:00 am',
+  'Adult 2: 11:05 am – 12:05 pm',
+  'Adult 3: 12:10 – 1:10 pm',
+  'Adult 4: 1:15 – 2:15 pm',
+  'Adult 5: 2:20 – 3:20 pm',
+  'Kids 1: 3:30 – 4:25 pm',
+  'Kids 2: 4:30 – 5:25 pm',
+  'Kids 3: 5:30 – 6:25 pm',
+  'Kids 4: 6:30 – 7:25 pm',
+  'Kids 5: 7:30 – 8:25 pm',
 ];
 
 const cabinOpts = ['6 seats', '8 seats', '10 seats', '12 seats', '16 seats (Arts & Crafts)', '24 seats', 'Not sure yet'];
@@ -221,7 +221,7 @@ export function ContactPage() {
                 <p className="font-mono text-[10.5px] tracking-[0.15em] uppercase text-[#D4B87A] font-bold">Operating Hours</p>
               </div>
               <p className="font-display font-semibold text-[#F7F2EA] text-sm">Monday – Saturday</p>
-              <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">9:40 am – 8:30 pm</p>
+              <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">10:00 am – 8:25 pm</p>
               <p className="font-display font-semibold text-[#F7F2EA] text-sm mt-3">Three Sundays per month</p>
               <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">By prior scheduling with manager</p>
             </div>

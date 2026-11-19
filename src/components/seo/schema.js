@@ -40,8 +40,8 @@ export function getLocalBusinessSchema() {
           'Friday',
           'Saturday',
         ],
-        opens: '09:40',
-        closes: '20:30',
+        opens: '10:00',
+        closes: '20:25',
       },
     ],
     sameAs: [

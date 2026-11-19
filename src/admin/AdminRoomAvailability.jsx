@@ -659,7 +659,7 @@ export function AdminRoomAvailability({
                 >
                   <div className="flex items-center justify-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-[#C9A96B]" />
-                    <span>Morning Sessions (9:40 AM – 3:00 PM)</span>
+                    <span>Morning Sessions (10:00 AM – 3:20 PM)</span>
                   </div>
                 </th>
 
@@ -670,7 +670,7 @@ export function AdminRoomAvailability({
                 >
                   <div className="flex items-center justify-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 text-[#C9A96B]" />
-                    <span>Evening Sessions (3:10 PM – 8:30 PM)</span>
+                    <span>Evening Sessions (3:30 PM – 8:25 PM)</span>
                   </div>
                 </th>
               </tr>

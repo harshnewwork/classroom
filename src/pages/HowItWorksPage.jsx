@@ -162,10 +162,10 @@ export function HowItWorksPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 9:40 am to 8:30 pm.' },
+              { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 10:00 am to 8:25 pm.' },
               { icon: Users,    title: 'Multiple Batches', desc: 'Run multiple batches across different time slots or cabin capacities. Easily coordinate with the manager.' },
-              { icon: Clock,    title: 'Adult Timetable', desc: '5 sessions (60 min each, 5-min clean): 9:40–10:40, 10:45–11:45, 11:50–12:50, 12:55–1:55, 2:00–3:00 (10-min deep clean 3:00–3:10).' },
-              { icon: Clock,    title: 'School Timetable', desc: '5 sessions (60 min each, 5-min clean): 3:10–4:10, 4:15–5:15, 5:20–6:20, 6:25–7:25, 7:30–8:30.' },
+              { icon: Clock,    title: 'Adult Timetable', desc: '5 sessions (60 min each, 5-min clean): 10:00–11:00, 11:05–12:05, 12:10–1:10, 1:15–2:15, 2:20–3:20 (10-min deep clean 3:20–3:30).' },
+              { icon: Clock,    title: 'School Timetable', desc: '5 sessions (55 min each, 5-min clean): 3:30–4:25, 4:30–5:25, 5:30–6:25, 6:30–7:25, 7:30–8:25.' },
               { icon: Calendar, title: 'Monthly Billing', desc: 'Consolidated invoice issued monthly based on student collections, with transparent package rates and security deposits.' },
             ].map(({ icon: Icon, title, desc }) => (
               <AnimatedSection key={title}>
