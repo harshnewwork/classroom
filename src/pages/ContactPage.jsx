@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
@@ -75,9 +76,17 @@ function buildWA(f) {
 }
 
 export function ContactPage() {
+  const [searchParams] = useSearchParams();
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
+
+  useEffect(() => {
+    const timeParam = searchParams.get('time');
+    if (timeParam) {
+      setForm((f) => ({ ...f, time: timeParam }));
+    }
+  }, [searchParams]);
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 

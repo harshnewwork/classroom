@@ -1,15 +1,21 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronLeft } from 'lucide-react';
 import { useRef } from 'react';
 import { Swoosh } from '../ui/Swoosh';
 
-const stats = [
-  { value: '9',           label: 'Cabins, 6–24 seats' },
-  { value: '120',         label: 'Total seats' },
-  { value: '7 Days',      label: 'A week (Mon–Sat + 3 Sun)' },
-  { value: '₹0',          label: 'Setup cost to you' },
-  { value: '10am–8:29pm', label: 'Daily sessions' },
+const rangeCards = [
+  {
+    range: '4–30',
+    title: 'SEATER CABIN & OPEN SPACES',
+    subtitle: 'Multiple Options for every need.',
+  },
+  {
+    range: '100–120',
+    title: 'SEATS IN TOTAL',
+    subtitle: 'Cabins + Arts area + Botany',
+  },
 ];
 
 export function Hero() {
@@ -17,6 +23,13 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const textY   = useTransform(scrollYProgress, [0, 1], ['0%', '5%']);
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+
+  // Carousel navigation state for range cards
+  const [activeRangeIndex, setActiveRangeIndex] = useState(0);
+
+  const prevCard = () => {
+    setActiveRangeIndex((prev) => (prev === 0 ? rangeCards.length - 1 : prev - 1));
+  };
 
   return (
     <section id="home" ref={ref} className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#1A1A1A]">
@@ -46,7 +59,7 @@ export function Hero() {
       {/* Brand swoosh */}
       <Swoosh className="absolute top-[72px] left-0 w-56 sm:w-64 pointer-events-none" />
 
-      <div className="relative z-10 flex-1 flex flex-col max-w-7xl mx-auto px-5 lg:px-8 w-full pt-32 pb-14">
+      <div className="relative z-10 flex-1 flex flex-col max-w-7xl mx-auto px-5 lg:px-8 w-full pt-32 pb-8">
         <div className="flex-1 flex items-center">
 
           {/* ── LEFT: Text ── */}
@@ -116,23 +129,116 @@ export function Hero() {
 
         </div>
 
-        {/* ── Stats bar ── */}
+        {/* ── Stats bar: All 5 slots styled with consistent rounded-card containers ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.6 }}
-          className="border-t border-[#C9A96B]/40 pt-7 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 mt-6"
+          className="border-t border-[#3E342A]/80 pt-6 mt-6"
         >
-          {stats.map((s, i) => (
-            <div key={i} className="flex flex-col gap-1">
-              <span className="font-display font-bold text-[#C9A96B] text-2xl lg:text-3xl italic leading-none">
-                {s.value}
-              </span>
-              <span className="font-mono text-[10px] text-[#EADCC8] tracking-wide uppercase mt-1 font-medium">
-                {s.label}
-              </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5">
+
+            {/* Slot 1: Range Card 1 */}
+            <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/70 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
+              <div className="flex items-start justify-between gap-2">
+                <span className="font-display font-medium italic text-[#D4B87A] text-2xl sm:text-3xl lg:text-[32px] leading-none">
+                  4–30
+                </span>
+                <button
+                  type="button"
+                  onClick={prevCard}
+                  title="Carousel navigation (Previous)"
+                  aria-label="Previous range card"
+                  className="w-6 h-6 rounded-full border border-[#4A3E31] bg-[#161311]/80 text-[#A89880] hover:text-[#F7F2EA] hover:border-[#C9A96B] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
+                >
+                  <ChevronLeft size={13} strokeWidth={1.75} />
+                </button>
+              </div>
+              <div className="mt-3">
+                <p className="font-mono text-[11px] font-bold tracking-[0.06em] text-[#F7F2EA] uppercase leading-tight">
+                  SEATER CABIN & OPEN SPACES
+                </p>
+                <p className="font-body text-[11px] text-[#A89880] font-light mt-1 leading-snug">
+                  Multiple Options for every need.
+                </p>
+              </div>
             </div>
-          ))}
+
+            {/* Slot 2: Range Card 2 */}
+            <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/70 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
+              <div className="flex items-start justify-between gap-2">
+                <span className="font-display font-medium italic text-[#D4B87A] text-2xl sm:text-3xl lg:text-[32px] leading-none">
+                  100–120
+                </span>
+                <button
+                  type="button"
+                  onClick={prevCard}
+                  title="Carousel navigation (Previous)"
+                  aria-label="Previous range card"
+                  className="w-6 h-6 rounded-full border border-[#4A3E31] bg-[#161311]/80 text-[#A89880] hover:text-[#F7F2EA] hover:border-[#C9A96B] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
+                >
+                  <ChevronLeft size={13} strokeWidth={1.75} />
+                </button>
+              </div>
+              <div className="mt-3">
+                <p className="font-mono text-[11px] font-bold tracking-[0.06em] text-[#F7F2EA] uppercase leading-tight">
+                  SEATS IN TOTAL
+                </p>
+                <p className="font-body text-[11px] text-[#A89880] font-light mt-1 leading-snug">
+                  Cabins + Arts area + Botany
+                </p>
+              </div>
+            </div>
+
+            {/* Slot 3: 7 Days */}
+            <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/50 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
+              <div>
+                <span className="font-display font-medium italic text-[#D4B87A] text-2xl sm:text-3xl lg:text-[32px] leading-none">
+                  7 Days
+                </span>
+              </div>
+              <div className="mt-3">
+                <p className="font-mono text-[10px] sm:text-[10.5px] font-bold tracking-[0.08em] text-[#A89880] uppercase leading-tight">
+                  A WEEK (MON–SAT + 3 SUN)
+                </p>
+              </div>
+            </div>
+
+            {/* Slot 4: ₹0 Setup Cost */}
+            <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/50 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
+              <div>
+                <span className="font-display font-medium italic text-[#D4B87A] text-2xl sm:text-3xl lg:text-[32px] leading-none">
+                  ₹0
+                </span>
+              </div>
+              <div className="mt-3">
+                <p className="font-mono text-[10px] sm:text-[10.5px] font-bold tracking-[0.08em] text-[#A89880] uppercase leading-tight">
+                  SETUP COST TO YOU
+                </p>
+              </div>
+            </div>
+
+            {/* Slot 5: 9:40am–8:30pm Daily Sessions */}
+            <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/50 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
+              <div className="flex flex-col font-display font-medium italic text-[#D4B87A] text-xl sm:text-2xl lg:text-[26px] leading-[1.08] tracking-tight">
+                <span>9:40am–</span>
+                <span>8:30pm</span>
+              </div>
+              <div className="mt-3">
+                <p className="font-mono text-[10px] sm:text-[10.5px] font-bold tracking-[0.08em] text-[#A89880] uppercase leading-tight">
+                  DAILY SESSIONS
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Reference indicator dot in bottom right */}
+          <div className="flex justify-end pt-3 pr-1 pointer-events-none">
+            <div className="w-5 h-5 rounded-full border border-[#4A3E31] flex items-center justify-center">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4B87A]" />
+            </div>
+          </div>
         </motion.div>
       </div>
 

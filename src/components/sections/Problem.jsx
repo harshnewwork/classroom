@@ -87,9 +87,9 @@ export function Problem() {
                   />
                 </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/90 via-[#1A1A1A]/20 to-[#1A1A1A]/10 pointer-events-none" />
-                <div className="absolute top-5 left-5 flex items-center gap-2 rounded-full border border-[#D4B87A] bg-[#1A1A1A]/85 px-4 py-1.5 backdrop-blur-sm pointer-events-none shadow-md">
-                  <span className="h-2 w-2 rounded-full bg-[#D4B87A]" />
-                  <span className="font-body text-[11px] font-bold tracking-[0.2em] text-[#F7F2EA] uppercase">
+                <div className="absolute top-5 left-5 flex items-center gap-2.5 rounded-full border border-[#E5C378]/80 bg-[#1A1A1A]/90 px-4 py-1.5 backdrop-blur-md pointer-events-none shadow-lg shadow-black/40">
+                  <span className="h-2 w-2 rounded-full bg-[#E5C378] shadow-[0_0_6px_rgba(229,195,120,0.6)]" />
+                  <span className="font-mono text-xs font-bold tracking-[0.24em] text-[#FFFFFF] uppercase drop-shadow-xs">
                     The Challenge
                   </span>
                 </div>

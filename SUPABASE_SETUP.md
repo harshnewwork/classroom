@@ -10,7 +10,7 @@ This guide documents the setup, database migration, and operational procedures f
 - **Backend / Database:** Supabase (PostgreSQL with Row Level Security).
 - **Client Library:** `@supabase/supabase-js`.
 - **Availability Grain:** Date + Time-Slot level (`room_slot_bookings`) uniquely constrained on `(room_id, booking_date, slot_id)`.
-- **Canonical Time Slots:** 10 recurring daily slots (5 Morning sessions 10:00 AM – 3:28 PM, 5 Evening sessions 3:30 PM – 8:29 PM) stored in `public.time_slots`.
+- **Canonical Time Slots:** 10 recurring daily slots (5 Morning sessions 9:40 AM – 3:00 PM, 5 Evening sessions 3:10 PM – 8:30 PM) stored in `public.time_slots`.
 - **Realtime Sync:** Supabase Realtime channels (`public:rooms`, `public:enquiries`, and `public:room_slot_bookings`) propagate slot changes and new form submissions to all open admin tabs instantly.
 - **Audit Trails:**
   - `slot_booking_history`: logs every slot booking, cancellation, and note edit.
@@ -49,16 +49,16 @@ CREATE TABLE IF NOT EXISTS public.time_slots (
 
 INSERT INTO public.time_slots (id, label, session_group, start_time, end_time, duration, sort_order)
 VALUES
-  ('M1', 'Session 1: 10:00 – 11:00 am', 'Morning', '10:00', '11:00', '60 min', 1),
-  ('M2', 'Session 2: 11:07 am – 12:07 pm', 'Morning', '11:07', '12:07', '60 min', 2),
-  ('M3', 'Session 3: 12:14 – 1:14 pm', 'Morning', '12:14', '13:14', '60 min', 3),
-  ('M4', 'Session 4: 1:21 – 2:21 pm', 'Morning', '1:21', '2:21', '60 min', 4),
-  ('M5', 'Session 5: 2:28 – 3:28 pm', 'Morning', '2:28', '3:28', '60 min', 5),
-  ('E1', 'Session 1: 3:30 – 4:25 pm (evening)', 'Evening', '3:30', '4:25', '55 min', 6),
-  ('E2', 'Session 2: 4:31 – 5:26 pm (evening)', 'Evening', '4:31', '5:26', '55 min', 7),
-  ('E3', 'Session 3: 5:32 – 6:27 pm (evening)', 'Evening', '5:32', '6:27', '55 min', 8),
-  ('E4', 'Session 4: 6:33 – 7:28 pm (evening)', 'Evening', '6:33', '7:28', '55 min', 9),
-  ('E5', 'Session 5: 7:34 – 8:29 pm (evening)', 'Evening', '7:34', '8:29', '55 min', 10)
+  ('M1', 'Session 1: 9:40 – 10:40 am', 'Morning', '09:40', '10:40', '60 min', 1),
+  ('M2', 'Session 2: 10:45 – 11:45 am', 'Morning', '10:45', '11:45', '60 min', 2),
+  ('M3', 'Session 3: 11:50 am – 12:50 pm', 'Morning', '11:50', '12:50', '60 min', 3),
+  ('M4', 'Session 4: 12:55 – 1:55 pm', 'Morning', '12:55', '13:55', '60 min', 4),
+  ('M5', 'Session 5: 2:00 – 3:00 pm', 'Morning', '14:00', '15:00', '60 min', 5),
+  ('E1', 'Session 1: 3:10 – 4:10 pm (kids)', 'Evening', '15:10', '16:10', '60 min', 6),
+  ('E2', 'Session 2: 4:15 – 5:15 pm (kids)', 'Evening', '16:15', '17:15', '60 min', 7),
+  ('E3', 'Session 3: 5:20 – 6:20 pm (kids)', 'Evening', '17:20', '18:20', '60 min', 8),
+  ('E4', 'Session 4: 6:25 – 7:25 pm (kids)', 'Evening', '18:25', '19:25', '60 min', 9),
+  ('E5', 'Session 5: 7:30 – 8:30 pm (kids)', 'Evening', '19:30', '20:30', '60 min', 10)
 ON CONFLICT (id) DO UPDATE SET
   label = excluded.label,
   session_group = excluded.session_group,
@@ -285,7 +285,7 @@ NOTIFY pgrst, 'reload schema';
   - Formatted display (e.g. `Wednesday, 4 Nov 2026`).
 - **Room × Slot Grid:**
   - Rows: All 11 rooms with cabin badge, name, capacity, and occupancy chip for that date (e.g. `Free all day`, `2/10 Booked`).
-  - Columns: 10 daily fixed time slots grouped into **Morning Sessions** (10:00 AM – 3:28 PM) and **Evening Sessions** (3:30 PM – 8:29 PM).
+  - Columns: 10 daily fixed time slots grouped into **Morning Sessions** (9:40 AM – 3:00 PM) and **Evening Sessions** (3:10 PM – 8:30 PM).
 - **Cell Actions:**
   - Click on an Available cell (`+`): opens a modal to book the slot on that date with an optional teacher/batch note (e.g. "Dr. Verma — Physics").
   - Click on a Booked cell: opens slot details modal showing who booked it and when, allowing the admin to edit the note or free up/cancel the booking.

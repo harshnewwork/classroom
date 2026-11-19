@@ -13,19 +13,19 @@ export const FAQS = [
     id: 'pricing-cost',
     category: 'Pricing & Billing',
     question: 'How much does it cost to rent a classroom in Gurugram at Mentors Studio?',
-    answer: `Classroom rental at Mentors Studio follows a transparent pay-per-seat, per-session model. School educator sessions start at ₹${siteConfig.rates.schoolPerSession} per seat, while adult and professional coaching sessions start at ₹${siteConfig.rates.adultPerSession} per seat (excl. GST). Long-term packages (Starter, Standard, Half-Yearly, and Annual) provide savings of 5% to 20% off the base rate, bringing per-seat costs as low as ₹200 for adult batches and ₹160 for school batches.`,
+    answer: `Classroom rental at Mentors Studio follows a transparent pay-per-seat, per-session model. School educator sessions start at ₹${siteConfig.rates.schoolPerSession} per seat (down to ₹170 with packages), while adult and professional coaching sessions start at ₹${siteConfig.rates.adultPerSession} per seat (down to ₹212.50 with packages, excl. GST). Long-term packages (Starter, Growth, Pro, and Elite) provide discounts of up to 15% off base rates, with the Elite tier including a complimentary free locker.`,
   },
   {
     id: 'deposit',
     category: 'Pricing & Billing',
     question: 'Is there a deposit to start teaching?',
-    answer: 'Every package includes a clear, modest security deposit (Starter: 20%, Standard: 15%, Half-Yearly: 12.5%, Annual: 10%), which is 100% refundable upon completing your package term. Sessions are billed monthly based on student collections.',
+    answer: 'Every package includes a clear, refundable security deposit (Starter: 20%, Growth: 15%, Pro: 12.5%, Elite: 10% + Free locker), which is 100% refundable upon completing your package term. Sessions are billed monthly after you teach.',
   },
   {
     id: 'booking-options',
     category: 'Booking & Commitment',
     question: 'Can I rent a classroom by the session, or only in monthly packages?',
-    answer: 'Classroom packages are structured from 36 to 288 sessions (Starter, Standard, Half-Yearly, and Annual) with a recommended commitment of at least 3 teaching days per week and 2 sessions per day. Packages offer volume savings, guaranteed recurring slots on the studio calendar, and flexible monthly billing.',
+    answer: 'Classroom packages are structured across four tiers: Starter (24 sessions / 2 months), Growth (60 sessions / 3 months), Pro (140 sessions / 6 months), and Elite (240 sessions / 12 months with Free locker). Packages offer volume savings, guaranteed recurring slots on the studio calendar, and convenient monthly billing after you teach.',
   },
   {
     id: 'inclusions',

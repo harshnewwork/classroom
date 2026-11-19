@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
@@ -77,10 +78,18 @@ function Field({ label, id, required, error, children }) {
 }
 
 export function Booking() {
+  const [searchParams] = useSearchParams();
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const timeParam = searchParams.get('time');
+    if (timeParam) {
+      setForm((f) => ({ ...f, time: timeParam }));
+    }
+  }, [searchParams]);
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 

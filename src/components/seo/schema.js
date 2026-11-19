@@ -40,8 +40,8 @@ export function getLocalBusinessSchema() {
           'Friday',
           'Saturday',
         ],
-        opens: '10:00',
-        closes: '20:29',
+        opens: '09:40',
+        closes: '20:30',
       },
     ],
     sameAs: [
@@ -57,7 +57,7 @@ export function getLocalBusinessSchema() {
  */
 export function getPricingProductSchemas() {
   return PACKAGES.map((pkg) => {
-    const discountedRate = (siteConfig.rates.adultPerSession * (1 - pkg.discount)).toFixed(0);
+    const discountedRate = (pkg.rates?.adult ?? siteConfig.rates.adultPerSession * (1 - pkg.discount)).toFixed(0);
     return {
       '@context': 'https://schema.org',
       '@type': 'Product',

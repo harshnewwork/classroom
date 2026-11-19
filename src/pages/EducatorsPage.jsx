@@ -79,7 +79,7 @@ const programClusters = [
   {
     title: 'School Subject Tuitions (Grade 5 to Grade 12)',
     icon: BookOpen,
-    badge: 'Evenings from 3:30 PM & Weekends',
+    badge: 'Evenings from 3:10 PM & Weekends',
     desc: 'Independent CBSE, ICSE, and IB curriculum teachers utilize Mentors Studio for Mathematics, Physics, Chemistry, Biology, Commerce, and Humanities batches. With clean tiered seating, daily sanitization, dedicated reception for parent pick-up, and on-site printing for question papers and study worksheets, tutors project high professional credibility.',
     keywords: ['School tuition classroom Gurugram', 'Grade 5 tuition space Gurugram', 'Board exam coaching room Sector 57'],
   },

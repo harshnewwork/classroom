@@ -59,8 +59,8 @@ export const siteConfig = {
 
   // Programmatic pricing references
   rates: {
-    adultPerSession: EDUCATOR_TYPES.find((e) => e.id === 'adult')?.ratePerSeat ?? 250,
-    schoolPerSession: EDUCATOR_TYPES.find((e) => e.id === 'school')?.ratePerSeat ?? 200,
+    adultPerSession: EDUCATOR_TYPES.find((e) => e.id === 'adult')?.baseRate ?? 250,
+    schoolPerSession: EDUCATOR_TYPES.find((e) => e.id === 'school')?.baseRate ?? 200,
   },
   packages: PACKAGES,
 };

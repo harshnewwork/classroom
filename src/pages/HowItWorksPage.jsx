@@ -163,7 +163,6 @@ export function HowItWorksPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 9:40 am to 8:30 pm.' },
-              { icon: Clock,    title: 'Recommended Commitment', desc: 'At least 2 sessions per day, and at least 3 days per week to ensure learning continuity for students.' },
               { icon: Users,    title: 'Multiple Batches', desc: 'Run multiple batches across different time slots or cabin capacities. Easily coordinate with the manager.' },
               { icon: Clock,    title: 'Adult Timetable', desc: '5 sessions (60 min each, 5-min clean): 9:40–10:40, 10:45–11:45, 11:50–12:50, 12:55–1:55, 2:00–3:00 (10-min deep clean 3:00–3:10).' },
               { icon: Clock,    title: 'School Timetable', desc: '5 sessions (60 min each, 5-min clean): 3:10–4:10, 4:15–5:15, 5:20–6:20, 6:25–7:25, 7:30–8:30.' },
