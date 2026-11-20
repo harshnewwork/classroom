@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Check, Info, ChevronDown, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { Sparkles } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
-import { EDUCATOR_TYPES, PACKAGES, calculatePricing, getMinBillable } from '../../data/pricing';
-import { cabins } from '../../data/cabins';
+import { EDUCATOR_TYPES, PACKAGES } from '../../data/pricing';
+import { Calculator } from '../pricing/Calculator';
 
 const HIGHLIGHT_PKG = 'elite';
 
-/* ─── Format helpers ── */
-const fmtINR = (n) => (n != null ? `₹${Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 })}` : '—');
-const fmtDec = (n) => (n != null ? `₹${Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—');
+/* ─── Format helper ── */
 const fmtRate = (n) => {
   if (n == null) return '—';
   const num = Number(n);
@@ -21,7 +18,6 @@ const fmtRate = (n) => {
 function PkgCard({ pkg, eduType }) {
   const isElite = pkg.id === HIGHLIGHT_PKG;
   const isSchool = eduType === 'school';
-  const activeRate = isSchool ? pkg.rates.school : pkg.rates.adult;
 
   return (
     <div
@@ -108,215 +104,6 @@ function PkgCard({ pkg, eduType }) {
   );
 }
 
-/* ─── Calculator ── */
-function Calculator({ defaultCapacity }) {
-  const [eduType,  setEduType]  = useState('adult');
-  const [cabinCap, setCabinCap] = useState(defaultCapacity || 10);
-  const [pkgId,    setPkgId]    = useState('starter');
-  const [students, setStudents] = useState(6);
-  const [result,   setResult]   = useState(null);
-
-  useEffect(() => { if (defaultCapacity) setCabinCap(defaultCapacity); }, [defaultCapacity]);
-  useEffect(() => {
-    const cap = Number(cabinCap);
-    setStudents((s) => Math.min(Number(s), cap));
-  }, [cabinCap]);
-  useEffect(() => {
-    setResult(calculatePricing({ educatorType: eduType, cabinCapacity: Number(cabinCap), packageId: pkgId, numStudents: Number(students) }));
-  }, [eduType, cabinCap, pkgId, students]);
-
-  const selCls = 'w-full bg-[#FFFFFF] border border-[#DDD0B8] text-[#1A1A1A] font-body text-sm px-4 py-3 rounded-sm appearance-none focus:outline-none focus:border-[#8B6914] focus:ring-1 focus:ring-[#8B6914] transition-colors cursor-pointer font-medium';
-
-  return (
-    <div className="grid lg:grid-cols-2 border border-[#DDD0B8] rounded-sm overflow-hidden shadow-lg shadow-[#C9A96B]/6">
-
-      {/* Inputs */}
-      <div className="p-6 lg:p-8 bg-[#F7F2EA] border-b lg:border-b-0 lg:border-r border-[#DDD0B8]">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-1.5 h-5 bg-[#8B6914]" />
-          <h3 className="font-display font-bold text-[#1A1A1A] text-xl">Price Your Sessions</h3>
-        </div>
-
-        <div className="flex flex-col gap-5">
-          {/* Educator type toggle */}
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] mb-2 font-bold">
-              Who are you teaching?
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              {EDUCATOR_TYPES.map((et) => (
-                <button
-                  key={et.id}
-                  type="button"
-                  onClick={() => setEduType(et.id)}
-                  className={`p-3 rounded-sm border text-left transition-all cursor-pointer ${
-                    eduType === et.id
-                      ? 'border-[#8B6914] bg-[#FFFDF9] shadow-xs'
-                      : 'border-[#DDD0B8] bg-[#F7F2EA] hover:border-[#8B6914]/40'
-                  }`}
-                >
-                  <p className={`font-body font-bold text-sm ${eduType === et.id ? 'text-[#1A1A1A]' : 'text-[#3E2F1F]'}`}>
-                    {et.label}
-                  </p>
-                  <p className={`font-mono text-[10px] mt-0.5 font-semibold ${eduType === et.id ? 'text-[#8B6914]' : 'text-[#5C450C]'}`}>
-                    ₹{et.baseRate}/seat base
-                  </p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Cabin */}
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] mb-2 font-bold">
-              Cabin size
-            </p>
-            <div className="relative">
-              <select value={cabinCap} onChange={(e) => setCabinCap(e.target.value)} className={selCls}>
-                {cabins.map((c) => (
-                  <option key={c.id} value={c.capacity}>
-                    {c.name} — {c.capacity} seats (min. {getMinBillable(c.capacity)} billed)
-                  </option>
-                ))}
-              </select>
-              <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#5C450C] pointer-events-none" />
-            </div>
-          </div>
-
-          {/* Package */}
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] mb-2 font-bold">
-              Package
-            </p>
-            <div className="relative">
-              <select value={pkgId} onChange={(e) => setPkgId(e.target.value)} className={selCls}>
-                {PACKAGES.map((p) => {
-                  const rate = eduType === 'school' ? p.rates.school : p.rates.adult;
-                  return (
-                    <option key={p.id} value={p.id}>
-                      {p.label} ({p.discountLabel}) · {p.sessions} sessions · {fmtRate(rate)}/seat · {p.depositPercent}% deposit{p.hasFreeLocker ? ' + Free Locker' : ''}
-                    </option>
-                  );
-                })}
-              </select>
-              <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#5C450C] pointer-events-none" />
-            </div>
-          </div>
-
-          {/* Students slider */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] font-bold">
-                Number of students attending
-              </p>
-              <span className="font-display font-bold text-[#8B6914] italic text-xl leading-none">
-                {students}
-              </span>
-            </div>
-            <input
-              type="range"
-              min={1}
-              max={Number(cabinCap)}
-              value={students}
-              onChange={(e) => setStudents(e.target.value)}
-              className="w-full h-1.5 cursor-pointer rounded-full"
-              style={{ accentColor: '#8B6914' }}
-            />
-            {result && Number(students) < result.minBillable && (
-              <p className="font-mono text-[10px] text-[#8B6914] mt-1.5 font-semibold">
-                ℹ Minimum {result.minBillable} seats billed for this cabin.
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Results / Cost Breakdown */}
-      <div className="p-6 lg:p-8 bg-[#FFFDF9] flex flex-col justify-between">
-        <div>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-1.5 h-5 bg-[#8B6914]" />
-            <h3 className="font-display font-bold text-[#1A1A1A] text-xl">Cost Breakdown</h3>
-          </div>
-
-          {result ? (
-            <>
-              <div className="flex flex-col bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm overflow-hidden mb-5">
-                {[
-                  {
-                    label: 'Seats billed / session',
-                    value: `${result.seatsForBilling} of ${cabinCap}`,
-                    note: result.seatsForBilling > Number(students) ? `Min. billing: ${result.minBillable} seats` : null,
-                  },
-                  {
-                    label: 'Rate per seat',
-                    value: fmtRate(result.ratePerSeat),
-                    note: `${result.label} tier (${result.discountLabel})`,
-                  },
-                  { label: 'Cost per session', value: fmtRate(result.perSession) },
-                  { label: 'Cost per student', value: fmtDec(result.costPerStudent) },
-                  {
-                    label: `Package subtotal (${result.packageSessions} sessions)`,
-                    value: fmtINR(result.packageSubtotal),
-                    bold: true,
-                  },
-                  { label: 'GST at 18%', value: fmtDec(result.gst) },
-                  {
-                    label: `Security deposit (${result.depositPercent}% refundable)`,
-                    value: fmtDec(result.securityDeposit),
-                    note: result.hasFreeLocker
-                      ? 'Refundable upon completion of term · Includes Free Locker'
-                      : 'Refundable upon completion of term',
-                  },
-                ].map((row) => (
-                  <div key={row.label} className="flex items-start justify-between gap-4 px-4 py-2.5 border-b border-[#DDD0B8] last:border-0">
-                    <div>
-                      <span className={`font-body text-xs sm:text-sm ${row.bold ? 'text-[#1A1A1A] font-bold' : 'text-[#3E2F1F]'}`}>
-                        {row.label}
-                      </span>
-                      {row.note && <p className="font-mono text-[10px] text-[#8B6914] font-medium mt-0.5">{row.note}</p>}
-                    </div>
-                    <span className={`font-mono text-xs sm:text-sm whitespace-nowrap flex-shrink-0 ${row.bold ? 'text-[#1A1A1A] font-bold' : 'text-[#1A1A1A] font-semibold'}`}>
-                      {row.value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Grand total card: subtotal + GST + deposit */}
-              <div className="p-4 bg-[#1A1A1A] border border-[#C9A96B]/30 rounded-sm mb-3 shadow-md">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-display font-bold text-[#F7F2EA] text-sm">Package Total with GST</p>
-                    <p className="font-mono text-[10px] text-[#DDD0B8] mt-1 font-medium">
-                      {result.packageSessions} sessions · {result.durationLabel} · incl. deposit & GST
-                    </p>
-                  </div>
-                  <span className="font-display font-bold text-[#D4B87A] italic text-2xl lg:text-3xl leading-none">
-                    {fmtDec(result.totalWithGst)}
-                  </span>
-                </div>
-              </div>
-
-              {/* Fine-print disclaimer — High Visibility Contrast Fix */}
-              <div className="flex items-start gap-2.5 p-3 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm">
-                <Info size={14} className="text-[#8B6914] flex-shrink-0 mt-0.5" />
-                <p className="font-mono text-[10.5px] text-[#3E2F1F] leading-relaxed font-medium">
-                  Billed monthly, after you teach · Deposits fully refundable · Unused sessions lapse at the end of validity
-                </p>
-              </div>
-            </>
-          ) : (
-            <div className="flex items-center justify-center h-48 text-[#5C450C] font-mono text-sm">
-              Select options to calculate
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* ─── Main Pricing section ── */
 export function Pricing({ defaultCapacity }) {
   const [activeType, setActiveType] = useState('adult');
@@ -390,9 +177,9 @@ export function Pricing({ defaultCapacity }) {
           </div>
         </AnimatedSection>
 
-        {/* Cost Calculator */}
+        {/* Cost Calculator with Promo/Discount & Booking Handoff */}
         <AnimatedSection delay={0.12}>
-          <Calculator defaultCapacity={defaultCapacity} />
+          <Calculator theme="light" defaultCapacity={defaultCapacity} />
         </AnimatedSection>
       </div>
     </section>

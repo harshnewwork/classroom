@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
-import { CheckCircle2, AlertCircle, Send, MessageCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Send, MessageCircle, Sparkles, Tag } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../../lib/supabaseClient';
 import { siteConfig } from '../../config/siteConfig';
 
 const MANAGER_WHATSAPP = siteConfig.contact.whatsapp;
-const STUDIO_EMAIL     = siteConfig.contact.email;
 const PLACEHOLDER_PATTERN = /^\[.*\]$/;
 const FALLBACK_MSG = "WhatsApp isn't set up yet, please use Copy Request or email us directly.";
 
@@ -54,19 +52,75 @@ const cabinOptions = [
   'Not sure yet',
 ];
 
-const inputCls = (err) =>
-  `w-full bg-[#FFFFFF] border rounded-sm px-4 py-3 font-body text-sm text-[#1A1A1A] placeholder-[#8C7A65] focus:outline-none transition-colors ${
+function getInitialQuote() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const pkgParam = params.get('pkg');
+    const totalParam = params.get('total');
+    if (pkgParam && totalParam) {
+      return {
+        packageLabel: pkgParam,
+        discountApplied: params.get('discount') || 'Package Discount',
+        ratePerSeat: params.get('rate') || '',
+        quotedTotal: totalParam,
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+function getInitialForm() {
+  if (typeof window === 'undefined') return initial;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const timeParam = params.get('time');
+    const studentTypeParam = params.get('studentType');
+    const batchSizeParam = params.get('batchSize');
+    const cabinCapParam = params.get('cabinCapacity');
+    const quote = getInitialQuote();
+
+    const quoteNote = quote
+      ? `[Calculator Quote: ${quote.packageLabel} | Discount: ${quote.discountApplied} | Quoted Total: ${quote.quotedTotal}]`
+      : '';
+
+    return {
+      ...initial,
+      ...(timeParam ? { time: timeParam } : {}),
+      ...(studentTypeParam ? { studentType: studentTypeParam } : {}),
+      ...(batchSizeParam ? { batchSize: batchSizeParam } : {}),
+      ...(cabinCapParam ? { cabinCapacity: cabinCapParam } : {}),
+      notes: quoteNote,
+    };
+  } catch {
+    return initial;
+  }
+}
+
+const inputCls = (err, isHighlighted = false) =>
+  `w-full bg-[#FFFFFF] border rounded-sm px-4 py-3 font-body text-sm text-[#1A1A1A] placeholder-[#8C7A65] focus:outline-none transition-all duration-300 ${
     err
       ? 'border-red-500 focus:border-red-600 focus:ring-1 focus:ring-red-500'
+      : isHighlighted
+      ? 'border-[#8B6914] ring-2 ring-[#C9A96B] bg-[#FFFDF9]'
       : 'border-[#DDD0B8] focus:border-[#8B6914] focus:ring-1 focus:ring-[#8B6914]'
   }`;
 
-function Field({ label, id, required, error, children }) {
+function Field({ label, id, required, error, isPrefilled, children }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="font-mono text-[10.5px] tracking-[0.2em] uppercase text-[#1A1A1A] font-bold">
-        {label}{required && <span className="text-[#8B6914] ml-0.5">*</span>}
-      </label>
+      <div className="flex items-center justify-between">
+        <label htmlFor={id} className="font-mono text-[10.5px] tracking-[0.2em] uppercase text-[#1A1A1A] font-bold">
+          {label}{required && <span className="text-[#8B6914] ml-0.5">*</span>}
+        </label>
+        {isPrefilled && (
+          <span className="font-mono text-[9.5px] text-[#8B6914] font-semibold flex items-center gap-1">
+            <Sparkles size={10} /> Pre-filled from calculator
+          </span>
+        )}
+      </div>
       {children}
       {error && (
         <span className="flex items-center gap-1 font-mono text-[10.5px] text-red-600 font-semibold">
@@ -78,18 +132,40 @@ function Field({ label, id, required, error, children }) {
 }
 
 export function Booking() {
-  const [searchParams] = useSearchParams();
-  const [form, setForm] = useState(initial);
+  const [form, setForm] = useState(getInitialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [quotationInfo, setQuotationInfo] = useState(getInitialQuote);
+  const [highlightFields, setHighlightFields] = useState(() => Boolean(getInitialQuote()));
 
+  // Listen for same-page handoff event from Calculator
   useEffect(() => {
-    const timeParam = searchParams.get('time');
-    if (timeParam) {
-      setForm((f) => ({ ...f, time: timeParam }));
-    }
-  }, [searchParams]);
+    const handleHandoff = (e) => {
+      const data = e.detail;
+      if (!data) return;
+
+      setQuotationInfo(data);
+      setHighlightFields(true);
+      setTimeout(() => setHighlightFields(false), 4000);
+
+      const quoteNote = `[Calculator Quote: ${data.packageLabel} | Discount: ${data.discountApplied} | Rate: ${data.ratePerSeat}/seat | Quoted Total: ${data.quotedTotal} (incl. GST & deposit)]`;
+
+      setForm((prev) => {
+        const cleanNotes = prev.notes ? prev.notes.replace(/\[Calculator Quote:[^\]]+\]\n?/g, '').trim() : '';
+        return {
+          ...prev,
+          studentType: data.studentType || prev.studentType,
+          batchSize: data.batchSize || prev.batchSize,
+          cabinCapacity: data.cabinCapacity || prev.cabinCapacity,
+          notes: cleanNotes ? `${quoteNote}\n${cleanNotes}` : quoteNote,
+        };
+      });
+    };
+
+    window.addEventListener('ms-calculator-booking-handoff', handleHandoff);
+    return () => window.removeEventListener('ms-calculator-booking-handoff', handleHandoff);
+  }, []);
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -109,12 +185,32 @@ export function Booking() {
     return e;
   };
 
-  const buildMsg = () =>
-    `Mentors Studio — Space Enquiry\n\nName: ${form.name}\nPhone: ${form.phone}\n${form.email ? `Email: ${form.email}\n` : ''}Teaching: ${form.subject}\nStudents: ${form.studentType}\nBatch: ${form.batchSize}\nCabin: ${form.cabinCapacity}\nDays: ${form.days}\nTime: ${form.time}\n${form.notes ? `Notes: ${form.notes}` : ''}`;
+  const buildMsg = () => {
+    let msg = `Mentors Studio — Space Enquiry\n\nName: ${form.name}\nPhone: ${form.phone}\n${form.email ? `Email: ${form.email}\n` : ''}Teaching: ${form.subject}\nStudents: ${form.studentType}\nBatch: ${form.batchSize}\nCabin: ${form.cabinCapacity}\nDays: ${form.days}\nTime: ${form.time}`;
+
+    if (quotationInfo) {
+      msg += `\n\nQuoted Package: ${quotationInfo.packageLabel}\nDiscount Applied: ${quotationInfo.discountApplied}\nQuoted Total: ${quotationInfo.quotedTotal} (incl. 18% GST & deposit)`;
+    }
+
+    if (form.notes) {
+      const filteredNotes = form.notes.replace(/\[Calculator Quote:[^\]]+\]\n?/g, '').trim();
+      if (filteredNotes) {
+        msg += `\nNotes: ${filteredNotes}`;
+      }
+    }
+
+    return msg;
+  };
 
   const saveEnquiry = (submittedVia) => {
     if (!isSupabaseConfigured || !supabase) return;
     try {
+      let finalNotes = form.notes.trim() || null;
+      if (quotationInfo && (!finalNotes || !finalNotes.includes(quotationInfo.quotedTotal))) {
+        const quoteNote = `[Calculator Quote: ${quotationInfo.packageLabel} | Discount: ${quotationInfo.discountApplied} | Total: ${quotationInfo.quotedTotal}]`;
+        finalNotes = finalNotes ? `${quoteNote}\n${finalNotes}` : quoteNote;
+      }
+
       const payload = {
         name: form.name.trim(),
         phone: form.phone.trim(),
@@ -125,7 +221,7 @@ export function Booking() {
         cabin_capacity: form.cabinCapacity || null,
         days: form.days.trim(),
         time_slot: form.time,
-        notes: form.notes.trim() || null,
+        notes: finalNotes,
         submitted_via: submittedVia,
         status: 'new',
       };
@@ -183,7 +279,7 @@ export function Booking() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
 
-          {/* Left info — Shortened concise copy per Section 9 and Section 15 */}
+          {/* Left info */}
           <AnimatedSection direction="left" className="lg:col-span-5">
             <SectionLabel>Book a Space</SectionLabel>
             <h2
@@ -197,7 +293,7 @@ export function Booking() {
               Share your requirements and our team will get back to you to confirm cabin availability and suitable time slots.
             </p>
 
-            <div className="p-5 border border-[#DDD0B8] rounded-sm bg-[#F7F2EA] shadow-xs">
+            <div className="p-5 border border-[#DDD0B8] rounded-sm bg-[#F7F2EA] shadow-xs mb-5">
               <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] mb-2 font-bold">
                 Operating Schedule
               </p>
@@ -207,9 +303,44 @@ export function Booking() {
             </div>
           </AnimatedSection>
 
-          {/* Right form — High contrast brand palette */}
+          {/* Right form */}
           <AnimatedSection direction="right" className="lg:col-span-7">
             <div className="bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm p-6 lg:p-8 shadow-lg shadow-[#C9A96B]/6">
+
+              {/* ─── QUOTATION SUMMARY BANNER FROM CALCULATOR ─── */}
+              {quotationInfo && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-4 rounded-sm border-2 border-[#8B6914] bg-[#FFFDF9] shadow-md relative overflow-hidden"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase font-bold text-white bg-[#8B6914] px-2 py-0.5 rounded-xs flex items-center gap-1">
+                          <Tag size={10} /> Quoted Rate Locked
+                        </span>
+                        <span className="font-display font-bold text-sm text-[#1A1A1A]">
+                          {quotationInfo.packageLabel}
+                        </span>
+                      </div>
+                      <p className="font-mono text-xs text-[#5C450C] mt-1.5 font-medium">
+                        Discount applied: <strong className="text-[#8B6914]">{quotationInfo.discountApplied}</strong>
+                        {quotationInfo.ratePerSeat && ` · Rate: ${quotationInfo.ratePerSeat}/seat`}
+                      </p>
+                    </div>
+
+                    <div className="text-right flex-shrink-0">
+                      <span className="font-mono text-[10px] uppercase text-[#5C450C] block font-bold">Quoted Total</span>
+                      <span className="font-display font-bold text-xl sm:text-2xl text-[#8B6914] italic leading-tight">
+                        {quotationInfo.quotedTotal}
+                      </span>
+                      <span className="font-mono text-[9px] text-[#5C450C] block">incl. 18% GST & deposit</span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
                 <Field label="Full Name" id="name" required error={errors.name}>
                   <input id="name" placeholder="Your full name" value={form.name} onChange={set('name')} className={inputCls(errors.name)} />
@@ -232,22 +363,22 @@ export function Booking() {
               </div>
 
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                <Field label="Student Category" id="studentType" required error={errors.studentType}>
+                <Field label="Student Category" id="studentType" required error={errors.studentType} isPrefilled={highlightFields}>
                   <div className="relative">
-                    <select id="studentType" value={form.studentType} onChange={set('studentType')} className={inputCls(errors.studentType)}>
+                    <select id="studentType" value={form.studentType} onChange={set('studentType')} className={inputCls(errors.studentType, highlightFields)}>
                       <option value="" disabled>Select category</option>
                       {studentTypes.map((o) => <option key={o} value={o}>{o}</option>)}
                     </select>
                   </div>
                 </Field>
-                <Field label="Expected Batch Size" id="batchSize" required error={errors.batchSize}>
-                  <input id="batchSize" type="number" min={1} max={24} placeholder="e.g. 8" value={form.batchSize} onChange={set('batchSize')} className={inputCls(errors.batchSize)} />
+                <Field label="Expected Batch Size" id="batchSize" required error={errors.batchSize} isPrefilled={highlightFields}>
+                  <input id="batchSize" type="number" min={1} max={24} placeholder="e.g. 8" value={form.batchSize} onChange={set('batchSize')} className={inputCls(errors.batchSize, highlightFields)} />
                 </Field>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                <Field label="Preferred Cabin Size" id="cabinCapacity">
-                  <select id="cabinCapacity" value={form.cabinCapacity} onChange={set('cabinCapacity')} className={inputCls()}>
+                <Field label="Preferred Cabin Size" id="cabinCapacity" isPrefilled={highlightFields}>
+                  <select id="cabinCapacity" value={form.cabinCapacity} onChange={set('cabinCapacity')} className={inputCls(false, highlightFields)}>
                     <option value="" disabled>Select size</option>
                     {cabinOptions.map((o) => <option key={o} value={o}>{o}</option>)}
                   </select>
@@ -267,7 +398,7 @@ export function Booking() {
               </div>
 
               <div className="mb-7">
-                <Field label="Additional Requirements" id="notes">
+                <Field label="Additional Requirements & Quoted Notes" id="notes">
                   <textarea id="notes" rows={3} placeholder="Any specific display, projector, or scheduling requests..." value={form.notes} onChange={set('notes')} className={`${inputCls()} resize-none`} />
                 </Field>
               </div>

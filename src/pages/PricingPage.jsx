@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Check, Info, Calculator as CalcIcon, ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
+import { Check, ArrowRight, Sparkles } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { getPricingProductSchemas, getFAQSchema } from '../components/seo/schema';
-import { EDUCATOR_TYPES, PACKAGES, calculatePricing, getMinBillable } from '../data/pricing';
-import { cabins } from '../data/cabins';
+import { EDUCATOR_TYPES, PACKAGES } from '../data/pricing';
 import { FAQS } from '../data/faqs';
+import { Calculator } from '../components/pricing/Calculator';
 
 const packageHighlight = 'elite';
 
@@ -28,7 +27,6 @@ const fmtRate = (n) => {
 function PricingCard({ pkg, educatorType, isActive, onClick }) {
   const isElite = pkg.id === packageHighlight;
   const isSchool = educatorType === 'school';
-  const currentRate = isSchool ? pkg.rates.school : pkg.rates.adult;
 
   return (
     <div
@@ -125,197 +123,6 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
             {item}
           </div>
         ))}
-      </div>
-    </div>
-  );
-}
-
-function Calculator({ defaultPackage }) {
-  const [educatorType, setEducatorType] = useState('adult');
-  const [cabinCapacity, setCabinCapacity] = useState(10);
-  const [packageId, setPackageId] = useState(defaultPackage || 'starter');
-  const [numStudents, setNumStudents] = useState(6);
-  const [result, setResult] = useState(null);
-
-  useEffect(() => {
-    if (defaultPackage) setPackageId(defaultPackage);
-  }, [defaultPackage]);
-
-  useEffect(() => {
-    const r = calculatePricing({ educatorType, cabinCapacity: Number(cabinCapacity), packageId, numStudents: Number(numStudents) });
-    setResult(r);
-  }, [educatorType, cabinCapacity, packageId, numStudents]);
-
-  const fmt = (n) => n != null ? `₹${Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 })}` : '—';
-  const fmtD = (n) => n != null ? `₹${Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—';
-
-  const rows = result ? [
-    {
-      label: 'Seats billed / session',
-      value: `${result.seatsForBilling} of ${cabinCapacity}`,
-      note: result.seatsForBilling > numStudents ? `Min. billing of ${result.minBillable} seats applied` : null,
-    },
-    {
-      label: 'Rate per seat',
-      value: fmtRate(result.ratePerSeat),
-      note: `${result.label} package (${result.discountLabel})`,
-    },
-    { label: 'Cost per session', value: fmtRate(result.perSession) },
-    { label: 'Your cost per student', value: fmtD(result.costPerStudent) },
-    {
-      label: `Subtotal (${result.packageSessions} sessions, excl. GST)`,
-      value: fmt(result.packageSubtotal),
-      bold: true,
-    },
-    { label: 'GST at 18%', value: fmtD(result.gst) },
-    {
-      label: `Security deposit (${result.depositPercent}% refundable)`,
-      value: fmtD(result.securityDeposit),
-      note: result.hasFreeLocker
-        ? 'Refundable upon completion of term · Includes Free Locker'
-        : 'Refundable on term completion',
-    },
-  ] : [];
-
-  return (
-    <div className="grid lg:grid-cols-2 gap-0 border border-[#3A3228] rounded-sm overflow-hidden bg-[#1A1A1A]">
-      {/* Inputs */}
-      <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-[#3A3228]">
-        <div className="flex items-center gap-2 mb-7">
-          <CalcIcon size={16} className="text-[#C9A96B]" />
-          <h3 className="font-display font-semibold text-[#F7F2EA] text-lg">Price Your Sessions</h3>
-        </div>
-
-        <div className="flex flex-col gap-6">
-          {/* Educator type */}
-          <div>
-            <label className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#A89880] block mb-2">Who are you teaching?</label>
-            <div className="grid grid-cols-2 gap-2">
-              {EDUCATOR_TYPES.map((et) => (
-                <button
-                  key={et.id}
-                  type="button"
-                  onClick={() => setEducatorType(et.id)}
-                  className={`p-3 rounded-sm border text-left transition-all cursor-pointer ${
-                    educatorType === et.id ? 'border-[#C9A96B] bg-[#C9A96B]/8' : 'border-[#3A3228] hover:border-[#C9A96B]/40'
-                  }`}
-                >
-                  <p className={`font-display font-semibold text-sm ${educatorType === et.id ? 'text-[#F7F2EA]' : 'text-[#A89880]'}`}>{et.label}</p>
-                  <p className={`font-mono text-xs mt-0.5 ${educatorType === et.id ? 'text-[#C9A96B]' : 'text-[#A89880]'}`}>₹{et.baseRate}/seat base</p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Cabin */}
-          <div>
-            <label className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#A89880] block mb-2">Cabin</label>
-            <div className="relative">
-              <select
-                value={cabinCapacity}
-                onChange={(e) => { setCabinCapacity(e.target.value); setNumStudents(Math.min(Number(numStudents), Number(e.target.value))); }}
-                className="w-full bg-[#231F1B] border border-[#3A3228] text-[#F7F2EA] font-body text-sm px-4 py-3 rounded-sm appearance-none cursor-pointer focus:outline-none focus:border-[#C9A96B]"
-              >
-                {cabins.map((c) => (
-                  <option key={c.id} value={c.capacity}>{c.name} — {c.capacity} seats (min. {getMinBillable(c.capacity)} billed)</option>
-                ))}
-              </select>
-              <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A89880] pointer-events-none" />
-            </div>
-          </div>
-
-          {/* Package */}
-          <div>
-            <label className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#A89880] block mb-2">Package</label>
-            <div className="relative">
-              <select
-                value={packageId}
-                onChange={(e) => setPackageId(e.target.value)}
-                className="w-full bg-[#231F1B] border border-[#3A3228] text-[#F7F2EA] font-body text-sm px-4 py-3 rounded-sm appearance-none cursor-pointer focus:outline-none focus:border-[#C9A96B]"
-              >
-                {PACKAGES.map((p) => {
-                  const rate = educatorType === 'school' ? p.rates.school : p.rates.adult;
-                  return (
-                    <option key={p.id} value={p.id}>
-                      {p.label} ({p.discountLabel}) · {p.sessions} sessions · {fmtRate(rate)}/seat · {p.depositPercent}% deposit{p.hasFreeLocker ? ' + Free Locker' : ''}
-                    </option>
-                  );
-                })}
-              </select>
-              <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A89880] pointer-events-none" />
-            </div>
-          </div>
-
-          {/* Students slider */}
-          <div>
-            <label className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#A89880] block mb-3">
-              Students in a typical session — <span className="text-[#C9A96B]">{numStudents}</span>
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="range"
-                min={1}
-                max={Number(cabinCapacity)}
-                value={numStudents}
-                onChange={(e) => setNumStudents(e.target.value)}
-                className="flex-1 h-1 cursor-pointer rounded-full"
-                style={{ accentColor: '#C9A96B' }}
-              />
-              <div className="w-14 h-10 bg-[#231F1B] border border-[#3A3228] rounded-sm flex items-center justify-center flex-shrink-0">
-                <span className="font-display font-bold text-[#F7F2EA] text-lg">{numStudents}</span>
-              </div>
-            </div>
-            {result && Number(numStudents) < result.minBillable && (
-              <p className="font-mono text-[10px] text-[#C9A96B] mt-2">
-                Min. {result.minBillable} seats billed regardless.
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Results */}
-      <div className="p-6 lg:p-8 flex flex-col justify-between">
-        <div>
-          <h3 className="font-display font-semibold text-[#F7F2EA] text-lg mb-6">Cost Breakdown</h3>
-          {result ? (
-            <div className="flex flex-col gap-0">
-              {rows.map((row) => (
-                <div key={row.label} className="flex items-start justify-between gap-4 py-3 border-b border-[#3A3228]">
-                  <div>
-                    <span className={`font-body text-sm ${row.bold ? 'text-[#F7F2EA] font-medium' : 'text-[#A89880]'}`}>{row.label}</span>
-                    {row.note && <p className="font-mono text-[10px] text-[#C9A96B] mt-0.5">{row.note}</p>}
-                  </div>
-                  <span className={`font-mono text-sm whitespace-nowrap ${row.bold ? 'text-[#F7F2EA]' : 'text-[#D4B87A]'}`}>{row.value}</span>
-                </div>
-              ))}
-
-              {/* Grand total: subtotal + GST + deposit */}
-              <div className="mt-4 p-4 bg-[#C9A96B]/15 border border-[#C9A96B]/40 rounded-sm">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-display font-bold text-[#F7F2EA] text-base">Package Total with GST</p>
-                    <p className="font-mono text-[10px] text-[#DDD0B8] mt-0.5">
-                      {result.packageSessions} sessions · {result.durationLabel} · incl. deposit & GST
-                    </p>
-                  </div>
-                  <span className="font-display font-bold text-[#D4B87A] text-2xl lg:text-3xl leading-none">
-                    {fmtD(result.totalWithGst)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5 mt-3 p-3 bg-[#231F1B] border border-[#3A3228] rounded-xs">
-                <Info size={13} className="text-[#D4B87A] flex-shrink-0 mt-0.5" />
-                <p className="font-mono text-[10.5px] text-[#EADCC8] leading-relaxed font-medium">
-                  Billed monthly, after you teach · Deposits fully refundable · Unused sessions lapse at the end of validity
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="text-[#A89880] font-mono text-sm text-center py-16">Select options to calculate</p>
-          )}
-        </div>
       </div>
     </div>
   );
@@ -457,7 +264,7 @@ export function PricingPage() {
         </div>
       </section>
 
-      {/* Calculator */}
+      {/* Calculator with Promo/Discount & Booking Handoff */}
       <section id="calculator" className="max-w-7xl mx-auto px-6 lg:px-8 py-16 scroll-mt-24">
         <AnimatedSection className="mb-8">
           <SectionLabel dark>Calculator</SectionLabel>
@@ -465,7 +272,7 @@ export function PricingPage() {
           <p className="font-body text-[#A89880] text-sm mt-2">All calculations follow the actual billing rules — minimum seats, explicit package rates, deposit and GST included.</p>
         </AnimatedSection>
         <AnimatedSection>
-          <Calculator defaultPackage={activePackage} />
+          <Calculator theme="dark" defaultPackage={activePackage} />
         </AnimatedSection>
       </section>
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
@@ -7,7 +6,7 @@ import { AnimatedSection } from '../components/ui/AnimatedSection';
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { getLocalBusinessSchema } from '../components/seo/schema';
-import { MapPin, Phone, Mail, MessageCircle, Clock, CheckCircle2, AlertCircle, Send, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, Clock, CheckCircle2, AlertCircle, Send, ExternalLink, Sparkles, Tag } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 import { siteConfig } from '../config/siteConfig';
 
@@ -42,12 +41,66 @@ const timeOpts = [
 
 const cabinOpts = ['6 seats', '8 seats', '10 seats', '12 seats', '16 seats (Arts & Crafts)', '24 seats', 'Not sure yet'];
 
-function Field({ label, required, id, error, children }) {
+function getInitialContactQuote() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const pkg = params.get('pkg');
+    const total = params.get('total');
+    if (pkg && total) {
+      return {
+        packageLabel: pkg,
+        discountApplied: params.get('discount') || 'Package Discount',
+        ratePerSeat: params.get('rate') || '',
+        quotedTotal: total,
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+function getInitialContactForm() {
+  if (typeof window === 'undefined') return initial;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const quote = getInitialContactQuote();
+    const timeParam = params.get('time');
+    const studentTypeParam = params.get('studentType');
+    const batchSizeParam = params.get('batchSize');
+    const cabinCapParam = params.get('cabinCapacity');
+
+    const quoteNote = quote
+      ? `[Calculator Quote: ${quote.packageLabel} | Discount: ${quote.discountApplied} | Quoted Total: ${quote.quotedTotal}]`
+      : '';
+
+    return {
+      ...initial,
+      ...(timeParam ? { time: timeParam } : {}),
+      ...(studentTypeParam ? { studentType: studentTypeParam } : {}),
+      ...(batchSizeParam ? { batchSize: batchSizeParam } : {}),
+      ...(cabinCapParam ? { cabinCapacity: cabinCapParam } : {}),
+      notes: quoteNote,
+    };
+  } catch {
+    return initial;
+  }
+}
+
+function Field({ label, required, id, error, isPrefilled, children }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#F7F2EA] font-semibold">
-        {label}{required && <span className="text-[#D4B87A] ml-0.5">*</span>}
-      </label>
+      <div className="flex items-center justify-between">
+        <label htmlFor={id} className="font-mono text-[11px] tracking-[0.15em] uppercase text-[#F7F2EA] font-semibold">
+          {label}{required && <span className="text-[#D4B87A] ml-0.5">*</span>}
+        </label>
+        {isPrefilled && (
+          <span className="font-mono text-[9.5px] text-[#D4B87A] font-semibold flex items-center gap-1">
+            <Sparkles size={10} /> Pre-filled from calculator
+          </span>
+        )}
+      </div>
       {children}
       {error && (
         <span className="flex items-center gap-1 font-mono text-[10px] text-red-400 font-semibold">
@@ -58,35 +111,53 @@ function Field({ label, required, id, error, children }) {
   );
 }
 
-const inputCls = (err) =>
-  `w-full bg-[#231F1B] border rounded-sm px-4 py-3 font-body text-sm text-[#F7F2EA] placeholder-[#A89880] focus:outline-none transition-colors ${
-    err ? 'border-red-500 focus:border-red-400 focus:ring-1 focus:ring-red-400' : 'border-[#4A3E31] focus:border-[#C9A96B] focus:ring-1 focus:ring-[#C9A96B]'
+const inputCls = (err, isHighlighted = false) =>
+  `w-full bg-[#231F1B] border rounded-sm px-4 py-3 font-body text-sm text-[#F7F2EA] placeholder-[#A89880] focus:outline-none transition-all duration-300 ${
+    err
+      ? 'border-red-500 focus:border-red-400 focus:ring-1 focus:ring-red-400'
+      : isHighlighted
+      ? 'border-[#C9A96B] ring-2 ring-[#C9A96B] bg-[#2E2319]'
+      : 'border-[#4A3E31] focus:border-[#C9A96B] focus:ring-1 focus:ring-[#C9A96B]'
   }`;
 
-function buildWA(f) {
-  return encodeURIComponent(
+function buildWA(f, quotationInfo) {
+  let text =
     `*Mentors Studio — Space Enquiry*\n\n` +
     `Name: ${f.name}\nPhone: ${f.phone}\n` +
     (f.email ? `Email: ${f.email}\n` : '') +
     `Teaching: ${f.subject}\nStudents: ${f.studentType}\nBatch: ${f.batchSize}\n` +
-    `Cabin: ${f.cabinCapacity}\nDays: ${f.days}\nTime: ${f.time}\n` +
-    (f.notes ? `Notes: ${f.notes}\n` : '') +
-    `\nFrom ${siteConfig.domain}`
-  );
+    `Cabin: ${f.cabinCapacity}\nDays: ${f.days}\nTime: ${f.time}\n`;
+
+  if (quotationInfo) {
+    text += `\n*Quoted Package:* ${quotationInfo.packageLabel}\n*Discount Applied:* ${quotationInfo.discountApplied}\n*Quoted Total:* ${quotationInfo.quotedTotal} (incl. 18% GST & deposit)\n`;
+  }
+
+  if (f.notes) {
+    const cleanNotes = f.notes.replace(/\[Calculator Quote:[^\]]+\]\n?/g, '').trim();
+    if (cleanNotes) {
+      text += `Notes: ${cleanNotes}\n`;
+    }
+  }
+
+  text += `\nFrom ${siteConfig.domain}`;
+  return encodeURIComponent(text);
 }
 
 export function ContactPage() {
-  const [searchParams] = useSearchParams();
-  const [form, setForm] = useState(initial);
+  const [form, setForm] = useState(getInitialContactForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
+  const [quotationInfo] = useState(getInitialContactQuote);
+  const [highlightFields] = useState(() => Boolean(getInitialContactQuote()));
 
+  // Smooth scroll to form if quoted
   useEffect(() => {
-    const timeParam = searchParams.get('time');
-    if (timeParam) {
-      setForm((f) => ({ ...f, time: timeParam }));
+    if (quotationInfo) {
+      setTimeout(() => {
+        document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+      }, 200);
     }
-  }, [searchParams]);
+  }, [quotationInfo]);
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -105,6 +176,12 @@ export function ContactPage() {
   const saveEnquiry = (submittedVia) => {
     if (!isSupabaseConfigured || !supabase) return;
     try {
+      let finalNotes = form.notes.trim() || null;
+      if (quotationInfo && (!finalNotes || !finalNotes.includes(quotationInfo.quotedTotal))) {
+        const quoteNote = `[Calculator Quote: ${quotationInfo.packageLabel} | Discount: ${quotationInfo.discountApplied} | Total: ${quotationInfo.quotedTotal}]`;
+        finalNotes = finalNotes ? `${quoteNote}\n${finalNotes}` : quoteNote;
+      }
+
       const payload = {
         name: form.name.trim(),
         phone: form.phone.trim(),
@@ -115,7 +192,7 @@ export function ContactPage() {
         cabin_capacity: form.cabinCapacity || null,
         days: form.days.trim(),
         time_slot: form.time,
-        notes: form.notes.trim() || null,
+        notes: finalNotes,
         submitted_via: submittedVia,
         status: 'new',
       };
@@ -138,7 +215,7 @@ export function ContactPage() {
     const e = validate(); if (Object.keys(e).length) { setErrors(e); return; }
     setErrors({});
     saveEnquiry('whatsapp');
-    window.open(`https://wa.me/${CONTACT.whatsapp}?text=${buildWA(form)}`, '_blank');
+    window.open(`https://wa.me/${CONTACT.whatsapp}?text=${buildWA(form, quotationInfo)}`, '_blank');
     setStatus('whatsapp');
     setTimeout(() => setStatus('idle'), 4000);
   };
@@ -147,7 +224,14 @@ export function ContactPage() {
     const e = validate(); if (Object.keys(e).length) { setErrors(e); return; }
     setErrors({});
     saveEnquiry('copy');
-    const msg = `Mentors Studio Enquiry\n\nName: ${form.name}\nPhone: ${form.phone}\n${form.email ? `Email: ${form.email}\n` : ''}Teaching: ${form.subject}\nStudents: ${form.studentType}\nBatch: ${form.batchSize}\nCabin: ${form.cabinCapacity}\nDays: ${form.days}\nTime: ${form.time}\n${form.notes ? `Notes: ${form.notes}` : ''}`;
+    let msg = `Mentors Studio Enquiry\n\nName: ${form.name}\nPhone: ${form.phone}\n${form.email ? `Email: ${form.email}\n` : ''}Teaching: ${form.subject}\nStudents: ${form.studentType}\nBatch: ${form.batchSize}\nCabin: ${form.cabinCapacity}\nDays: ${form.days}\nTime: ${form.time}`;
+    if (quotationInfo) {
+      msg += `\n\nQuoted Package: ${quotationInfo.packageLabel}\nDiscount Applied: ${quotationInfo.discountApplied}\nQuoted Total: ${quotationInfo.quotedTotal} (incl. 18% GST & deposit)`;
+    }
+    if (form.notes) {
+      const clean = form.notes.replace(/\[Calculator Quote:[^\]]+\]\n?/g, '').trim();
+      if (clean) msg += `\nNotes: ${clean}`;
+    }
     navigator.clipboard.writeText(msg).then(() => setStatus('copied'));
     setTimeout(() => setStatus('idle'), 4000);
   };
@@ -162,7 +246,6 @@ export function ContactPage() {
         breadcrumbs={[{ name: 'Contact & Location', path: '/contact' }]}
       />
 
-      {/* PageHero updated per Section 9 */}
       <PageHero
         label="Contact & Location"
         title="The Right Space for Every Teaching Ambition."
@@ -226,7 +309,7 @@ export function ContactPage() {
               <p className="font-mono text-xs text-[#EADCC8] mt-0.5 font-medium">By prior scheduling with manager</p>
             </div>
 
-            {/* Embedded interactive Google Map per Section 14 */}
+            {/* Embedded interactive Google Map */}
             <div className="border border-[#3A3228] rounded-sm overflow-hidden bg-[#1A1A1A] shadow-lg">
               <div className="p-4 border-b border-[#3A3228] flex items-center justify-between bg-[#231F1B]">
                 <div className="flex items-center gap-2">
@@ -255,9 +338,44 @@ export function ContactPage() {
             </div>
           </AnimatedSection>
 
-          {/* Right: form — High contrast brand palette */}
+          {/* Right: form */}
           <AnimatedSection direction="right" className="lg:col-span-7">
             <div id="enquiry-form" className="bg-[#1A1A1A] border border-[#3A3228] rounded-sm p-6 lg:p-8 scroll-mt-28 shadow-xl">
+
+              {/* ─── QUOTATION SUMMARY BANNER FROM CALCULATOR ─── */}
+              {quotationInfo && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-4 rounded-sm border-2 border-[#C9A96B] bg-[#2E2319] shadow-lg relative overflow-hidden"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[10px] tracking-[0.18em] uppercase font-bold text-[#1A1A1A] bg-[#C9A96B] px-2 py-0.5 rounded-xs flex items-center gap-1">
+                          <Tag size={10} /> Quoted Rate Locked
+                        </span>
+                        <span className="font-display font-bold text-sm text-[#F7F2EA]">
+                          {quotationInfo.packageLabel}
+                        </span>
+                      </div>
+                      <p className="font-mono text-xs text-[#DDD0B8] mt-1.5 font-medium">
+                        Discount applied: <strong className="text-[#D4B87A]">{quotationInfo.discountApplied}</strong>
+                        {quotationInfo.ratePerSeat && ` · Rate: ${quotationInfo.ratePerSeat}/seat`}
+                      </p>
+                    </div>
+
+                    <div className="text-right flex-shrink-0">
+                      <span className="font-mono text-[10px] uppercase text-[#A89880] block font-bold">Quoted Total</span>
+                      <span className="font-display font-bold text-xl sm:text-2xl text-[#D4B87A] italic leading-tight">
+                        {quotationInfo.quotedTotal}
+                      </span>
+                      <span className="font-mono text-[9px] text-[#A89880] block">incl. 18% GST & deposit</span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
                 <Field label="Full Name" id="name" required error={errors.name}>
                   <input id="name" placeholder="Your full name" value={form.name} onChange={set('name')} className={inputCls(errors.name)} />
@@ -280,20 +398,20 @@ export function ContactPage() {
               </div>
 
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                <Field label="Student Category" id="studentType" required error={errors.studentType}>
-                  <select id="studentType" value={form.studentType} onChange={set('studentType')} className={inputCls(errors.studentType)}>
+                <Field label="Student Category" id="studentType" required error={errors.studentType} isPrefilled={highlightFields}>
+                  <select id="studentType" value={form.studentType} onChange={set('studentType')} className={inputCls(errors.studentType, highlightFields)}>
                     <option value="" disabled>Select category</option>
                     {studentTypes.map((o) => <option key={o} value={o}>{o}</option>)}
                   </select>
                 </Field>
-                <Field label="Expected Batch Size" id="batchSize" required error={errors.batchSize}>
-                  <input id="batchSize" type="number" min={1} max={24} placeholder="e.g. 8" value={form.batchSize} onChange={set('batchSize')} className={inputCls(errors.batchSize)} />
+                <Field label="Expected Batch Size" id="batchSize" required error={errors.batchSize} isPrefilled={highlightFields}>
+                  <input id="batchSize" type="number" min={1} max={24} placeholder="e.g. 8" value={form.batchSize} onChange={set('batchSize')} className={inputCls(errors.batchSize, highlightFields)} />
                 </Field>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                <Field label="Preferred Cabin Size" id="cabinCapacity">
-                  <select id="cabinCapacity" value={form.cabinCapacity} onChange={set('cabinCapacity')} className={inputCls()}>
+                <Field label="Preferred Cabin Size" id="cabinCapacity" isPrefilled={highlightFields}>
+                  <select id="cabinCapacity" value={form.cabinCapacity} onChange={set('cabinCapacity')} className={inputCls(false, highlightFields)}>
                     <option value="" disabled>Select size</option>
                     {cabinOpts.map((o) => <option key={o} value={o}>{o}</option>)}
                   </select>
@@ -313,7 +431,7 @@ export function ContactPage() {
               </div>
 
               <div className="mb-8">
-                <Field label="Additional Requirements" id="notes">
+                <Field label="Additional Requirements & Quoted Notes" id="notes">
                   <textarea id="notes" rows={3} placeholder="Special equipment, projector requests, or student requirements..." value={form.notes} onChange={set('notes')} className={`${inputCls()} resize-none`} />
                 </Field>
               </div>
