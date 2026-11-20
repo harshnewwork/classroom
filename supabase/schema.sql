@@ -466,3 +466,37 @@ on conflict (id) do update set
   name = excluded.name,
   capacity = excluded.capacity,
   type = excluded.type;
+
+-- ==============================================================================
+-- 12. SITE SETTINGS TABLE (Global Campaign & Feature Flags)
+-- ==============================================================================
+create table if not exists public.site_settings (
+  key text primary key,
+  value jsonb not null,
+  updated_at timestamptz not null default now(),
+  updated_by text
+);
+
+comment on table public.site_settings is 'Global site settings and campaign toggles including Early Bird offer visibility';
+
+-- Enable RLS
+alter table public.site_settings enable row level security;
+
+-- Public can read settings
+drop policy if exists "Allow public read access to site_settings" on public.site_settings;
+create policy "Allow public read access to site_settings"
+  on public.site_settings for select
+  using (true);
+
+-- Admins can update/insert settings
+drop policy if exists "Allow admins to manage site_settings" on public.site_settings;
+create policy "Allow admins to manage site_settings"
+  on public.site_settings for all
+  using (public.is_admin())
+  with check (public.is_admin());
+
+-- Seed default early_bird_offer (enabled = true)
+insert into public.site_settings (key, value, updated_by)
+values ('early_bird_offer', '{"enabled": true}'::jsonb, 'system')
+on conflict (key) do nothing;
+

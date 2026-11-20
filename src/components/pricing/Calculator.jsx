@@ -18,8 +18,6 @@ import { cabins } from '../../data/cabins';
 import {
   EARLY_BIRD_CONFIG,
   getOfferDateStatus,
-  setOfferDateMode,
-  getOfferDateMode,
 } from '../../data/earlyBird';
 
 /* ─── Format helpers ── */
@@ -66,8 +64,7 @@ export function Calculator({
     setPkgId(defaultPackage);
   }
 
-  // Offer date status & simulation mode (initialized lazily)
-  const [offerMode, setOfferMode] = useState(() => getOfferDateMode());
+  // Offer status (initialized lazily)
   const [offerStatus, setOfferStatus] = useState(() => getOfferDateStatus());
 
   // Independent discount flags:
@@ -102,8 +99,6 @@ export function Calculator({
   // Offer mode change listener
   useEffect(() => {
     const handleModeChange = () => {
-      const mode = getOfferDateMode();
-      setOfferMode(mode);
       const status = getOfferDateStatus();
       setOfferStatus(status);
 
@@ -283,47 +278,6 @@ export function Calculator({
                 <CalcIcon size={18} className={isDark ? 'text-[#C9A96B]' : 'text-[#8B6914]'} />
                 Price Your Sessions
               </h3>
-            </div>
-
-            {/* Subtle Date Simulation & QA Mode Switcher */}
-            <div className="flex items-center gap-1 text-[10px] font-mono">
-              <span className={`${textSub} hidden sm:inline`}>QA Mode:</span>
-              <button
-                type="button"
-                onClick={() => setOfferDateMode('live')}
-                title="Simulate 21 Nov 2026 (Active Window)"
-                className={`px-1.5 py-0.5 rounded-xs transition-colors cursor-pointer ${
-                  offerMode === 'live'
-                    ? 'bg-[#8B6914] text-white font-bold'
-                    : `${isDark ? 'bg-[#2E2319] text-[#A89880]' : 'bg-[#EADCC8] text-[#3E2F1F]'}`
-                }`}
-              >
-                Live (21 Nov)
-              </button>
-              <button
-                type="button"
-                onClick={() => setOfferDateMode('upcoming')}
-                title="Simulate 20 Nov 2026 (Not yet active)"
-                className={`px-1.5 py-0.5 rounded-xs transition-colors cursor-pointer ${
-                  offerMode === 'upcoming'
-                    ? 'bg-amber-600 text-white font-bold'
-                    : `${isDark ? 'bg-[#2E2319] text-[#A89880]' : 'bg-[#EADCC8] text-[#3E2F1F]'}`
-                }`}
-              >
-                Upcoming
-              </button>
-              <button
-                type="button"
-                onClick={() => setOfferDateMode('expired')}
-                title="Simulate 13 Dec 2026 (Expired)"
-                className={`px-1.5 py-0.5 rounded-xs transition-colors cursor-pointer ${
-                  offerMode === 'expired'
-                    ? 'bg-red-700 text-white font-bold'
-                    : `${isDark ? 'bg-[#2E2319] text-[#A89880]' : 'bg-[#EADCC8] text-[#3E2F1F]'}`
-                }`}
-              >
-                Expired
-              </button>
             </div>
           </div>
 

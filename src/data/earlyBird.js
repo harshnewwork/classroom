@@ -1,107 +1,48 @@
-// ─── Early Bird Offer Configuration & Date Guard ───────────────────────
+import { supabase } from '../lib/supabaseClient.js';
+
+// ─── Early Bird Offer Configuration ─────────────────────────────────────
 
 export const EARLY_BIRD_CONFIG = {
-  // Campaign window: 21 Nov 2026 00:00:00 IST to 12 Dec 2026 23:59:59 IST
-  startDate: new Date('2026-11-21T00:00:00+05:30'),
-  endDate:   new Date('2026-12-12T23:59:59+05:30'),
   discountPercent: 30, // 30% off base rate
   discountRate: 0.30,
   promoCode: 'EARLYBIRD30',
   title: 'SUPER EARLY BIRD OFFER — 30% OFF',
   shortTitle: 'Early Bird (30% off)',
-  terms: '30% off all packages · Valid 21 Nov – 12 Dec 2026 · Stackable with package tier discounts.',
+  terms: '30% off all packages · Stackable with package tier discounts.',
 };
 
+const STORAGE_KEY_ADMIN_ENABLED = 'ms_early_bird_admin_enabled';
+
 /**
- * Get the effective test/simulated date or current real time.
- * Supports URL param (?offer=live|upcoming|expired or ?date=YYYY-MM-DD),
- * localStorage override, window override, or falls back to live simulation / system date.
+ * Check whether the Early Bird offer is currently enabled by Admin.
+ * Does not rely on date: directly follows the Admin setting.
+ * Defaults to true (Active/Appears) unless explicitly turned off by Admin.
  */
-export function getEffectiveDate() {
-  if (typeof window === 'undefined') {
-    // For SSR prerender, default to live campaign window
-    return new Date('2026-11-25T12:00:00+05:30');
-  }
-
-  // 1. Check URL query params
+export function isEarlyBirdAdminEnabled() {
+  if (typeof window === 'undefined') return true;
   try {
-    const params = new URLSearchParams(window.location.search);
-    const offerParam = params.get('offer');
-    if (offerParam === 'live')     return new Date('2026-11-25T12:00:00+05:30');
-    if (offerParam === 'upcoming') return new Date('2026-11-20T12:00:00+05:30');
-    if (offerParam === 'expired')  return new Date('2026-12-15T12:00:00+05:30');
-
-    const dateParam = params.get('date') || params.get('mockDate');
-    if (dateParam) {
-      const d = new Date(dateParam);
-      if (!isNaN(d.getTime())) return d;
-    }
+    const val = localStorage.getItem(STORAGE_KEY_ADMIN_ENABLED);
+    if (val === 'false') return false;
+    if (val === 'true') return true;
   } catch {
     // ignore
   }
-
-  // 2. Check window global override
-  if (window.__EARLY_BIRD_DATE_OVERRIDE__) {
-    const d = new Date(window.__EARLY_BIRD_DATE_OVERRIDE__);
-    if (!isNaN(d.getTime())) return d;
-  }
-
-  // 3. Check localStorage override
-  try {
-    const stored = localStorage.getItem('ms_early_bird_mode');
-    if (stored === 'live')     return new Date('2026-11-25T12:00:00+05:30');
-    if (stored === 'upcoming') return new Date('2026-11-20T12:00:00+05:30');
-    if (stored === 'expired')  return new Date('2026-12-15T12:00:00+05:30');
-    if (stored === 'system')   return new Date();
-    if (stored) {
-      const d = new Date(stored);
-      if (!isNaN(d.getTime())) return d;
-    }
-  } catch {
-    // ignore
-  }
-
-  // 4. Default:
-  // If system time is within the campaign window, use system time.
-  // If system time is exactly on 20 Nov 2026 (the launch eve), default simulation mode to 'live'
-  // so reviewers/testers can immediately interact with the active campaign, while allowing 1-click toggle to test 'upcoming' and 'expired'.
-  const now = new Date();
-  const start = EARLY_BIRD_CONFIG.startDate;
-  const end = EARLY_BIRD_CONFIG.endDate;
-  if (now >= start && now <= end) {
-    return now;
-  }
-
-  // For seamless demo & QA, default to active campaign date unless explicitly set to 'system'
-  return new Date('2026-11-25T12:00:00+05:30');
+  return true;
 }
 
 /**
- * Determine the status of the Early Bird offer for a given date.
- * Returns: { status: 'active' | 'upcoming' | 'expired', label, active: boolean, date: Date, message: string }
+ * Determine the status of the Early Bird offer.
+ * Returns: { status: 'active' | 'hidden', label, active: boolean, message: string }
  */
-export function getOfferDateStatus(customDate) {
-  const date = customDate || getEffectiveDate();
-  const start = EARLY_BIRD_CONFIG.startDate;
-  const end   = EARLY_BIRD_CONFIG.endDate;
+export function getOfferDateStatus() {
+  const isEnabled = isEarlyBirdAdminEnabled();
 
-  if (date < start) {
+  if (!isEnabled) {
     return {
-      status: 'upcoming',
-      label: 'Not yet active',
+      status: 'hidden',
+      label: 'Offer Inactive',
       active: false,
-      date,
-      message: 'Offer starts 21 Nov 2026',
-    };
-  }
-
-  if (date > end) {
-    return {
-      status: 'expired',
-      label: 'Expired',
-      active: false,
-      date,
-      message: 'Offer ended 12 Dec 2026',
+      message: 'Early Bird offer is currently turned off by administrator',
     };
   }
 
@@ -109,33 +50,79 @@ export function getOfferDateStatus(customDate) {
     status: 'active',
     label: 'Active',
     active: true,
-    date,
-    message: 'Offer live until 12 Dec 2026',
+    message: '30% Early Bird Active',
   };
 }
 
 /**
- * Set the simulation mode for testing & QA.
- * mode: 'live' | 'upcoming' | 'expired' | 'system'
+ * Admin action: Set the Early Bird offer to appear or hide.
+ * Persists to Supabase `site_settings` table, caches in localStorage,
+ * and broadcasts an event to immediately update all components.
  */
-export function setOfferDateMode(mode) {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem('ms_early_bird_mode', mode);
-  } catch {
-    // ignore
+export async function setEarlyBirdAdminEnabled(enabled, userEmail = 'admin') {
+  const boolVal = Boolean(enabled);
+
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(STORAGE_KEY_ADMIN_ENABLED, boolVal ? 'true' : 'false');
+    } catch {
+      // ignore
+    }
+    window.dispatchEvent(new CustomEvent('ms-offer-mode-changed', { detail: { enabled: boolVal } }));
   }
-  window.dispatchEvent(new CustomEvent('ms-offer-mode-changed', { detail: { mode } }));
+
+  if (supabase) {
+    try {
+      const { error } = await supabase.from('site_settings').upsert(
+        {
+          key: 'early_bird_offer',
+          value: { enabled: boolVal },
+          updated_at: new Date().toISOString(),
+          updated_by: userEmail,
+        },
+        { onConflict: 'key' }
+      );
+
+      if (error) {
+        console.warn('[EarlyBird Setting] Supabase sync warning (table may need creation):', error.message);
+      }
+    } catch (err) {
+      console.warn('[EarlyBird Setting] Network error syncing setting:', err);
+    }
+  }
+
+  return boolVal;
 }
 
 /**
- * Get current simulation mode ('live' | 'upcoming' | 'expired' | 'system')
+ * Fetch the latest Early Bird setting from Supabase.
+ * Call on app load to ensure visitor views match the admin toggle.
  */
-export function getOfferDateMode() {
-  if (typeof window === 'undefined') return 'live';
+export async function fetchEarlyBirdAdminSetting() {
+  if (!supabase) return isEarlyBirdAdminEnabled();
+
   try {
-    return localStorage.getItem('ms_early_bird_mode') || 'live';
-  } catch {
-    return 'live';
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'early_bird_offer')
+      .maybeSingle();
+
+    if (!error && data?.value && typeof data.value.enabled === 'boolean') {
+      const remoteEnabled = data.value.enabled;
+      if (typeof window !== 'undefined') {
+        const localCurrent = isEarlyBirdAdminEnabled();
+        if (localCurrent !== remoteEnabled) {
+          localStorage.setItem(STORAGE_KEY_ADMIN_ENABLED, remoteEnabled ? 'true' : 'false');
+          window.dispatchEvent(new CustomEvent('ms-offer-mode-changed', { detail: { enabled: remoteEnabled } }));
+        }
+      }
+      return remoteEnabled;
+    }
+  } catch (err) {
+    // If offline or table not present, seamlessly continue with local setting
+    console.debug('[EarlyBird Setting] Using local setting fallback:', err);
   }
+
+  return isEarlyBirdAdminEnabled();
 }

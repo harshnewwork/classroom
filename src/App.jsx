@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Navigation }       from './components/Navigation';
@@ -7,6 +7,7 @@ import { CustomCursor }     from './components/CustomCursor';
 import { StickyBookingCTA } from './components/StickyBookingCTA';
 import { FloatingEarlyBird } from './components/pricing/FloatingEarlyBird';
 import { LoadingScreen }    from './components/ui/LoadingScreen';
+import { fetchEarlyBirdAdminSetting } from './data/earlyBird';
 
 import { HomePage }         from './pages/HomePage';
 import { SpacesPage }       from './pages/SpacesPage';
@@ -25,6 +26,10 @@ const AdminPage = lazy(() =>
 
 export function AppContent() {
   const location = useLocation();
+
+  useEffect(() => {
+    fetchEarlyBirdAdminSetting();
+  }, []);
   const isAdminRoute =
     location.pathname === ADMIN_ROUTE ||
     location.pathname.startsWith(`${ADMIN_ROUTE}/`);

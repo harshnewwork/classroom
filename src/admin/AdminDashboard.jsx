@@ -5,6 +5,11 @@ import { AdminEnquiries } from './AdminEnquiries';
 import { AdminRoomAvailability } from './AdminRoomAvailability';
 import { NavLogo } from '../components/ui/Logo';
 import {
+  isEarlyBirdAdminEnabled,
+  setEarlyBirdAdminEnabled,
+  fetchEarlyBirdAdminSetting,
+} from '../data/earlyBird';
+import {
   LogOut,
   RefreshCw,
   User,
@@ -12,7 +17,8 @@ import {
   Building,
   AlertCircle,
   CheckCircle2,
-  Inbox
+  Inbox,
+  Percent,
 } from 'lucide-react';
 
 export function AdminDashboard({ user, onSignOut }) {
@@ -22,6 +28,26 @@ export function AdminDashboard({ user, onSignOut }) {
   const [loading, setLoading] = useState(true);
   const [realtimeStatus, setRealtimeStatus] = useState('CONNECTING'); // 'CONNECTED', 'CONNECTING', 'ERROR'
   const [activeHistoryRoom, setActiveHistoryRoom] = useState(null);
+
+  // Early Bird Offer Control (Independent of date)
+  const [earlyBirdActive, setEarlyBirdActive] = useState(() => isEarlyBirdAdminEnabled());
+  const [earlyBirdSaving, setEarlyBirdSaving] = useState(false);
+
+  useEffect(() => {
+    fetchEarlyBirdAdminSetting().then((val) => {
+      if (typeof val === 'boolean') {
+        setEarlyBirdActive(val);
+      }
+    });
+
+    const handler = (e) => {
+      if (typeof e.detail?.enabled === 'boolean') {
+        setEarlyBirdActive(e.detail.enabled);
+      }
+    };
+    window.addEventListener('ms-offer-mode-changed', handler);
+    return () => window.removeEventListener('ms-offer-mode-changed', handler);
+  }, []);
 
   // Synchronized Calendar Date & Cell Highlighter for cross-tab jumping
   const [calendarDate, setCalendarDate] = useState(() => {
@@ -52,6 +78,25 @@ export function AdminDashboard({ user, onSignOut }) {
       setToast(null);
     }, 4000);
   }, []);
+
+  const handleToggleEarlyBird = async () => {
+    const nextState = !earlyBirdActive;
+    setEarlyBirdSaving(true);
+    try {
+      await setEarlyBirdAdminEnabled(nextState, user?.email);
+      setEarlyBirdActive(nextState);
+      showToast(
+        nextState
+          ? '✓ Early Bird 30% Offer is now LIVE and appears across the site!'
+          : '✓ Early Bird 30% Offer is now HIDDEN and disabled across the site.',
+        'success'
+      );
+    } catch {
+      showToast('Saved locally. Could not update remote database table.', 'error');
+    } finally {
+      setEarlyBirdSaving(false);
+    }
+  };
 
   // Fetch all rooms from Supabase
   const fetchRooms = useCallback(async (silent = false) => {
@@ -295,12 +340,36 @@ export function AdminDashboard({ user, onSignOut }) {
             </button>
           </div>
 
-          <div className="hidden sm:flex items-center gap-3 py-2 text-[11px] font-mono text-[#7A6A50]">
-            {activeTab === 'rooms' ? (
-              <span>Date & slot availability synced across sessions</span>
-            ) : (
-              <span>Review and action bookings submitted through website</span>
-            )}
+          {/* Right: Early Bird Offer Control Toggle */}
+          <div className="flex items-center gap-3 py-1.5 flex-wrap sm:flex-nowrap">
+            <div className="flex items-center gap-2 bg-[#FAF6F0] px-3 py-1 rounded-sm border border-[#DDD0B8] shadow-xs">
+              <span className="font-mono text-[11px] text-[#7A6A50] font-semibold flex items-center gap-1.5">
+                <Percent className="w-3.5 h-3.5 text-[#C9A96B]" />
+                Early Bird 30%:
+              </span>
+              <button
+                type="button"
+                onClick={handleToggleEarlyBird}
+                disabled={earlyBirdSaving}
+                title={
+                  earlyBirdActive
+                    ? 'Click to Hide / Disable Early Bird offer across the site'
+                    : 'Click to Show / Enable Early Bird offer across the site'
+                }
+                className={`px-3 py-1 rounded-xs text-[11px] font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs disabled:opacity-50 ${
+                  earlyBirdActive
+                    ? 'bg-[#2E7D32] hover:bg-[#256828] text-white'
+                    : 'bg-[#8C1D18] hover:bg-[#721713] text-white'
+                }`}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    earlyBirdActive ? 'bg-white animate-pulse' : 'bg-white/60'
+                  }`}
+                />
+                <span>{earlyBirdActive ? 'Appear (Active)' : 'Hide (Off)'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
