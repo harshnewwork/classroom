@@ -68,7 +68,7 @@ export function SpacesPage() {
         title="Find a Space That Fits Your Teaching Needs."
         subtitle="Nine dedicated teaching cabins from 6 to 24 seats, plus an open-air balcony and dedicated arts space. Fully furnished with climate-controlled AC, high-speed Wi-Fi, and presentation displays."
         image="/images/classroom-seminar.png"
-        cta={{ label: 'Book a Space', to: '/contact' }}
+        cta={{ label: 'Book a Space', to: '/contact#enquiry-form' }}
       />
 
       <Breadcrumbs items={[{ name: 'Spaces & Cabins' }]} />

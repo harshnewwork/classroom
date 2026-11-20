@@ -18,9 +18,29 @@ const navLinks = [
 export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const [prevPathname, setPrevPathname] = useState(location.pathname);
 
-  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [location.pathname]);
+  if (prevPathname !== location.pathname) {
+    setPrevPathname(location.pathname);
+    setMobileOpen(false);
+  }
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const scrollToHash = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+      scrollToHash();
+      const timer = setTimeout(scrollToHash, 200);
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [location.pathname, location.hash]);
 
   const isActive = (link) =>
     link.exact ? location.pathname === link.to : location.pathname.startsWith(link.to);
@@ -78,7 +98,12 @@ export function Navigation() {
               whileTap={{ scale: 0.98 }}
             >
               <Link
-                to="/contact"
+                to="/contact#enquiry-form"
+                onClick={() => {
+                  if (location.pathname === '/contact') {
+                    document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
                 className="px-5 py-2.5 font-body font-bold text-[10px] tracking-[0.2em] uppercase rounded-sm transition-colors shadow-sm bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#8B6914] hover:text-white"
               >
                 BOOK YOUR SPACE
@@ -133,8 +158,13 @@ export function Navigation() {
                 );
               })}
               <Link
-                to="/contact"
-                onClick={() => setMobileOpen(false)}
+                to="/contact#enquiry-form"
+                onClick={() => {
+                  setMobileOpen(false);
+                  if (location.pathname === '/contact') {
+                    document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
                 className="mt-4 mb-2 flex items-center justify-center py-3.5 font-body font-bold text-xs tracking-[0.2em] uppercase rounded-sm transition-colors bg-[#1A1A1A] text-[#F7F2EA] hover:bg-[#8B6914] hover:text-white"
               >
                 BOOK YOUR SPACE

@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { getFAQSchema } from '../components/seo/schema';
-import { ArrowRight, CheckCircle2, Clock, Calendar, Users, MessageCircle, HelpCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock, Calendar, Users, MessageCircle } from 'lucide-react';
 import { FAQS } from '../data/faqs';
 
 const steps = [
@@ -85,7 +84,7 @@ export function HowItWorksPage() {
         title="From Booking to Teaching — How It Works"
         subtitle="Four clear steps from enquiry to your first class on Golf Course Extension Road, Sector 57, Gurugram. Simple process, transparent packages, and monthly billing based on student collections."
         image="/images/terrace-balcony.png"
-        cta={{ label: 'Start Your Enquiry', to: '/contact' }}
+        cta={{ label: 'Start Your Enquiry', to: '/contact#enquiry-form' }}
       />
 
       <Breadcrumbs items={[{ name: 'How It Works' }]} />

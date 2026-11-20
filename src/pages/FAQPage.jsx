@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle, ArrowRight, PhoneCall, MessageCircle } from 'lucide-react';
+import { ChevronDown, HelpCircle, ArrowRight, MessageCircle } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection } from '../components/ui/AnimatedSection';
@@ -9,7 +9,6 @@ import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { getFAQSchema } from '../components/seo/schema';
 import { FAQS } from '../data/faqs';
-import { siteConfig } from '../config/siteConfig';
 
 const categories = ['All', 'Pricing & Billing', 'Booking & Commitment', 'Facilities & Tech', 'Location & Access', 'Programmes & Rules', 'Educator Guidance'];
 
@@ -48,7 +47,7 @@ export function FAQPage() {
         title={<>Frequently Asked Questions — <span className="text-gradient">Classroom Rental in Gurugram</span></>}
         subtitle="Everything you need to know about renting fully equipped teaching cabins on Golf Course Extension Road, Sector 57. From per-seat billing to cabin specs and Sunday schedules."
         image="/images/classroom-seminar.png"
-        cta={{ label: 'Ask a Question', to: '/contact' }}
+        cta={{ label: 'Ask a Question', to: '/contact#enquiry-form' }}
       />
 
       <Breadcrumbs items={[{ name: 'Frequently Asked Questions' }]} />

@@ -1,13 +1,13 @@
 import { PageHero } from '../components/ui/PageHero';
 import { SectionLabel } from '../components/ui/SectionLabel';
-import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
+import { AnimatedSection } from '../components/ui/AnimatedSection';
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { Link } from 'react-router-dom';
 import {
   Sofa, Laptop, Wifi, UserCheck, Camera, Home, Mic, Printer,
-  Lock, Package, Zap, Monitor, Shield, Clock, ArrowRight, CheckCircle2,
-  Server, Sparkles
+  Lock, Package, Zap, Monitor, ArrowRight, CheckCircle2,
+  Sparkles
 } from 'lucide-react';
 
 const facilitiesDetailed = [
@@ -196,7 +196,7 @@ export function FacilitiesPage() {
         title="Everything You Need to Teach, Already in Place."
         subtitle="Step into fully equipped teaching spaces with air-conditioning, high-speed Wi-Fi, digital displays, whiteboards and dedicated on-site support. No setup hassles or separate utility bills."
         image="/images/reception-lobby.png"
-        cta={{ label: 'Schedule a Visit', to: '/contact' }}
+        cta={{ label: 'Schedule a Visit', to: '/contact#enquiry-form' }}
       />
 
       <Breadcrumbs items={[{ name: 'Facilities & Amenities' }]} />

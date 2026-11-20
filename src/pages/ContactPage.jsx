@@ -150,9 +150,9 @@ export function ContactPage() {
   const [quotationInfo] = useState(getInitialContactQuote);
   const [highlightFields] = useState(() => Boolean(getInitialContactQuote()));
 
-  // Smooth scroll to form if quoted
+  // Smooth scroll to form if quoted or navigated to hash
   useEffect(() => {
-    if (quotationInfo) {
+    if (quotationInfo || (typeof window !== 'undefined' && window.location.hash === '#enquiry-form')) {
       setTimeout(() => {
         document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' });
       }, 200);

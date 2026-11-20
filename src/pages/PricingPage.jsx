@@ -284,7 +284,7 @@ export function PricingPage() {
             <p className="font-body text-[#A89880] text-sm">Schedule a personal walkthrough on Golf Course Extension Road. Our facility manager confirms your timetable before any commitment.</p>
           </div>
           <Link
-            to="/contact"
+            to="/contact#enquiry-form"
             className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#C9A96B] text-[#1A1A1A] font-display font-bold text-sm rounded-sm hover:bg-[#D4B87A] transition-colors flex-shrink-0"
           >
             Book Your Space

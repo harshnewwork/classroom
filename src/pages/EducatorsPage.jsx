@@ -4,7 +4,8 @@ import { SectionLabel } from '../components/ui/SectionLabel';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui/AnimatedSection';
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
-import { CheckCircle2, XCircle, ArrowRight, Clock, BookOpen, GraduationCap, Code2, Globe2, Palette, Sparkles, Target, Award, ClipboardCheck, Briefcase, Video } from 'lucide-react';
+import { Booking } from '../components/sections/Booking';
+import { CheckCircle2, XCircle, ArrowRight, BookOpen, GraduationCap, Code2, Globe2, Palette, Target, Award, ClipboardCheck, Briefcase, Video } from 'lucide-react';
 
 const educatorProfiles = [
   {
@@ -116,7 +117,7 @@ export function EducatorsPage() {
         title="Built for Every Kind of Educator"
         subtitle="Mentors Studio is purpose-built for independent tutors, test-prep coaches, corporate trainers, and subject teachers who value a professional academic environment on Golf Course Extension Road, Sector 57, Gurugram — without the operational overhead of running a personal center."
         image="/images/classroom-standard.png"
-        cta={{ label: 'Book Your Teaching Space', to: '/contact' }}
+        cta={{ label: 'Book Your Teaching Space', to: '#booking' }}
       />
 
       <Breadcrumbs items={[{ name: 'For Educators' }]} />
@@ -308,6 +309,9 @@ export function EducatorsPage() {
         </div>
       </section>
 
+      {/* Booking Form Section */}
+      <Booking />
+
       {/* CTA */}
       <AnimatedSection className="max-w-7xl mx-auto px-6 lg:px-8 py-20 text-center">
         <h3 className="font-display font-bold text-[#F7F2EA] text-2xl lg:text-3xl mb-4 max-w-lg mx-auto leading-tight">
@@ -317,13 +321,17 @@ export function EducatorsPage() {
           One walkthrough with our manager is all it takes. Bring your students for a complimentary demo session before committing.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#C9A96B] text-[#1A1A1A] font-display font-bold text-base rounded-sm hover:bg-[#D4B87A] transition-colors"
+          <a
+            href="#booking"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#C9A96B] text-[#1A1A1A] font-display font-bold text-base rounded-sm hover:bg-[#D4B87A] transition-colors cursor-pointer"
           >
             Book Your Space
             <ArrowRight size={16} />
-          </Link>
+          </a>
           <Link
             to="/pricing"
             className="inline-flex items-center gap-2 px-8 py-4 border border-[#3A3228] text-[#A89880] font-display font-semibold text-base rounded-sm hover:border-[#C9A96B] hover:text-[#C9A96B] transition-all"

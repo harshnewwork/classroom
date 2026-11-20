@@ -1,8 +1,35 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 export function PageHero({ label, title, subtitle, image, cta }) {
+  const location = useLocation();
+
+  const handleCtaClick = (e) => {
+    if (cta?.onClick) {
+      cta.onClick(e);
+      return;
+    }
+    if (!cta?.to) return;
+
+    // Check if target has a hash (e.g. '#calculator' or '/pricing#calculator')
+    if (cta.to.includes('#')) {
+      const [path, hash] = cta.to.split('#');
+      const isCurrentPage = !path || path === location.pathname;
+
+      if (isCurrentPage && hash) {
+        e.preventDefault();
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+            window.history.pushState(null, '', `#${hash}`);
+          }
+        }
+      }
+    }
+  };
+
   return (
     <section className="relative min-h-[54vh] flex items-end overflow-hidden bg-[#1A1A1A]">
       {/* Background image */}
@@ -71,7 +98,8 @@ export function PageHero({ label, title, subtitle, image, cta }) {
           >
             <Link
               to={cta.to}
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#C9A96B] text-[#1A1A1A] font-body font-bold text-xs tracking-[0.2em] uppercase rounded-sm hover:bg-[#D4B87A] transition-colors"
+              onClick={handleCtaClick}
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#C9A96B] text-[#1A1A1A] font-body font-bold text-xs tracking-[0.2em] uppercase rounded-sm hover:bg-[#D4B87A] transition-colors cursor-pointer"
             >
               {cta.label}
               <ChevronRight size={14} />
