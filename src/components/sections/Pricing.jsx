@@ -115,7 +115,7 @@ export function Pricing({ defaultCapacity }) {
         style={{ background: 'radial-gradient(circle, rgba(201,169,107,0.07) 0%, transparent 70%)' }}
       />
 
-      <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
         <AnimatedSection className="text-center max-w-2xl mx-auto mb-10">

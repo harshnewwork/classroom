@@ -11,6 +11,8 @@ import {
   Calculator as CalcIcon,
   CheckCircle2,
   Layers,
+  Minus,
+  Plus,
 } from 'lucide-react';
 import { AnimatedNumber } from './AnimatedNumber';
 import { EDUCATOR_TYPES, PACKAGES, calculatePricing, getMinBillable } from '../../data/pricing';
@@ -257,37 +259,37 @@ export function Calculator({
   const textSub = isDark ? 'text-[#A89880]' : 'text-[#5C450C]';
   const textBody = isDark ? 'text-[#DDD0B8]' : 'text-[#3E2F1F]';
   const selectCls = isDark
-    ? 'w-full bg-[#231F1B] border border-[#3A3228] text-[#F7F2EA] font-body text-sm px-4 py-3 rounded-sm appearance-none focus:outline-none focus:border-[#C9A96B] focus:ring-1 focus:ring-[#C9A96B] transition-colors cursor-pointer font-medium'
-    : 'w-full bg-[#FFFFFF] border border-[#DDD0B8] text-[#1A1A1A] font-body text-sm px-4 py-3 rounded-sm appearance-none focus:outline-none focus:border-[#8B6914] focus:ring-1 focus:ring-[#8B6914] transition-colors cursor-pointer font-medium';
+    ? 'w-full bg-[#231F1B] border border-[#3A3228] text-[#F7F2EA] font-body text-xs sm:text-sm pl-3.5 pr-9 py-2.5 sm:py-3 rounded-sm appearance-none focus:outline-none focus:border-[#C9A96B] focus:ring-1 focus:ring-[#C9A96B] transition-colors cursor-pointer font-medium truncate'
+    : 'w-full bg-[#FFFFFF] border border-[#DDD0B8] text-[#1A1A1A] font-body text-xs sm:text-sm pl-3.5 pr-9 py-2.5 sm:py-3 rounded-sm appearance-none focus:outline-none focus:border-[#8B6914] focus:ring-1 focus:ring-[#8B6914] transition-colors cursor-pointer font-medium truncate';
 
   return (
     <div
       id="cost-calculator"
-      className={`relative grid lg:grid-cols-2 border ${cardBorder} rounded-sm overflow-hidden shadow-xl transition-all duration-500 ${
+      className={`relative grid grid-cols-1 lg:grid-cols-2 w-full max-w-full min-w-0 border ${cardBorder} rounded-sm overflow-hidden shadow-xl transition-all duration-500 ${
         calculatorHalo ? 'ring-3 ring-[#C9A96B] shadow-2xl shadow-[#C9A96B]/25' : ''
       }`}
     >
       {/* ─── LEFT PANEL: INPUTS & DISCOUNT ─── */}
-      <div className={`p-6 lg:p-8 ${leftBg} border-b lg:border-b-0 lg:border-r ${cardBorder} flex flex-col justify-between`}>
+      <div className={`p-3.5 sm:p-6 lg:p-8 ${leftBg} border-b lg:border-b-0 lg:border-r ${cardBorder} flex flex-col justify-between w-full max-w-full min-w-0 overflow-hidden`}>
         <div>
           {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <div className={`w-1.5 h-5 ${isDark ? 'bg-[#C9A96B]' : 'bg-[#8B6914]'}`} />
-              <h3 className={`font-display font-bold ${textTitle} text-xl flex items-center gap-2`}>
-                <CalcIcon size={18} className={isDark ? 'text-[#C9A96B]' : 'text-[#8B6914]'} />
+          <div className="flex items-center justify-between gap-2 flex-wrap mb-4 sm:mb-6">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className={`w-1.5 h-5 flex-shrink-0 ${isDark ? 'bg-[#C9A96B]' : 'bg-[#8B6914]'}`} />
+              <h3 className={`font-display font-bold ${textTitle} text-lg sm:text-xl flex items-center gap-2 truncate`}>
+                <CalcIcon size={18} className={`flex-shrink-0 ${isDark ? 'text-[#C9A96B]' : 'text-[#8B6914]'}`} />
                 Price Your Sessions
               </h3>
             </div>
           </div>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3.5 sm:gap-5 w-full min-w-0">
             {/* Educator Type Toggle */}
-            <div>
-              <p className={`font-mono text-[10px] tracking-[0.2em] uppercase ${textSub} mb-2 font-bold`}>
+            <div className="w-full min-w-0">
+              <p className={`font-mono text-[10px] tracking-wider uppercase ${textSub} mb-2 font-bold`}>
                 Who are you teaching?
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 w-full min-w-0">
                 {EDUCATOR_TYPES.map((et) => {
                   const isSelected = eduType === et.id;
                   return (
@@ -295,7 +297,7 @@ export function Calculator({
                       key={et.id}
                       type="button"
                       onClick={() => setEduType(et.id)}
-                      className={`p-3 rounded-sm border text-left transition-all cursor-pointer ${
+                      className={`p-2 sm:p-3 rounded-sm border text-left transition-all cursor-pointer min-w-0 ${
                         isSelected
                           ? isDark
                             ? 'border-[#C9A96B] bg-[#C9A96B]/10 shadow-xs'
@@ -305,11 +307,11 @@ export function Calculator({
                           : 'border-[#DDD0B8] bg-[#F7F2EA] hover:border-[#8B6914]/40'
                       }`}
                     >
-                      <p className={`font-body font-bold text-sm ${isSelected ? textTitle : textBody}`}>
+                      <p className={`font-body font-bold text-xs sm:text-sm truncate ${isSelected ? textTitle : textBody}`}>
                         {et.label}
                       </p>
                       <p
-                        className={`font-mono text-[10px] mt-0.5 font-semibold ${
+                        className={`font-mono text-[9px] sm:text-[10px] mt-0.5 font-semibold truncate ${
                           isSelected
                             ? isDark
                               ? 'text-[#D4B87A]'
@@ -326,11 +328,11 @@ export function Calculator({
             </div>
 
             {/* Cabin Size Select */}
-            <div>
-              <p className={`font-mono text-[10px] tracking-[0.2em] uppercase ${textSub} mb-2 font-bold`}>
+            <div className="w-full min-w-0">
+              <p className={`font-mono text-[10px] tracking-wider uppercase ${textSub} mb-2 font-bold`}>
                 Cabin size
               </p>
-              <div className="relative">
+              <div className="relative w-full min-w-0">
                 <select
                   value={cabinCap}
                   onChange={(e) => {
@@ -338,7 +340,7 @@ export function Calculator({
                     setCabinCap(val);
                     setStudents((s) => Math.min(Number(s), val));
                   }}
-                  className={selectCls}
+                  className={`${selectCls} max-w-full`}
                 >
                   {cabins.map((c) => (
                     <option key={c.id} value={c.capacity}>
@@ -348,103 +350,138 @@ export function Calculator({
                 </select>
                 <ChevronDown
                   size={14}
-                  className={`absolute right-3.5 top-1/2 -translate-y-1/2 ${textSub} pointer-events-none`}
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 ${textSub} pointer-events-none`}
                 />
               </div>
             </div>
 
             {/* Package Select */}
-            <div>
-              <p className={`font-mono text-[10px] tracking-[0.2em] uppercase ${textSub} mb-2 font-bold`}>
+            <div className="w-full min-w-0">
+              <p className={`font-mono text-[10px] tracking-wider uppercase ${textSub} mb-2 font-bold`}>
                 Package
               </p>
-              <div className="relative">
-                <select value={pkgId} onChange={(e) => setPkgId(e.target.value)} className={selectCls}>
+              <div className="relative w-full min-w-0">
+                <select value={pkgId} onChange={(e) => setPkgId(e.target.value)} className={`${selectCls} max-w-full`}>
                   {PACKAGES.map((p) => {
                     const rate = eduType === 'school' ? p.rates.school : p.rates.adult;
                     return (
                       <option key={p.id} value={p.id}>
-                        {p.label} ({p.discountLabel}) · {p.sessions} sessions · {fmtRate(rate)}/seat · {p.depositPercent}% deposit
-                        {p.hasFreeLocker ? ' + Free Locker' : ''}
+                        {p.label} ({p.discountLabel}) · {p.sessions} sess. · {fmtRate(rate)}/seat
                       </option>
                     );
                   })}
                 </select>
                 <ChevronDown
                   size={14}
-                  className={`absolute right-3.5 top-1/2 -translate-y-1/2 ${textSub} pointer-events-none`}
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 ${textSub} pointer-events-none`}
                 />
               </div>
             </div>
 
-            {/* Students Slider */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <p className={`font-mono text-[10px] tracking-[0.2em] uppercase ${textSub} font-bold`}>
-                  Number of students attending
+            {/* Students Slider & Stepper */}
+            <div className="w-full min-w-0">
+              <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
+                <p className={`font-mono text-[10px] tracking-wider uppercase ${textSub} font-bold flex-1 min-w-[130px]`}>
+                  Students attending
                 </p>
-                <span className={`font-display font-bold ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} italic text-xl leading-none`}>
-                  {students}
-                </span>
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setStudents((s) => Math.max(1, Number(s) - 1))}
+                    disabled={Number(students) <= 1}
+                    aria-label="Decrease students"
+                    className={`w-7 h-7 rounded-sm border flex items-center justify-center transition-colors cursor-pointer ${
+                      Number(students) <= 1
+                        ? 'opacity-30 cursor-not-allowed border-transparent'
+                        : isDark
+                        ? 'border-[#3A3228] bg-[#231F1B] text-[#D4B87A] hover:border-[#C9A96B]'
+                        : 'border-[#DDD0B8] bg-[#FFFFFF] text-[#8B6914] hover:border-[#8B6914]'
+                    }`}
+                  >
+                    <Minus size={13} />
+                  </button>
+                  <span className={`font-display font-bold ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} italic text-lg sm:text-xl leading-none w-6 text-center`}>
+                    {students}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setStudents((s) => Math.min(Number(cabinCap), Number(s) + 1))}
+                    disabled={Number(students) >= Number(cabinCap)}
+                    aria-label="Increase students"
+                    className={`w-7 h-7 rounded-sm border flex items-center justify-center transition-colors cursor-pointer ${
+                      Number(students) >= Number(cabinCap)
+                        ? 'opacity-30 cursor-not-allowed border-transparent'
+                        : isDark
+                        ? 'border-[#3A3228] bg-[#231F1B] text-[#D4B87A] hover:border-[#C9A96B]'
+                        : 'border-[#DDD0B8] bg-[#FFFFFF] text-[#8B6914] hover:border-[#8B6914]'
+                    }`}
+                  >
+                    <Plus size={13} />
+                  </button>
+                </div>
               </div>
               <input
                 type="range"
                 min={1}
                 max={Number(cabinCap)}
                 value={students}
-                onChange={(e) => setStudents(e.target.value)}
-                className="w-full h-1.5 cursor-pointer rounded-full"
+                onChange={(e) => setStudents(Number(e.target.value))}
+                className="w-full h-2 cursor-pointer rounded-full"
                 style={{ accentColor: isDark ? '#C9A96B' : '#8B6914' }}
               />
+              <div className="flex justify-between items-center mt-1 text-[10px] font-mono text-[#A89880] w-full min-w-0">
+                <span>1 seat</span>
+                <span>Max: {cabinCap} seats</span>
+              </div>
               {result && Number(students) < result.minBillable && (
-                <p className={`font-mono text-[10px] ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} mt-1.5 font-semibold`}>
+                <p className={`font-mono text-[10px] ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} mt-1 font-semibold`}>
                   ℹ Minimum {result.minBillable} seats billed for this cabin.
                 </p>
               )}
             </div>
 
             {/* ─── 1. "APPLY A DISCOUNT" SECTION (STACKABLE DISCOUNTS) ─── */}
-            <div className={`pt-5 mt-2 border-t ${cardBorder}`}>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-1.5">
-                  <Tag size={13} className={isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} />
-                  <p className={`font-mono text-[10.5px] tracking-[0.2em] uppercase ${textSub} font-bold`}>
+            <div className={`pt-4 sm:pt-5 mt-1 sm:mt-2 border-t ${cardBorder} w-full min-w-0`}>
+              <div className="flex items-center justify-between gap-1.5 flex-wrap mb-2.5 sm:mb-3">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <Tag size={13} className={`flex-shrink-0 ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'}`} />
+                  <p className={`font-mono text-[10px] sm:text-[10.5px] tracking-wider uppercase ${textSub} font-bold truncate`}>
                     Apply a Discount
                   </p>
                 </div>
 
                 {appliedPkgDiscount && appliedEarlyBird ? (
-                  <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9A96B] text-[#1A1A1A] animate-pulse flex items-center gap-1">
-                    <Layers size={10} /> Both Discounts Active (Stacked)
+                  <span className="font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9A96B] text-[#1A1A1A] animate-pulse flex items-center gap-1 flex-shrink-0">
+                    <Layers size={10} /> Both Stacked
                   </span>
                 ) : appliedEarlyBird ? (
-                  <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9A96B] text-[#1A1A1A] animate-pulse">
-                    30% Early Bird Active
+                  <span className="font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9A96B] text-[#1A1A1A] animate-pulse flex-shrink-0">
+                    30% Early Bird
                   </span>
                 ) : appliedPkgDiscount ? (
-                  <span className={`font-mono text-[10px] font-medium ${textSub}`}>
+                  <span className={`font-mono text-[9px] sm:text-[10px] font-medium ${textSub} flex-shrink-0`}>
                     {currentPkg.label} Tier Applied
                   </span>
                 ) : (
-                  <span className={`font-mono text-[10px] font-medium ${textSub}`}>
-                    No Discount Applied
+                  <span className={`font-mono text-[9px] sm:text-[10px] font-medium ${textSub} flex-shrink-0`}>
+                    No Discount
                   </span>
                 )}
               </div>
 
               {/* Stackable Banner Notice */}
-              <div className={`p-2 mb-2.5 rounded-xs border text-[10.5px] font-mono flex items-center gap-1.5 ${
+              <div className={`p-2 mb-2.5 rounded-xs border text-[10px] sm:text-[10.5px] font-mono flex items-center gap-1.5 w-full min-w-0 ${
                 isDark ? 'bg-[#2E2319] border-[#C9A96B]/30 text-[#D4B87A]' : 'bg-[#FFF9EE] border-[#C9A96B]/60 text-[#8B6914]'
               }`}>
                 <Sparkles size={12} className="flex-shrink-0" />
-                <span>You can apply <strong>both</strong> the Package Tier Discount and Early Bird Offer together!</span>
+                <span className="leading-snug">You can apply <strong>both</strong> Package Tier + Early Bird together!</span>
               </div>
 
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-2 w-full min-w-0">
                 {/* Checkbox 1: Package Discount */}
                 <label
                   onClick={() => setSelectedPkgDiscount((v) => !v)}
-                  className={`p-3 rounded-sm border cursor-pointer flex items-start gap-3 transition-all ${
+                  className={`p-2.5 sm:p-3 rounded-sm border cursor-pointer flex items-start gap-2.5 sm:gap-3 transition-all w-full min-w-0 ${
                     selectedPkgDiscount
                       ? isDark
                         ? 'border-[#C9A96B] bg-[#C9A96B]/10 shadow-xs'
@@ -459,23 +496,23 @@ export function Calculator({
                     checked={selectedPkgDiscount}
                     onChange={(e) => setSelectedPkgDiscount(e.target.checked)}
                     onClick={(e) => e.stopPropagation()}
-                    className="mt-1 cursor-pointer w-4 h-4 rounded-xs"
+                    className="mt-1 cursor-pointer w-4 h-4 rounded-xs flex-shrink-0"
                     style={{ accentColor: isDark ? '#C9A96B' : '#8B6914' }}
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center justify-between gap-1.5 flex-wrap">
                       <span className={`font-body font-bold text-xs sm:text-sm ${textTitle}`}>
                         Package Tier Discount
                       </span>
                       <span
-                        className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs ${
+                        className={`font-mono text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-xs leading-normal ${
                           isDark ? 'bg-[#3E2F1F] text-[#D4B87A]' : 'bg-[#EADCC8] text-[#3E2F1F]'
                         }`}
                       >
-                        {currentPkg.label} tier — {currentPkg.discount > 0 ? `${currentPkg.discountLabel} applied` : 'Standard rate'}
+                        {currentPkg.label} {currentPkg.discount > 0 ? `(${currentPkg.discountLabel})` : 'Standard'}
                       </span>
                     </div>
-                    <p className={`font-mono text-[10.5px] ${textSub} mt-1 leading-relaxed`}>
+                    <p className={`font-mono text-[10px] sm:text-[10.5px] ${textSub} mt-1 leading-relaxed`}>
                       {currentPkg.discount > 0
                         ? `Standard commitment savings baked into the ${currentPkg.label} package.`
                         : `Starter tier has no volume discount. Upgrade to Growth, Pro, or Elite for up to 15% off.`}
@@ -488,7 +525,7 @@ export function Calculator({
                   onClick={() => {
                     if (offerStatus.active) setSelectedEarlyBird((v) => !v);
                   }}
-                  className={`p-3 rounded-sm border flex items-start gap-3 transition-all ${
+                  className={`p-2.5 sm:p-3 rounded-sm border flex items-start gap-2.5 sm:gap-3 transition-all w-full min-w-0 ${
                     !offerStatus.active
                       ? 'opacity-60 cursor-not-allowed bg-stone-200/40 border-stone-300'
                       : selectedEarlyBird
@@ -506,16 +543,16 @@ export function Calculator({
                     checked={selectedEarlyBird}
                     onChange={(e) => setSelectedEarlyBird(e.target.checked)}
                     onClick={(e) => e.stopPropagation()}
-                    className="mt-1 cursor-pointer w-4 h-4 rounded-xs"
+                    className="mt-1 cursor-pointer w-4 h-4 rounded-xs flex-shrink-0"
                     style={{ accentColor: isDark ? '#C9A96B' : '#8B6914' }}
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between gap-1.5 flex-wrap">
+                      <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                         <span className={`font-body font-bold text-xs sm:text-sm ${textTitle}`}>
                           Early Bird Offer
                         </span>
-                        <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A] shadow-xs">
+                        <span className="font-mono text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A] shadow-xs">
                           30% OFF
                         </span>
                       </div>
@@ -523,7 +560,7 @@ export function Calculator({
                       {/* Date Guard Indicator */}
                       {offerStatus.status !== 'active' ? (
                         <span
-                          className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs ${
+                          className={`font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-xs ${
                             offerStatus.status === 'upcoming'
                               ? 'bg-amber-100 text-amber-800 border border-amber-300'
                               : 'bg-red-100 text-red-800 border border-red-300'
@@ -532,7 +569,7 @@ export function Calculator({
                           {offerStatus.label}
                         </span>
                       ) : (
-                        <span className="font-mono text-[10px] text-[#25D366] font-semibold flex items-center gap-1">
+                        <span className="font-mono text-[9px] sm:text-[10px] text-[#25D366] font-semibold flex items-center gap-1 flex-shrink-0">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-ping" />
                           Live Offer
                         </span>
@@ -541,15 +578,15 @@ export function Calculator({
 
                     {/* Promo Code Input & Quick Apply Button */}
                     {offerStatus.active && (
-                      <div className="mt-2 flex items-center gap-2">
-                        <div className="relative flex-1">
+                      <div className="mt-2 flex items-center gap-1.5 sm:gap-2 w-full min-w-0">
+                        <div className="relative flex-1 min-w-0">
                           <input
                             type="text"
-                            placeholder="Promo code (e.g. EARLYBIRD30)"
+                            placeholder="Promo (EARLYBIRD30)"
                             value={promoCodeInput}
                             onChange={(e) => setPromoCodeInput(e.target.value)}
                             onClick={(e) => e.stopPropagation()}
-                            className={`w-full font-mono text-xs px-2.5 py-1.5 rounded-xs border focus:outline-none focus:border-[#8B6914] ${
+                            className={`w-full font-mono text-[11px] sm:text-xs px-2.5 py-1.5 rounded-xs border focus:outline-none focus:border-[#8B6914] ${
                               isDark
                                 ? 'bg-[#1A1A1A] border-[#3A3228] text-[#F7F2EA]'
                                 : 'bg-[#FFFFFF] border-[#DDD0B8] text-[#1A1A1A]'
@@ -563,7 +600,7 @@ export function Calculator({
                             setPromoCodeInput('EARLYBIRD30');
                             setSelectedEarlyBird(true);
                           }}
-                          className={`font-mono text-[10px] font-semibold px-2.5 py-1.5 rounded-xs border transition-colors cursor-pointer ${
+                          className={`font-mono text-[10px] sm:text-xs font-semibold px-2 py-1.5 rounded-xs border transition-colors cursor-pointer flex-shrink-0 ${
                             isDark
                               ? 'border-[#C9A96B]/40 text-[#D4B87A] hover:bg-[#C9A96B]/20'
                               : 'border-[#8B6914]/40 text-[#8B6914] hover:bg-[#8B6914]/10'
@@ -575,7 +612,7 @@ export function Calculator({
                     )}
 
                     {/* Inline Offer Terms */}
-                    <p className={`font-mono text-[10px] ${textSub} mt-2 leading-relaxed font-medium`}>
+                    <p className={`font-mono text-[9.5px] sm:text-[10px] ${textSub} mt-2 leading-relaxed font-medium`}>
                       {EARLY_BIRD_CONFIG.terms}
                     </p>
                   </div>
@@ -584,29 +621,29 @@ export function Calculator({
 
               {/* Apply Action Bar with Live Savings Preview */}
               <div
-                className={`mt-3 p-3 rounded-sm border flex items-center justify-between gap-3 ${
+                className={`mt-3 p-2.5 sm:p-3 rounded-sm border flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0 ${
                   isDark ? 'bg-[#231F1B] border-[#3A3228]' : 'bg-[#FFFFFF] border-[#DDD0B8]'
                 }`}
               >
-                <div className="flex flex-col min-w-0">
-                  <span className={`font-mono text-[10px] uppercase ${textSub} font-bold`}>
+                <div className="flex flex-col min-w-0 pr-1 flex-1">
+                  <span className={`font-mono text-[9px] sm:text-[10px] uppercase ${textSub} font-bold truncate`}>
                     Discount Preview
                   </span>
                   <span className={`font-mono text-xs sm:text-sm font-bold truncate ${
                     isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'
                   }`}>
                     {selectedPkgDiscount && selectedEarlyBird ? (
-                      `You’ll save ₹${Math.round(previewCalculation.savingsVsBase).toLocaleString('en-IN')} (${currentPkg.label} + 30% Early Bird)`
+                      `Save ₹${Math.round(previewCalculation.savingsVsBase).toLocaleString('en-IN')} (Stacked)`
                     ) : selectedEarlyBird ? (
-                      `You’ll save ₹${Math.round(previewCalculation.savingsVsBase).toLocaleString('en-IN')} (30% off base)`
+                      `Save ₹${Math.round(previewCalculation.savingsVsBase).toLocaleString('en-IN')} (30% off)`
                     ) : selectedPkgDiscount ? (
                       previewCalculation.savingsVsBase > 0 ? (
-                        `You’ll save ₹${Math.round(previewCalculation.savingsVsBase).toLocaleString('en-IN')} (${currentPkg.label} tier)`
+                        `Save ₹${Math.round(previewCalculation.savingsVsBase).toLocaleString('en-IN')}`
                       ) : (
-                        'Standard package rate (₹0 savings)'
+                        'Standard rate'
                       )
                     ) : (
-                      'Standard base rate (no discount)'
+                      'Standard base rate'
                     )}
                   </span>
                 </div>
@@ -618,7 +655,7 @@ export function Calculator({
                     disabled={!hasPendingChanges && !isAnimating}
                     whileHover={{ scale: hasPendingChanges ? 1.03 : 1 }}
                     whileTap={{ scale: hasPendingChanges ? 0.97 : 1 }}
-                    className={`px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider rounded-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                    className={`px-3 sm:px-4 py-2 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider rounded-xs flex items-center gap-1.5 transition-all cursor-pointer ${
                       hasPendingChanges
                         ? isDark
                           ? 'bg-[#C9A96B] text-[#1A1A1A] hover:bg-[#D4B87A] shadow-md ring-2 ring-[#C9A96B]/50'
@@ -662,31 +699,60 @@ export function Calculator({
             </div>
           </div>
         </div>
+
+        {/* ─── Mobile Live Total Glance & Jump to Breakdown (lg:hidden) ─── */}
+        {result && (
+          <div className="lg:hidden mt-4 pt-3 border-t border-[#DDD0B8] dark:border-[#3A3228] flex items-center justify-between gap-2 flex-wrap w-full min-w-0">
+            <div className="min-w-0">
+              <span className="font-mono text-[9px] uppercase tracking-wider text-[#A89880] block font-bold">
+                Current Total (incl. GST)
+              </span>
+              <span className={`font-display font-bold italic text-lg sm:text-xl ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'}`}>
+                {fmtDec(result.totalWithGst)}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById('calc-cost-breakdown');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className={`font-mono text-[10px] sm:text-[10.5px] font-bold uppercase tracking-wider px-2.5 sm:px-3 py-1.5 rounded-xs border inline-flex items-center gap-1.5 transition-colors cursor-pointer flex-shrink-0 ${
+                isDark
+                  ? 'border-[#C9A96B]/50 bg-[#C9A96B]/10 text-[#D4B87A] hover:bg-[#C9A96B]/20'
+                  : 'border-[#8B6914]/50 bg-[#8B6914]/10 text-[#8B6914] hover:bg-[#8B6914]/20'
+              }`}
+            >
+              <span>View Breakdown</span>
+              <ArrowRight size={12} className="rotate-90" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ─── RIGHT PANEL: COST BREAKDOWN & BOOKING HANDOFF ─── */}
-      <div className={`p-6 lg:p-8 ${rightBg} flex flex-col justify-between`}>
+      <div className={`p-3.5 sm:p-6 lg:p-8 ${rightBg} flex flex-col justify-between w-full max-w-full min-w-0 overflow-hidden`}>
         <div>
           {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <div className={`w-1.5 h-5 ${isDark ? 'bg-[#C9A96B]' : 'bg-[#8B6914]'}`} />
-              <h3 className={`font-display font-bold ${textTitle} text-xl`}>
+          <div id="calc-cost-breakdown" className="flex items-center justify-between gap-2 flex-wrap mb-4 sm:mb-6 scroll-mt-24 w-full min-w-0">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className={`w-1.5 h-5 flex-shrink-0 ${isDark ? 'bg-[#C9A96B]' : 'bg-[#8B6914]'}`} />
+              <h3 className={`font-display font-bold ${textTitle} text-lg sm:text-xl`}>
                 Cost Breakdown
               </h3>
             </div>
 
             {appliedPkgDiscount && appliedEarlyBird ? (
-              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A] shadow-xs flex items-center gap-1">
-                <Layers size={11} /> Both Discounts Applied
+              <span className="font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A] shadow-xs flex items-center gap-1 flex-shrink-0">
+                <Layers size={11} /> Both Applied
               </span>
             ) : appliedEarlyBird ? (
-              <span className="font-mono text-[10px] font-bold px-2.5 py-1 rounded-xs bg-[#C9A96B] text-[#1A1A1A] shadow-xs">
-                30% Early Bird Active
+              <span className="font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A] shadow-xs flex-shrink-0">
+                30% Early Bird
               </span>
             ) : appliedPkgDiscount && currentPkg.discount > 0 ? (
-              <span className="font-mono text-[10px] font-bold px-2.5 py-1 rounded-xs bg-[#EADCC8] text-[#3E2F1F] shadow-xs">
-                {currentPkg.label} Tier Discount
+              <span className="font-mono text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-xs bg-[#EADCC8] text-[#3E2F1F] shadow-xs flex-shrink-0">
+                {currentPkg.label} Tier
               </span>
             ) : null}
           </div>
@@ -695,7 +761,7 @@ export function Calculator({
             <div className="flex flex-col">
               {/* Line Items Container */}
               <div
-                className={`flex flex-col border ${cardBorder} rounded-sm overflow-hidden mb-5 transition-colors duration-500 ${
+                className={`flex flex-col border ${cardBorder} rounded-sm overflow-hidden mb-4 sm:mb-5 transition-colors duration-500 ${
                   pulseLineItems
                     ? isDark
                       ? 'bg-[#C9A96B]/10 ring-1 ring-[#C9A96B]'
@@ -706,13 +772,13 @@ export function Calculator({
                 }`}
               >
                 {/* 1. Seats billed / session */}
-                <div className={`flex items-start justify-between gap-4 px-4 py-2.5 border-b ${cardBorder}`}>
+                <div className={`flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 border-b ${cardBorder}`}>
                   <div>
                     <span className={`font-body text-xs sm:text-sm ${textBody}`}>
                       Seats billed / session
                     </span>
                     {result.seatsForBilling > Number(students) && (
-                      <p className={`font-mono text-[10px] ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} font-medium mt-0.5`}>
+                      <p className={`font-mono text-[9.5px] sm:text-[10px] ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} font-medium mt-0.5`}>
                         Min. billing: {result.minBillable} seats
                       </p>
                     )}
@@ -723,7 +789,7 @@ export function Calculator({
                 </div>
 
                 {/* 2. Rate per seat (with dynamic stacked discount badge) */}
-                <div className={`flex items-start justify-between gap-4 px-4 py-2.5 border-b ${cardBorder}`}>
+                <div className={`flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 border-b ${cardBorder}`}>
                   <div>
                     <span className={`font-body text-xs sm:text-sm ${textBody}`}>
                       Rate per seat
@@ -731,19 +797,19 @@ export function Calculator({
                     {/* Visual Tag for Rate line */}
                     <div className="mt-0.5">
                       {appliedPkgDiscount && appliedEarlyBird ? (
-                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9A96B]/25 text-[#8B6914] dark:text-[#D4B87A] border border-[#C9A96B]/50 animate-pulse">
+                        <span className="inline-flex items-center gap-1 font-mono text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-[#C9A96B]/25 text-[#8B6914] dark:text-[#D4B87A] border border-[#C9A96B]/50 animate-pulse leading-tight">
                           🎉 {currentPkg.label} {currentPkg.discount > 0 ? `(${currentPkg.discountLabel}) ` : ''}+ Early Bird (30% off)
                         </span>
                       ) : appliedEarlyBird ? (
-                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9A96B]/25 text-[#8B6914] dark:text-[#D4B87A] border border-[#C9A96B]/50 animate-pulse">
+                        <span className="inline-flex items-center gap-1 font-mono text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-[#C9A96B]/25 text-[#8B6914] dark:text-[#D4B87A] border border-[#C9A96B]/50 animate-pulse leading-tight">
                           🎉 Early Bird Applied — 30% OFF
                         </span>
                       ) : appliedPkgDiscount ? (
-                        <p className={`font-mono text-[10px] ${textSub} font-medium`}>
+                        <p className={`font-mono text-[9.5px] sm:text-[10px] ${textSub} font-medium`}>
                           {result.label} tier ({result.discountLabel})
                         </p>
                       ) : (
-                        <p className={`font-mono text-[10px] ${textSub} font-medium`}>
+                        <p className={`font-mono text-[9.5px] sm:text-[10px] ${textSub} font-medium`}>
                           Standard base rate (No discount)
                         </p>
                       )}
@@ -761,7 +827,7 @@ export function Calculator({
                 </div>
 
                 {/* 3. Cost per session */}
-                <div className={`flex items-start justify-between gap-4 px-4 py-2.5 border-b ${cardBorder}`}>
+                <div className={`flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 border-b ${cardBorder}`}>
                   <span className={`font-body text-xs sm:text-sm ${textBody}`}>
                     Cost per session
                   </span>
@@ -771,7 +837,7 @@ export function Calculator({
                 </div>
 
                 {/* 4. Cost per student */}
-                <div className={`flex items-start justify-between gap-4 px-4 py-2.5 border-b ${cardBorder}`}>
+                <div className={`flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 border-b ${cardBorder}`}>
                   <span className={`font-body text-xs sm:text-sm ${textBody}`}>
                     Cost per student
                   </span>
@@ -781,7 +847,7 @@ export function Calculator({
                 </div>
 
                 {/* 5. Package subtotal */}
-                <div className={`flex items-start justify-between gap-4 px-4 py-2.5 border-b ${cardBorder} ${
+                <div className={`flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 border-b ${cardBorder} ${
                   isDark ? 'bg-[#231F1B]/60' : 'bg-[#EADCC8]/30'
                 }`}>
                   <div>
@@ -789,8 +855,8 @@ export function Calculator({
                       Package subtotal ({result.packageSessions} sessions)
                     </span>
                     {result.savingsVsBase > 0 && (
-                      <p className={`font-mono text-[10px] ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} mt-0.5`}>
-                        Total savings: ₹{Math.round(result.savingsVsBase).toLocaleString('en-IN')} vs base rate
+                      <p className={`font-mono text-[9.5px] sm:text-[10px] ${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} mt-0.5`}>
+                        Savings: ₹{Math.round(result.savingsVsBase).toLocaleString('en-IN')} vs base rate
                       </p>
                     )}
                   </div>
@@ -802,7 +868,7 @@ export function Calculator({
                 </div>
 
                 {/* 6. GST at 18% */}
-                <div className={`flex items-start justify-between gap-4 px-4 py-2.5 border-b ${cardBorder}`}>
+                <div className={`flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 border-b ${cardBorder}`}>
                   <span className={`font-body text-xs sm:text-sm ${textBody}`}>
                     GST at 18%
                   </span>
@@ -812,12 +878,12 @@ export function Calculator({
                 </div>
 
                 {/* 7. Security deposit */}
-                <div className="flex items-start justify-between gap-4 px-4 py-2.5">
+                <div className="flex items-start justify-between gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5">
                   <div>
                     <span className={`font-body text-xs sm:text-sm ${textBody}`}>
                       Security deposit ({result.depositPercent}% refundable)
                     </span>
-                    <p className={`font-mono text-[10px] ${textSub} mt-0.5`}>
+                    <p className={`font-mono text-[9.5px] sm:text-[10px] ${textSub} mt-0.5`}>
                       {result.hasFreeLocker
                         ? 'Refundable upon completion · Includes Free Locker'
                         : 'Refundable upon completion of term'}
@@ -831,7 +897,7 @@ export function Calculator({
 
               {/* ─── Grand Total Card: Subtotal + GST + Deposit ─── */}
               <div
-                className={`p-4 rounded-sm mb-3 shadow-lg transition-all duration-500 border ${
+                className={`p-3.5 sm:p-4 rounded-sm mb-3 shadow-lg transition-all duration-500 border ${
                   pulseTotalCard
                     ? 'ring-2 ring-[#C9A96B] bg-[#2E2319]'
                     : isDark
@@ -839,27 +905,27 @@ export function Calculator({
                     : 'bg-[#1A1A1A] border-[#C9A96B]/40'
                 }`}
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-display font-bold text-[#F7F2EA] text-sm">
+                <div className="flex items-center justify-between gap-3 sm:gap-4">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                      <p className="font-display font-bold text-[#F7F2EA] text-xs sm:text-sm">
                         Package Total with GST
                       </p>
                       {appliedPkgDiscount && appliedEarlyBird ? (
-                        <span className="font-mono text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A]">
-                          Stacked Discount
+                        <span className="font-mono text-[8.5px] sm:text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A]">
+                          Stacked
                         </span>
                       ) : appliedEarlyBird ? (
-                        <span className="font-mono text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A]">
+                        <span className="font-mono text-[8.5px] sm:text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-xs bg-[#C9A96B] text-[#1A1A1A]">
                           30% Off
                         </span>
                       ) : null}
                     </div>
-                    <p className="font-mono text-[10px] text-[#DDD0B8] mt-1 font-medium">
+                    <p className="font-mono text-[9.5px] sm:text-[10px] text-[#DDD0B8] mt-1 font-medium leading-tight">
                       {result.packageSessions} sessions · {result.durationLabel} · incl. deposit & GST
                     </p>
                   </div>
-                  <span className="font-display font-bold text-[#D4B87A] italic text-2xl lg:text-3xl leading-none flex-shrink-0">
+                  <span className="font-display font-bold text-[#D4B87A] italic text-xl sm:text-2xl lg:text-3xl leading-none flex-shrink-0">
                     <AnimatedNumber value={result.totalWithGst} format="decimal" />
                   </span>
                 </div>
@@ -867,12 +933,12 @@ export function Calculator({
 
               {/* Fine-Print Disclaimer Line */}
               <div
-                className={`flex items-start gap-2.5 p-3 rounded-sm border mb-4 ${
+                className={`flex items-start gap-2.5 p-2.5 sm:p-3 rounded-sm border mb-4 ${
                   isDark ? 'bg-[#231F1B] border-[#3A3228]' : 'bg-[#F7F2EA] border-[#DDD0B8]'
                 }`}
               >
                 <Info size={14} className={`${isDark ? 'text-[#D4B87A]' : 'text-[#8B6914]'} flex-shrink-0 mt-0.5`} />
-                <p className={`font-mono text-[10.5px] ${textBody} leading-relaxed font-medium`}>
+                <p className={`font-mono text-[10px] sm:text-[10.5px] ${textBody} leading-relaxed font-medium`}>
                   Billed monthly, after you teach · Deposits fully refundable · Unused sessions lapse at the end of validity
                 </p>
               </div>
@@ -883,7 +949,7 @@ export function Calculator({
                 onClick={handleBookYourSpace}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 px-6 bg-[#C9A96B] hover:bg-[#D4B87A] text-[#1A1A1A] font-body font-bold text-xs sm:text-sm tracking-[0.18em] uppercase rounded-sm shadow-md hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2.5 group"
+                className="w-full min-h-[48px] py-3.5 sm:py-4 px-4 sm:px-6 bg-[#C9A96B] hover:bg-[#D4B87A] text-[#1A1A1A] font-body font-bold text-xs sm:text-sm tracking-[0.12em] sm:tracking-[0.18em] uppercase rounded-sm shadow-md hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2 group"
               >
                 {bookHandoffSent ? (
                   <>

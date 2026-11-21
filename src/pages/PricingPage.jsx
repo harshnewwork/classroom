@@ -265,7 +265,7 @@ export function PricingPage() {
       </section>
 
       {/* Calculator with Promo/Discount & Booking Handoff */}
-      <section id="calculator" className="max-w-7xl mx-auto px-6 lg:px-8 py-16 scroll-mt-24">
+      <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24">
         <AnimatedSection className="mb-8">
           <SectionLabel dark>Calculator</SectionLabel>
           <h2 className="font-display font-bold text-[#F7F2EA] text-2xl">Calculate your exact cost</h2>
