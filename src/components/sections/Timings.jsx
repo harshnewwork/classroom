@@ -6,19 +6,19 @@ import { SectionLabel } from '../ui/SectionLabel';
 import { Clock, Calendar, Sparkles, Check, ArrowRight } from 'lucide-react';
 
 const adultSessions = [
-  { id: 'adult-1', num: 1, time: '10:00 – 11:00 am',    dur: '60 MIN SESSION', bookingTime: 'Adult 1: 10:00 – 11:00 am', shift: 'Adults' },
-  { id: 'adult-2', num: 2, time: '11:05 am – 12:05 pm', dur: '60 MIN SESSION', bookingTime: 'Adult 2: 11:05 am – 12:05 pm', shift: 'Adults' },
-  { id: 'adult-3', num: 3, time: '12:10 – 1:10 pm',     dur: '60 MIN SESSION', bookingTime: 'Adult 3: 12:10 – 1:10 pm', shift: 'Adults' },
-  { id: 'adult-4', num: 4, time: '1:15 – 2:15 pm',      dur: '60 MIN SESSION', bookingTime: 'Adult 4: 1:15 – 2:15 pm', shift: 'Adults' },
-  { id: 'adult-5', num: 5, time: '2:20 – 3:20 pm',      dur: '60 MIN SESSION', bookingTime: 'Adult 5: 2:20 – 3:20 pm', shift: 'Adults' },
+  { id: 'adult-1', num: 1, time: '10:00 – 10:55 AM', dur: '55 MIN SESSION', bookingTime: 'Adult 1: 10:00 – 10:55 am', shift: 'Adults' },
+  { id: 'adult-2', num: 2, time: '11:05 AM – 12:00 PM', dur: '55 MIN SESSION', bookingTime: 'Adult 2: 11:05 am – 12:00 pm', shift: 'Adults' },
+  { id: 'adult-3', num: 3, time: '12:10 – 1:05 PM', dur: '55 MIN SESSION', bookingTime: 'Adult 3: 12:10 – 1:05 pm', shift: 'Adults' },
+  { id: 'adult-4', num: 4, time: '1:15 – 2:10 PM', dur: '55 MIN SESSION', bookingTime: 'Adult 4: 1:15 – 2:10 pm', shift: 'Adults' },
+  { id: 'adult-5', num: 5, time: '2:20 – 3:15 PM', dur: '55 MIN SESSION', bookingTime: 'Adult 5: 2:20 – 3:15 pm', shift: 'Adults' },
 ];
 
-const kidsSessions = [
-  { id: 'kids-1', num: 1, time: '3:30 – 4:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 1: 3:30 – 4:25 pm', shift: 'Kids' },
-  { id: 'kids-2', num: 2, time: '4:30 – 5:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 2: 4:30 – 5:25 pm', shift: 'Kids' },
-  { id: 'kids-3', num: 3, time: '5:30 – 6:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 3: 5:30 – 6:25 pm', shift: 'Kids' },
-  { id: 'kids-4', num: 4, time: '6:30 – 7:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 4: 6:30 – 7:25 pm', shift: 'Kids' },
-  { id: 'kids-5', num: 5, time: '7:30 – 8:25 pm', dur: '55 MIN SESSION', bookingTime: 'Kids 5: 7:30 – 8:25 pm', shift: 'Kids' },
+const schoolSessions = [
+  { id: 'school-1', num: 1, time: '3:30 – 4:25 PM', dur: '55 MIN SESSION', bookingTime: 'School 1: 3:30 – 4:25 pm', shift: 'School' },
+  { id: 'school-2', num: 2, time: '4:35 – 5:30 PM', dur: '55 MIN SESSION', bookingTime: 'School 2: 4:35 – 5:30 pm', shift: 'School' },
+  { id: 'school-3', num: 3, time: '5:40 – 6:35 PM', dur: '55 MIN SESSION', bookingTime: 'School 3: 5:40 – 6:35 pm', shift: 'School' },
+  { id: 'school-4', num: 4, time: '6:45 – 7:40 PM', dur: '55 MIN SESSION', bookingTime: 'School 4: 6:45 – 7:40 pm', shift: 'School' },
+  { id: 'school-5', num: 5, time: '7:50 – 8:45 PM', dur: '55 MIN SESSION', bookingTime: 'School 5: 7:50 – 8:45 pm', shift: 'School' },
 ];
 
 function InteractiveSessionRow({ s, isSelected, onToggle }) {
@@ -101,11 +101,11 @@ export function Timings() {
             <span className="text-[#8B6914] italic">One Learning Space.</span>
           </h2>
           <p className="font-body text-[#3E2F1F] text-sm mt-3 font-normal">
-            Structured sessions with 5-minute cleaning buffers between sessions to ensure every educator enters a fresh, sanitized room. Click any slot to reserve it.
+            Structured 55-minute sessions with 10-minute cleaning buffers between sessions to ensure every educator enters a fresh, sanitized room. Click any slot to reserve it.
           </p>
         </AnimatedSection>
 
-        <div className="grid lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
           {/* Adult Sessions */}
           <AnimatedSection direction="left">
             <div className="border border-[#DDD0B8] rounded-sm overflow-hidden bg-[#F7F2EA] shadow-sm flex flex-col h-full">
@@ -113,9 +113,9 @@ export function Timings() {
                 <div className="flex items-center gap-3">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#8B6914]" />
                   <div>
-                    <h3 className="font-display font-bold text-[#1A1A1A] text-base">Adults</h3>
+                    <h3 className="font-display font-bold text-[#1A1A1A] text-base">Adults (Morning shift)</h3>
                     <p className="font-mono text-[10px] text-[#5C450C] uppercase tracking-wide font-semibold">
-                      10:00 am – 3:20 pm · 60 min sessions · 5-min clean
+                      10:00 am – 3:15 pm · 55 min sessions · 10-min clean
                     </p>
                   </div>
                 </div>
@@ -137,27 +137,27 @@ export function Timings() {
                   ))}
                 </StaggerContainer>
 
-                {/* 10-min deep clean notice */}
+                {/* 15-min shift break notice */}
                 <div className="mt-2 p-2.5 bg-[#FFFDF9] border border-[#DDD0B8] rounded-sm flex items-center gap-2">
                   <Sparkles size={13} className="text-[#8B6914] flex-shrink-0" />
                   <p className="font-mono text-[10.5px] text-[#3E2F1F] font-medium">
-                    <strong className="text-[#1A1A1A]">3:20 – 3:30 pm:</strong> 10-min deep clean & room reset
+                    <strong className="text-[#1A1A1A]">3:15 – 3:30 pm:</strong> 15-min shift handover & deep clean
                   </p>
                 </div>
               </div>
             </div>
           </AnimatedSection>
 
-          {/* Kids Sessions */}
+          {/* School Sessions */}
           <AnimatedSection direction="right" delay={0.1}>
             <div className="border border-[#DDD0B8] rounded-sm overflow-hidden bg-[#F7F2EA] shadow-sm flex flex-col h-full">
               <div className="p-5 border-b border-[#DDD0B8] bg-[#F7F2EA] flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#3E2F1F]" />
                   <div>
-                    <h3 className="font-display font-bold text-[#1A1A1A] text-base">Kids</h3>
+                    <h3 className="font-display font-bold text-[#1A1A1A] text-base">School (Evening shift)</h3>
                     <p className="font-mono text-[10px] text-[#5C450C] uppercase tracking-wide font-semibold">
-                      3:30 pm – 8:25 pm · 55 min sessions · 5-min clean
+                      3:30 pm – 8:45 pm · 55 min sessions · 10-min clean
                     </p>
                   </div>
                 </div>
@@ -168,7 +168,7 @@ export function Timings() {
               </div>
               <div className="p-4 flex flex-col gap-2 flex-1">
                 <StaggerContainer className="flex flex-col gap-2" delay={0.04}>
-                  {kidsSessions.map((s) => (
+                  {schoolSessions.map((s) => (
                     <StaggerItem key={s.id}>
                       <InteractiveSessionRow
                         s={s}
@@ -189,6 +189,15 @@ export function Timings() {
             </div>
           </AnimatedSection>
         </div>
+
+        {/* Tagline under the table */}
+        <AnimatedSection className="mb-8">
+          <div className="p-4 sm:p-5 rounded-sm bg-[#FFFDF9] border border-[#DDD0B8] shadow-xs text-center max-w-3xl mx-auto">
+            <p className="font-display italic text-[#8B6914] text-base sm:text-lg font-medium">
+              “A space for every age. An opportunity to learn at every stage.”
+            </p>
+          </div>
+        </AnimatedSection>
 
         {/* Interactive Selection Drawer / Bar */}
         <AnimatePresence>

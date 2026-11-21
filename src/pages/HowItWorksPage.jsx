@@ -16,7 +16,7 @@ const steps = [
     desc: 'Share your subject focus, batch size, and preferred days and times. Our manager will help identify the ideal cabin for your learners.',
     details: [
       'Share your subject and learner group (school or adult)',
-      'Specify your expected batch size (6 to 24 students)',
+      'Specify your expected batch size (4 to 30 students)',
       'Indicate preferred session timings and recurring days',
     ],
     image: '/images/reception-lobby.png',
@@ -161,10 +161,10 @@ export function HowItWorksPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 10:00 am to 8:25 pm.' },
+              { icon: Calendar, title: 'Operating Days', desc: 'Monday to Saturday, plus three Sundays per month. Operating hours run from 10:00 am to 8:45 pm.' },
               { icon: Users,    title: 'Multiple Batches', desc: 'Run multiple batches across different time slots or cabin capacities. Easily coordinate with the manager.' },
-              { icon: Clock,    title: 'Adult Timetable', desc: '5 sessions (60 min each, 5-min clean): 10:00–11:00, 11:05–12:05, 12:10–1:10, 1:15–2:15, 2:20–3:20 (10-min deep clean 3:20–3:30).' },
-              { icon: Clock,    title: 'School Timetable', desc: '5 sessions (55 min each, 5-min clean): 3:30–4:25, 4:30–5:25, 5:30–6:25, 6:30–7:25, 7:30–8:25.' },
+              { icon: Clock,    title: 'Adult Timetable', desc: '5 sessions (55 min each, 10-min clean): 10:00–10:55, 11:05–12:00, 12:10–1:05, 1:15–2:10, 2:20–3:15 (15-min shift handover 3:15–3:30).' },
+              { icon: Clock,    title: 'School Timetable', desc: '5 sessions (55 min each, 10-min clean): 3:30–4:25, 4:35–5:30, 5:40–6:35, 6:45–7:40, 7:50–8:45.' },
               { icon: Calendar, title: 'Monthly Billing', desc: 'Consolidated invoice issued monthly based on student collections, with transparent package rates and security deposits.' },
             ].map(({ icon: Icon, title, desc }) => (
               <AnimatedSection key={title}>

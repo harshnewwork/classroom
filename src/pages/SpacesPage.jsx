@@ -57,8 +57,8 @@ export function SpacesPage() {
   return (
     <div className="bg-warm-stone min-h-screen">
       <SEO
-        title="Classroom Cabins for Rent (6–24 Seats) | Mentors Studio, Gurugram"
-        description="9 furnished teaching cabins from 6 to 24 seats, plus an open-air balcony and arts area. Whiteboards, AC, Wi-Fi and display tech in every room."
+        title="Classroom Cabins for Rent (4–30 Seats) | Mentors Studio, Gurugram"
+        description="9 furnished teaching cabins from 4 to 30 seats, plus an open-air balcony and arts area. Whiteboards, AC, Wi-Fi and display tech in every room."
         canonicalPath="/spaces"
         breadcrumbs={[{ name: 'Spaces', path: '/spaces' }]}
       />
@@ -66,7 +66,7 @@ export function SpacesPage() {
       <PageHero
         label="Our Spaces & Cabins"
         title="Find a Space That Fits Your Teaching Needs."
-        subtitle="Nine dedicated teaching cabins from 6 to 24 seats, plus an open-air balcony and dedicated arts space. Fully furnished with climate-controlled AC, high-speed Wi-Fi, and presentation displays."
+        subtitle="Nine dedicated teaching cabins from 4 to 30 seats, plus an open-air balcony and dedicated arts space. Fully furnished with climate-controlled AC, high-speed Wi-Fi, and presentation displays."
         image="/images/classroom-seminar.png"
         cta={{ label: 'Book a Space', to: '/contact#enquiry-form' }}
       />
@@ -76,7 +76,7 @@ export function SpacesPage() {
       {/* Stats */}
       <div className="bg-[#1A1A1A] border-b border-[#3A3228]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {[['9','Teaching cabins'],['2','Open areas'],['120','Total seats'],['6–24','Seats per cabin']].map(([v, l]) => (
+          {[['9','Teaching cabins'],['2','Open areas'],['120','Total seats'],['4–30','Seats per cabin']].map(([v, l]) => (
             <div key={l} className="text-center">
               <p className="font-display font-bold text-[#D4B87A] text-3xl italic">{v}</p>
               <p className="font-mono text-[9.5px] text-[#EADCC8] mt-1 tracking-wider uppercase font-semibold">{l}</p>
@@ -95,7 +95,7 @@ export function SpacesPage() {
             </h2>
           </div>
           <p className="font-body text-[#3E2F1F] text-base leading-relaxed font-normal mb-6">
-            Professional teaching spaces with furnished cabins, digital displays, whiteboards and high-speed Wi-Fi. Choose from 9 private cabins and 2 open spaces, accommodating groups of 6–24 students.
+            Professional teaching spaces with furnished cabins, digital displays, whiteboards and high-speed Wi-Fi. Choose from 9 private cabins and 2 open spaces, accommodating groups of 4–30 students.
           </p>
           <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
             <Link to="/pricing" className="text-[#8B6914] hover:text-[#5C450C] font-bold inline-flex items-center gap-1.5 transition-colors">

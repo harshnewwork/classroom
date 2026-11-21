@@ -47,8 +47,10 @@ export function Calculator({
   const isDark = theme === 'dark';
 
   // Calculator inputs
+  const initialCabin = cabins.find((c) => c.capacity === Number(defaultCapacity)) || cabins[0];
   const [eduType, setEduType] = useState('adult');
-  const [cabinCap, setCabinCap] = useState(defaultCapacity || 10);
+  const [selectedCabinId, setSelectedCabinId] = useState(initialCabin?.id || 'D');
+  const [cabinCap, setCabinCap] = useState(initialCabin?.capacity || 10);
   const [pkgId, setPkgId] = useState(defaultPackage || 'starter');
   const [students, setStudents] = useState(6);
 
@@ -56,7 +58,9 @@ export function Calculator({
   const [prevCap, setPrevCap] = useState(defaultCapacity);
   if (defaultCapacity !== prevCap) {
     setPrevCap(defaultCapacity);
-    setCabinCap(defaultCapacity);
+    const match = cabins.find((c) => c.capacity === Number(defaultCapacity)) || cabins[0];
+    setSelectedCabinId(match?.id || 'D');
+    setCabinCap(match?.capacity || Number(defaultCapacity));
     setStudents((s) => Math.min(Number(s), Number(defaultCapacity)));
   }
 
@@ -192,9 +196,9 @@ export function Calculator({
   const handleBookYourSpace = () => {
     if (!result) return;
 
-    const cabinObj = cabins.find((c) => c.capacity === Number(cabinCap));
+    const cabinObj = cabins.find((c) => c.id === selectedCabinId) || cabins.find((c) => c.capacity === Number(cabinCap));
     const studentCategory = eduType === 'school' ? 'School students (Grade 5 and above)' : 'Adults';
-    const cabinFormatted = cabinObj ? `${cabinObj.capacity} seats` : `${cabinCap} seats`;
+    const cabinFormatted = cabinObj ? `${cabinObj.name} (${cabinObj.capacity} seats)` : `${cabinCap} seats`;
 
     let discountSummary;
     if (appliedPkgDiscount && appliedEarlyBird) {
@@ -334,16 +338,20 @@ export function Calculator({
               </p>
               <div className="relative w-full min-w-0">
                 <select
-                  value={cabinCap}
+                  value={selectedCabinId}
                   onChange={(e) => {
-                    const val = Number(e.target.value);
-                    setCabinCap(val);
-                    setStudents((s) => Math.min(Number(s), val));
+                    const cId = e.target.value;
+                    setSelectedCabinId(cId);
+                    const found = cabins.find((c) => c.id === cId);
+                    if (found) {
+                      setCabinCap(found.capacity);
+                      setStudents((s) => Math.min(Number(s), found.capacity));
+                    }
                   }}
                   className={`${selectCls} max-w-full`}
                 >
                   {cabins.map((c) => (
-                    <option key={c.id} value={c.capacity}>
+                    <option key={c.id} value={c.id}>
                       {c.name} — {c.capacity} seats (min. {getMinBillable(c.capacity)} billed)
                     </option>
                   ))}

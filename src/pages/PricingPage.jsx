@@ -175,7 +175,7 @@ export function PricingPage() {
                     <span className="font-display font-bold text-[#F7F2EA] text-4xl">₹{et.baseRate}</span>
                     <span className="font-body text-[#A89880] text-sm">/ seat base rate</span>
                   </div>
-                  <p className="font-mono text-xs text-[#A89880] mt-1">{et.id === 'school' ? '55 min' : '60 min'} · excl. GST</p>
+                  <p className="font-mono text-xs text-[#A89880] mt-1">55 min sessions · excl. GST</p>
                 </div>
               ))}
             </div>
@@ -196,7 +196,7 @@ export function PricingPage() {
             Traditional coaching room rentals in Gurugram demand fixed monthly leases between ₹35,000 and ₹75,000 regardless of student turnout. Mentors Studio replaces that liability with an educator-first variable model: you pay strictly per seat, per session, billed monthly in arrears. You collect tuition fees from your students first throughout the month, then settle your classroom invoice with zero cashflow strain.
           </p>
           <p className="font-body text-[#A89880] text-sm lg:text-base leading-relaxed font-light mb-4">
-            To reserve a dedicated room, every cabin requires a reasonable 80% minimum billable capacity (rounded up). In an 8-seat cabin, the minimum bill is 7 seats; in a 10-seat cabin, it is 8 seats; in our 24-seat seminar hall, it is 20 seats. If 9 students attend your 10-seat session, you pay for 9 seats; if 5 attend, you pay the 8-seat baseline. With packages offering up to 15% savings, educators run high-margin batches without ever risking lease penalties.
+            To reserve a dedicated room, every cabin requires a reasonable 80% minimum billable capacity (rounded up). In a 4-seat cabin, the minimum bill is 4 seats; in an 8-seat cabin, it is 7 seats; in a 10-seat cabin, it is 8 seats; in a 12-seat cabin, it is 10 seats; and in our 30-seat flagship seminar hall, it is 24 seats. If 9 students attend your 10-seat session, you pay for 9 seats; if 5 attend, you pay the 8-seat baseline. With packages offering up to 15% savings, educators run high-margin batches without ever risking lease penalties.
           </p>
           <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono">
             <Link to="/spaces" className="text-[#C9A96B] hover:text-[#F7F2EA] font-semibold inline-flex items-center gap-1">

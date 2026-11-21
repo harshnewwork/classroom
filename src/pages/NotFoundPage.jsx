@@ -51,7 +51,7 @@ export function NotFoundPage() {
                 Browse Teaching Cabins
               </h3>
               <p className="font-body text-[#7A6A50] text-sm mt-1 font-light">
-                Explore all 9 cabins (6–24 seats), photos, seating configurations, and tech setups.
+                Explore all 9 cabins (4–30 seats), photos, seating configurations, and tech setups.
               </p>
             </div>
           </Link>

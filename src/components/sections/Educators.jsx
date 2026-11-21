@@ -249,7 +249,7 @@ export function Educators() {
                 </div>
 
                 <p className="text-center font-mono text-[10.5px] sm:text-[11px] tracking-wider uppercase text-[#8B6914] font-bold mb-5 mt-2">
-                  Monday to Friday · 10:00 am – 3:20 pm
+                  Monday to Friday · 10:00 am – 3:15 pm
                 </p>
 
                 {/* 15 Program Tiles (3 columns x 5 rows) */}

@@ -179,11 +179,11 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Slot 5: 10:00am–8:25pm Daily Sessions */}
+            {/* Slot 5: 10:00am–8:45pm Daily Sessions */}
             <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/50 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
               <div className="flex flex-col font-display font-medium italic text-[#D4B87A] text-xl sm:text-2xl lg:text-[26px] leading-[1.08] tracking-tight">
                 <span>10:00am–</span>
-                <span>8:25pm</span>
+                <span>8:45pm</span>
               </div>
               <div className="mt-3">
                 <p className="font-mono text-[10px] sm:text-[10.5px] font-bold tracking-[0.08em] text-[#A89880] uppercase leading-tight">

@@ -5,6 +5,7 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from '../components/ui
 import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { Booking } from '../components/sections/Booking';
+import { CompetitorComparison } from '../components/sections/CompetitorComparison';
 import { CheckCircle2, XCircle, ArrowRight, BookOpen, GraduationCap, Code2, Globe2, Palette, Target, Award, ClipboardCheck, Briefcase, Video } from 'lucide-react';
 
 const educatorProfiles = [
@@ -251,63 +252,8 @@ export function EducatorsPage() {
         </StaggerContainer>
       </section>
 
-      {/* Comparison: Independent setup vs Mentors Studio */}
-      <section className="bg-[#231F1B] border-y border-[#3A3228] py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection className="mb-10">
-            <SectionLabel>Why Here</SectionLabel>
-            <h2 className="font-display font-bold text-[#F7F2EA] text-2xl lg:text-3xl leading-tight max-w-2xl">
-              Why Gurugram educators choose Mentors Studio over leasing commercial space.
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            <AnimatedSection direction="left">
-              <div className="border border-[#3A3228] rounded-sm p-6 bg-[#1A1A1A]">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#A89880] mb-4">Setting up independently</p>
-                <div className="flex flex-col gap-3">
-                  {[
-                    'Finding and negotiating commercial property leases in Sector 57',
-                    '3–6 month security deposits + upfront broker commissions',
-                    'Purchasing classroom furniture, podiums, and whiteboards',
-                    'Installing projectors, displays, and commercial internet connections',
-                    'Hiring cleaning staff, reception manager, and technical maintenance',
-                    'Fixed electricity bills and high ongoing operational liabilities',
-                    '6–12 months before holding your first paid class',
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <XCircle size={14} className="text-[#A89880] flex-shrink-0 mt-0.5" />
-                      <span className="font-body text-[#A89880] text-sm">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right">
-              <div className="border border-[#C9A96B]/30 rounded-sm p-6 bg-[#C9A96B]/3">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#C9A96B] mb-4">With Mentors Studio</p>
-                <div className="flex flex-col gap-3">
-                  {[
-                    'Walk directly into a furnished, ready-to-teach classroom cabin',
-                    'Zero setup cost, zero infrastructure capital expenditure',
-                    'All display tech, laptops, and whiteboards in place and maintained',
-                    'Dual-band optical Wi-Fi and 100% generator power backup included',
-                    'Full-time floor manager and IT technician present every session',
-                    'Daily professional housekeeping, printing station, and student reception',
-                    'Start teaching your batch in as little as 24–48 hours',
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 size={14} className="text-[#C9A96B] flex-shrink-0 mt-0.5" />
-                      <span className="font-body text-[#F7F2EA] text-sm">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
+      {/* Competitor Comparison: Why Mentors Studio */}
+      <CompetitorComparison />
 
       {/* Booking Form Section */}
       <Booking />

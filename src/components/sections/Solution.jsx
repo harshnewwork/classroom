@@ -30,12 +30,6 @@ const features = [
     alt: 'Reception lobby with on-site facility manager and IT support staff',
   },
   {
-    title: 'Recording Facilities',
-    desc: 'Audio and video recording of your class available on request.',
-    image: '/images/classroom-music.png',
-    alt: 'Classroom studio setup with audio and video recording equipment',
-  },
-  {
     title: 'Printing & Scanning',
     desc: 'Multiple sizes. Charged per page. No separate print shop needed.',
     image: '/images/facilities-lockers.png',

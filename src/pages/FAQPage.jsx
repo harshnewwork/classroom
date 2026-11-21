@@ -44,8 +44,8 @@ export function FAQPage() {
 
       <PageHero
         label="FAQ & Knowledge Base"
-        title={<>Frequently Asked Questions — <span className="text-gradient">Classroom Rental in Gurugram</span></>}
-        subtitle="Everything you need to know about renting fully equipped teaching cabins on Golf Course Extension Road, Sector 57. From per-seat billing to cabin specs and Sunday schedules."
+        title={<>Got Questions? <span className="text-gradient">We’ve Got Classrooms (and Answers).</span></>}
+        subtitle="Everything you need to know about classroom rental in Gurugram before you walk in and teach — per-seat billing, 4–30 seat cabin specs, flexible timings, and 7-day access on Golf Course Extension Road."
         image="/images/classroom-seminar.png"
         cta={{ label: 'Ask a Question', to: '/contact#enquiry-form' }}
       />
@@ -151,7 +151,7 @@ export function FAQPage() {
           <div className="p-6 bg-[#F7F2EA] border border-[#DDD0B8] rounded-sm">
             <h4 className="font-display font-semibold text-[#1A1A1A] text-base mb-2">Browse 9 Teaching Cabins</h4>
             <p className="font-body text-[#7A6A50] text-sm mb-4 font-light">
-              Explore photos, seat layouts, whiteboard setups, and display technology for 6 to 24-seat rooms.
+              Explore photos, seat layouts, whiteboard setups, and display technology for 4 to 30-seat rooms.
             </p>
             <Link to="/spaces" className="inline-flex items-center gap-1.5 font-mono text-xs text-[#C9A96B] hover:text-[#3E2F1F] font-semibold">
               View All Spaces <ArrowRight size={12} />

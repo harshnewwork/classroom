@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { NavLogo } from './ui/Logo';
+import { EarlyBirdTopBanner } from './pricing/EarlyBirdTopBanner';
 
 const navLinks = [
   { label: 'Home',          to: '/',              exact: true },
@@ -53,6 +54,9 @@ export function Navigation() {
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#F7F2EA]/96 backdrop-blur-md border-b border-[#DDD0B8] shadow-xs"
       >
+        {/* Full-width grand Early Bird Top Banner */}
+        <EarlyBirdTopBanner />
+
         {/* Top gold line */}
         <div className="h-[3px] bg-gradient-to-r from-[#8B6914] via-[#C9A96B] to-[#8B6914]" />
 

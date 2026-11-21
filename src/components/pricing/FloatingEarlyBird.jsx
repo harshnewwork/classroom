@@ -20,6 +20,16 @@ export function FloatingEarlyBird() {
   const timerRef = useRef(null);
 
   const [offerStatus, setOfferStatus] = useState(() => getOfferDateStatus());
+  const [scrolledPastTop, setScrolledPastTop] = useState(false);
+  const [topBannerDismissed, setTopBannerDismissed] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      return sessionStorage.getItem('ms_early_bird_top_banner_dismissed') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
   const [dismissed, setDismissed] = useState(() => {
     if (typeof window === 'undefined') return false;
     try {
@@ -32,6 +42,28 @@ export function FloatingEarlyBird() {
     }
     return false;
   });
+
+  // Track scrolling so the floating badge acts as a secondary reminder once user scrolls down
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = () => {
+      setScrolledPastTop(window.scrollY > 280);
+    };
+
+    const handleBannerDismissed = () => {
+      setTopBannerDismissed(true);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('ms-early-bird-banner-dismissed', handleBannerDismissed);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('ms-early-bird-banner-dismissed', handleBannerDismissed);
+    };
+  }, []);
 
   const hideForOneMinute = useCallback(() => {
     setDismissed(true);
@@ -131,7 +163,7 @@ export function FloatingEarlyBird() {
 
   return (
     <AnimatePresence>
-      {offerStatus.active && !dismissed && (
+      {offerStatus.active && !dismissed && (scrolledPastTop || topBannerDismissed) && (
         <motion.div
           key="floating-early-bird-card"
           initial={{ opacity: 0, y: 40, scale: 0.95 }}

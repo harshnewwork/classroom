@@ -5,7 +5,7 @@ import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { Link } from 'react-router-dom';
 import {
-  Sofa, Wifi, UserCheck, Camera, Home, Mic, Printer,
+  Sofa, Wifi, UserCheck, Camera, Home, Printer,
   Lock, Package, Zap, Monitor, ArrowRight, CheckCircle2,
   Sparkles
 } from 'lucide-react';
@@ -61,7 +61,7 @@ const facilitiesDetailed = [
       'Dedicated manager handles the shared booking calendar',
       'Prevents double bookings across all 9 cabins and 2 open areas',
       'Assists with educator onboarding and student reception',
-      'Available on the floor throughout all 10:00 am to 8:25 pm hours',
+      'Available on the floor throughout all 10:00 am to 8:45 pm hours',
       'Single point of contact for schedule adjustments and batch extensions',
     ],
     image: '/images/reception-lobby.png',
@@ -74,7 +74,7 @@ const facilitiesDetailed = [
     details: [
       'Dedicated IT technician present during all operating hours',
       'Handles laptop, display, audio, and network connectivity issues',
-      'Sets up audio and video recording equipment upon request',
+      'Assists with display tuning, HDMI projection, and audio setup',
       'Performs preventive maintenance on all in-cabin AV equipment',
       'Immediate in-person response — no waiting for outside help',
     ],
@@ -108,20 +108,6 @@ const facilitiesDetailed = [
     ],
     image: '/images/classroom-standard.png',
     highlight: false,
-  },
-  {
-    icon: Mic,
-    title: 'Audio & Video Recording',
-    summary: 'Record your class — for review or digital course creation.',
-    details: [
-      'HD lecture recording support available upon prior notice',
-      'Ideal for review, absent students, or creating online course content',
-      'IT technician assists with microphone placement and tripod setup',
-      'Recordings are handed over directly to you as your exclusive IP',
-      'Available across all cabins subject to advance notification',
-    ],
-    image: '/images/classroom-music.png',
-    highlight: true,
   },
   {
     icon: Printer,
@@ -276,7 +262,7 @@ export function FacilitiesPage() {
           </p>
           <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
             <Link to="/spaces" className="text-[#8B6914] hover:text-[#5C450C] font-bold inline-flex items-center gap-1.5 transition-colors">
-              View cabin sizes from 6 to 24 seats <ArrowRight size={13} />
+              View cabin sizes from 4 to 30 seats <ArrowRight size={13} />
             </Link>
             <span className="text-[#DDD0B8]">|</span>
             <Link to="/pricing" className="text-[#8B6914] hover:text-[#5C450C] font-bold inline-flex items-center gap-1.5 transition-colors">

@@ -43,19 +43,19 @@ export const FAQS = [
     id: 'age-groups-subjects',
     category: 'Programmes & Rules',
     question: 'What age groups and subjects are allowed in the classrooms?',
-    answer: 'We welcome adult learners during morning and midday slots (10:00 am to 3:20 pm, 60-min sessions) for programmes like IELTS/TOEFL, spoken English, coding, AutoCAD, digital marketing, and professional skills. Evening slots (3:30 pm to 8:25 pm, 55-min sessions) and scheduled Sundays cater to school students from Grade 5 and above for academic tuition, board exam prep, and arts/botany. To ensure a focused academic atmosphere, dance, loud music, and pre-nursery programmes are not accommodated.',
+    answer: 'We welcome adult learners during morning and midday slots (10:00 am to 3:15 pm, 55-min sessions) for programmes like IELTS/TOEFL, spoken English, coding, AutoCAD, digital marketing, and professional skills. Evening slots (3:30 pm to 8:45 pm, 55-min sessions) and scheduled Sundays cater to school students from Grade 5 and above for academic tuition, board exam prep, and arts/botany. To ensure a focused academic atmosphere, dance, loud music, and pre-nursery programmes are not accommodated.',
   },
   {
     id: 'recording-classes',
     category: 'Facilities & Tech',
     question: 'Can I record my sessions for content or review?',
-    answer: 'Yes. Audio and video recording can be arranged upon prior request with our on-site IT technician. You can record lectures for review, hybrid student delivery, or digital course creation. All recorded footage remains your 100% exclusive intellectual property and is never shared with third parties.',
+    answer: 'Yes. Educators are welcome to record their classes using their own equipment or camera setups for student review, hybrid delivery, or digital course creation. All recorded footage remains your 100% exclusive intellectual property and is never shared with third parties.',
   },
   {
     id: 'min-billing-calculation',
     category: 'Pricing & Billing',
     question: 'How is billing calculated if fewer students show up than expected (minimum billable seats)?',
-    answer: 'To reserve a dedicated cabin exclusively for your batch, each room requires a minimum billable seat threshold set at 80% of capacity, rounded up (for example, 5 seats in a 6-seat cabin, 8 seats in a 10-seat cabin, or 20 seats in a 24-seat seminar room). If fewer students attend on a given day, you are billed only for that minimum; when attendance exceeds the minimum, you pay only for the exact seats occupied.',
+    answer: 'To reserve a dedicated cabin exclusively for your batch, each room requires a minimum billable seat threshold set at 80% of capacity, rounded up (for example, 4 seats in a 4-seat cabin, 7 seats in an 8-seat cabin, 8 seats in a 10-seat cabin, 10 seats in a 12-seat cabin, or 24 seats in a 30-seat seminar room). If fewer students attend on a given day, you are billed only for that minimum; when attendance exceeds the minimum, you pay only for the exact seats occupied.',
   },
   {
     id: 'parking',
@@ -73,13 +73,13 @@ export const FAQS = [
     id: 'scale-cabin-size',
     category: 'Booking & Commitment',
     question: 'What happens if I need a larger or smaller cabin later?',
-    answer: 'Flexibility is a cornerstone of Mentors Studio. As your batch expands or contracts, you can request an upgrade or change of cabin size through the on-site manager. With 9 distinct cabins ranging from 6 to 24 seats plus two open-format creative areas, you can seamlessly transition between room capacities as your student enrollment grows.',
+    answer: 'Flexibility is a cornerstone of Mentors Studio. As your batch expands or contracts, you can request an upgrade or change of cabin size through the on-site manager. With 9 distinct cabins ranging from 4 to 30 seats plus two open-format creative areas, you can seamlessly transition between room capacities as your student enrollment grows.',
   },
   {
     id: 'sunday-classes',
     category: 'Booking & Commitment',
     question: 'Are Sunday classes possible?',
-    answer: 'Yes. Mentors Studio operates Monday through Saturday (10:00 am to 8:25 pm), and is open for teaching sessions on three designated Sundays per calendar month by prior scheduling arrangement with the facility manager. This is ideal for weekend crash courses, mock test drives, and executive workshops.',
+    answer: 'Yes. Mentors Studio operates Monday through Saturday (10:00 am to 8:45 pm), and is open for teaching sessions on three designated Sundays per calendar month by prior scheduling arrangement with the facility manager. This is ideal for weekend crash courses, mock test drives, and executive workshops.',
   },
   {
     id: 'legal-operations',
@@ -96,8 +96,8 @@ export const FAQS = [
   {
     id: 'cabin-capacities-layout',
     category: 'Facilities & Tech',
-    question: 'How many students can an 8-seat, 12-seat, or 24-seat cabin hold comfortably?',
-    answer: 'Every cabin capacity is rated for comfortable ergonomic learning with individual desks, proper sightlines to the display screen and whiteboard, and adequate aisle space. Our 6-seat and 8-seat cabins are tailored for personalized tutoring, 10-seat and 12-seat cabins accommodate standard school or language batches, and our 24-seat seminar hall comfortably accommodates large competitive exam batches or workshops.',
+    question: 'How many students can a 4-seat, 10-seat, or 30-seat cabin hold comfortably?',
+    answer: 'Every cabin capacity is rated for comfortable ergonomic learning with individual desks, proper sightlines to the display screen and whiteboard, and adequate aisle space. Our 4-seat and 8-seat cabins are tailored for personalized tutoring, 10-seat and 12-seat cabins accommodate standard school or language batches, and our 30-seat seminar hall comfortably accommodates large competitive exam batches or workshops.',
   },
 ];
 

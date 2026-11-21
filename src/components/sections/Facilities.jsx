@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/AnimatedSection';
 import { SectionLabel } from '../ui/SectionLabel';
 import {
@@ -7,26 +8,41 @@ import {
   Wifi,
   UserCheck,
   Camera,
-  Home,
-  Mic,
-  Printer,
-  Lock,
-  Package,
-  Zap,
+  ArrowRight,
 } from 'lucide-react';
 
 const facilities = [
-  { icon: Sofa,      title: 'Furnished AC Cabins',     desc: 'Ready-to-use, fully furnished classrooms.',            image: '/images/classroom-standard.png' },
-  { icon: Monitor,   title: 'In-Cabin Digital Screen', desc: 'Screen and laptop available in every cabin.',          image: '/images/classroom-physics.png' },
-  { icon: Wifi,      title: 'Wi-Fi & Utilities',       desc: 'High-speed internet and electricity included.',        image: '/images/classroom-seminar.png', highlight: true },
-  { icon: UserCheck, title: 'On-Site Support',         desc: 'Dedicated manager and IT assistance.',                 image: '/images/reception-lobby.png' },
-  { icon: Camera,    title: 'CCTV Security',           desc: 'Monitored common areas.',                             image: '/images/reception-lobby.png' },
-  { icon: Home,      title: 'Daily Housekeeping',      desc: 'Clean spaces between sessions.',                      image: '/images/classroom-standard.png' },
-  { icon: Mic,       title: 'Audio & Video Recording', desc: 'Recording available on request.',                     image: '/images/classroom-music.png', highlight: true },
-  { icon: Printer,   title: 'Printing & Scanning',     desc: 'Convenient front-desk services.',                     image: '/images/facilities-lockers.png' },
-  { icon: Lock,      title: 'Secure Lockers',          desc: 'Safe storage for personal belongings.',                image: '/images/facilities-lockers.png' },
-  { icon: Package,   title: 'Stationery & Art Kits',   desc: 'Essential supplies available.',                       image: '/images/classroom-music.png' },
-  { icon: Zap,       title: 'Operational Support',     desc: 'Hassle-free day-to-day assistance.',                  image: '/images/terrace-balcony.png' },
+  {
+    icon: Sofa,
+    title: 'Furnished Classrooms',
+    desc: 'Ready-to-use, air-conditioned teaching cabins with ergonomic seating and magnetic whiteboards.',
+    image: '/images/classroom-standard.png',
+  },
+  {
+    icon: Monitor,
+    title: 'Free Digital Screen in Every Cabin',
+    desc: 'High-definition digital display screen and presentation laptop available in every room.',
+    image: '/images/classroom-physics.png',
+  },
+  {
+    icon: Wifi,
+    title: 'Electricity, Wi-Fi & Housekeeping',
+    desc: 'Dual-band high-speed internet, 100% generator power backup, and fresh room resets between sessions.',
+    image: '/images/classroom-seminar.png',
+    highlight: true,
+  },
+  {
+    icon: UserCheck,
+    title: 'Dedicated Manager & Maintenance Team',
+    desc: 'Full-time on-site facility manager and IT technician present during all operating hours.',
+    image: '/images/reception-lobby.png',
+  },
+  {
+    icon: Camera,
+    title: 'CCTV Surveillance',
+    desc: 'Continuous security monitoring across corridors and reception for complete student safety.',
+    image: '/images/reception-lobby.png',
+  },
 ];
 
 export function Facilities() {
@@ -67,8 +83,8 @@ export function Facilities() {
           </div>
         </AnimatedSection>
 
-        {/* Grid — Clean, focused 12-item list */}
-        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {/* Grid — Curated 5 core universally-included facilities */}
+        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {facilities.map((f, i) => {
             const Icon = f.icon;
             const isActive = activeIndex === i;
@@ -134,6 +150,19 @@ export function Facilities() {
             );
           })}
         </StaggerContainer>
+
+        {/* Add-ons note footer */}
+        <AnimatedSection className="mt-8 pt-6 border-t border-[#DDD0B8] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <p className="font-mono text-xs text-[#5C450C]">
+            *Add-on services available at nominal rates (Printing &amp; Scanning Desk, Secure Lockers, Stationery &amp; Art Kits).
+          </p>
+          <Link
+            to="/pricing"
+            className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#8B6914] hover:text-[#5C450C] transition-colors"
+          >
+            View Add-on Details <ArrowRight size={13} />
+          </Link>
+        </AnimatedSection>
       </div>
     </section>
   );

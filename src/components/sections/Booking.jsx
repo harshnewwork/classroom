@@ -30,25 +30,26 @@ const studentTypes = [
 ];
 
 const timeOptions = [
-  'Adult 1: 10:00 – 11:00 am',
-  'Adult 2: 11:05 am – 12:05 pm',
-  'Adult 3: 12:10 – 1:10 pm',
-  'Adult 4: 1:15 – 2:15 pm',
-  'Adult 5: 2:20 – 3:20 pm',
-  'Kids 1: 3:30 – 4:25 pm',
-  'Kids 2: 4:30 – 5:25 pm',
-  'Kids 3: 5:30 – 6:25 pm',
-  'Kids 4: 6:30 – 7:25 pm',
-  'Kids 5: 7:30 – 8:25 pm',
+  'Adult 1: 10:00 – 10:55 am',
+  'Adult 2: 11:05 am – 12:00 pm',
+  'Adult 3: 12:10 – 1:05 pm',
+  'Adult 4: 1:15 – 2:10 pm',
+  'Adult 5: 2:20 – 3:15 pm',
+  'School 1: 3:30 – 4:25 pm',
+  'School 2: 4:35 – 5:30 pm',
+  'School 3: 5:40 – 6:35 pm',
+  'School 4: 6:45 – 7:40 pm',
+  'School 5: 7:50 – 8:45 pm',
 ];
 
 const cabinOptions = [
-  '6 seats',
-  '8 seats',
-  '10 seats',
-  '12 seats',
-  '16 seats (Arts & Crafts)',
-  '24 seats',
+  '4 seats (Cabin A/B)',
+  '8 seats (Cabin C)',
+  '10 seats (Cabin D/E/F)',
+  '12 seats (Cabin G/H)',
+  '30 seats (Seminar Hall)',
+  '10 seats (Arts & Crafts Area)',
+  '10 seats (Balcony / Outdoor Area)',
   'Not sure yet',
 ];
 
