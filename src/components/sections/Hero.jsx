@@ -1,35 +1,14 @@
-import { useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown, ChevronLeft } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useRef } from 'react';
 import { Swoosh } from '../ui/Swoosh';
-
-const rangeCards = [
-  {
-    range: '4–30',
-    title: 'SEATER CABIN & OPEN SPACES',
-    subtitle: 'Multiple Options for every need.',
-  },
-  {
-    range: '100–120',
-    title: 'SEATS IN TOTAL',
-    subtitle: 'Cabins + Arts area + Botany',
-  },
-];
 
 export function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const textY   = useTransform(scrollYProgress, [0, 1], ['0%', '5%']);
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-
-  // Carousel navigation state for range cards
-  const [activeRangeIndex, setActiveRangeIndex] = useState(0);
-
-  const prevCard = () => {
-    setActiveRangeIndex((prev) => (prev === 0 ? rangeCards.length - 1 : prev - 1));
-  };
 
   return (
     <section id="home" ref={ref} className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#1A1A1A]">
@@ -140,19 +119,10 @@ export function Hero() {
 
             {/* Slot 1: Range Card 1 */}
             <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/70 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
-              <div className="flex items-start justify-between gap-2">
+              <div>
                 <span className="font-display font-medium italic text-[#D4B87A] text-2xl sm:text-3xl lg:text-[32px] leading-none">
                   4–30
                 </span>
-                <button
-                  type="button"
-                  onClick={prevCard}
-                  title="Carousel navigation (Previous)"
-                  aria-label="Previous range card"
-                  className="w-6 h-6 rounded-full border border-[#4A3E31] bg-[#161311]/80 text-[#A89880] hover:text-[#F7F2EA] hover:border-[#C9A96B] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
-                >
-                  <ChevronLeft size={13} strokeWidth={1.75} />
-                </button>
               </div>
               <div className="mt-3">
                 <p className="font-mono text-[11px] font-bold tracking-[0.06em] text-[#F7F2EA] uppercase leading-tight">
@@ -166,19 +136,10 @@ export function Hero() {
 
             {/* Slot 2: Range Card 2 */}
             <div className="p-4 sm:p-4.5 rounded-lg border border-[#3E342A] bg-[#1E1B18]/70 backdrop-blur-md shadow-md min-h-[148px] flex flex-col justify-between hover:border-[#C9A96B]/50 transition-all group">
-              <div className="flex items-start justify-between gap-2">
+              <div>
                 <span className="font-display font-medium italic text-[#D4B87A] text-2xl sm:text-3xl lg:text-[32px] leading-none">
                   100–120
                 </span>
-                <button
-                  type="button"
-                  onClick={prevCard}
-                  title="Carousel navigation (Previous)"
-                  aria-label="Previous range card"
-                  className="w-6 h-6 rounded-full border border-[#4A3E31] bg-[#161311]/80 text-[#A89880] hover:text-[#F7F2EA] hover:border-[#C9A96B] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
-                >
-                  <ChevronLeft size={13} strokeWidth={1.75} />
-                </button>
               </div>
               <div className="mt-3">
                 <p className="font-mono text-[11px] font-bold tracking-[0.06em] text-[#F7F2EA] uppercase leading-tight">

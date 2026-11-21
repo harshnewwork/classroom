@@ -78,13 +78,13 @@ export const PACKAGES = [
 ];
 
 export const GST_RATE = 0.18;
-export const MIN_BILLABLE_PCT = 0.6; // 60% of cabin capacity, rounded up
+export const MIN_BILLABLE_PCT = 0.8; // 80% of cabin capacity, rounded up
 export const EARLY_BIRD_DISCOUNT_RATE = 0.30; // Flat 30% discount
 
 /**
  * Calculate minimum billable seats for a given cabin capacity.
- * Rule: ceil(capacity × 60%)
- * Example: 6-seat cabin → ceil(3.6) = 4 seats minimum
+ * Rule: ceil(capacity × 80%)
+ * Example: 6-seat cabin → ceil(4.8) = 5 seats minimum
  */
 export function getMinBillable(cabinCapacity) {
   return Math.ceil(cabinCapacity * MIN_BILLABLE_PCT);

@@ -57,7 +57,7 @@ export function Navigation() {
         <div className="h-[3px] bg-gradient-to-r from-[#8B6914] via-[#C9A96B] to-[#8B6914]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-between h-[68px] gap-4">
+          <nav className="flex items-center justify-between h-[68px] gap-2 lg:gap-4">
 
             {/* Logo — clean, transparent, single instance */}
             <Link to="/" className="group flex-shrink-0" aria-label="Mentors Studio Home">
@@ -65,14 +65,14 @@ export function Navigation() {
             </Link>
 
             {/* Desktop navigation tabs — consistent palette with explicit legible hover colors */}
-            <div className="hidden lg:flex items-center justify-center flex-1 gap-1">
+            <div className="hidden lg:flex items-center justify-center flex-1 gap-0.5 xl:gap-1">
               {navLinks.map((link) => {
                 const active = isActive(link);
                 return (
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`relative px-3 py-2 font-body text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 whitespace-nowrap ${
+                    className={`relative px-2 xl:px-3 py-2 font-body text-[10px] xl:text-[11px] tracking-[0.08em] xl:tracking-[0.12em] uppercase transition-colors duration-200 whitespace-nowrap ${
                       active
                         ? 'text-[#8B6914] font-bold'
                         : 'text-[#1A1A1A] hover:text-[#8B6914] font-semibold'

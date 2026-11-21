@@ -55,7 +55,7 @@ export const FAQS = [
     id: 'min-billing-calculation',
     category: 'Pricing & Billing',
     question: 'How is billing calculated if fewer students show up than expected (minimum billable seats)?',
-    answer: 'To reserve a dedicated cabin exclusively for your batch, each room requires a minimum billable seat threshold set at 60% of capacity, rounded up (for example, 4 seats in a 6-seat cabin, 6 seats in a 10-seat cabin, or 15 seats in a 24-seat seminar room). If fewer students attend on a given day, you are billed only for that minimum; when attendance exceeds the minimum, you pay only for the exact seats occupied.',
+    answer: 'To reserve a dedicated cabin exclusively for your batch, each room requires a minimum billable seat threshold set at 80% of capacity, rounded up (for example, 5 seats in a 6-seat cabin, 8 seats in a 10-seat cabin, or 20 seats in a 24-seat seminar room). If fewer students attend on a given day, you are billed only for that minimum; when attendance exceeds the minimum, you pay only for the exact seats occupied.',
   },
   {
     id: 'parking',

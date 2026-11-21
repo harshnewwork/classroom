@@ -77,7 +77,7 @@ export function Spaces({ onCabinSelect }) {
           <div className="flex flex-wrap items-center gap-6 mt-6 pt-6 border-t border-[#DDD0B8] text-[11px] font-mono text-[#3E2F1F] font-semibold">
             <span className="flex items-center gap-2">
               <span className="w-4 h-4 bg-[#C9A96B] border border-[#A8883F] rounded-xs" />
-              Seats always billed (min. 60%)
+              Seats always billed (min. 80%)
             </span>
             <span className="flex items-center gap-2">
               <span className="w-4 h-4 bg-[#E5D7C3] border border-[#A89880] rounded-xs" />

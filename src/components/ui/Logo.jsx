@@ -2,43 +2,23 @@
  * Logo components for Mentors Studio.
  *
  * Usage:
- *   <NavLogo />       — clean transparent monogram + wordmark for navbar
+ *   <NavLogo />       — clean transparent horizontal logo for navbar
  *   <HeroLogo />      — monogram emblem with elegant transparent presentation
  *   <FullLogo />      — full transparent horizontal logo (monogram + wordmark + tagline)
  *   <BrandBanner />   — full banner logo
  */
 
-/** Clean monogram emblem + wordmark — transparent, elegant, not boxed in */
-export function NavLogo({ light = false }) {
+/** Clean full horizontal logo PNG for navbar */
+export function NavLogo({ light = false, className = '' }) {
   return (
-    <div className="flex items-center gap-3 flex-shrink-0">
-      {/* MS emblem — clean transparent PNG without boxed container */}
+    <div className={`flex items-center flex-shrink-0 ${className}`}>
       <img
-        src="/brand/logo-monogram.png"
-        alt="Mentors Studio"
-        className="h-9 sm:h-10 w-auto object-contain flex-shrink-0 transition-transform group-hover:scale-105 duration-200"
+        src="/brand/logo-nav.png"
+        alt="Mentors Studio — By The Vensej"
+        className={`h-5 sm:h-5.5 md:h-6 lg:h-6.5 w-auto max-w-[160px] sm:max-w-[190px] md:max-w-[230px] lg:max-w-[260px] object-contain flex-shrink-0 transition-transform group-hover:scale-[1.02] duration-200 ${
+          light ? 'brightness-0 invert' : ''
+        }`}
       />
-
-      {/* Wordmark */}
-      <div className="flex flex-col leading-none">
-        <span
-          className={`font-display font-black tracking-[0.12em] transition-colors ${
-            light
-              ? 'text-[#F7F2EA] group-hover:text-[#D4B87A]'
-              : 'text-[#1A1A1A] group-hover:text-[#8B6914]'
-          }`}
-          style={{ fontSize: '13.5px' }}
-        >
-          MENTORS <span className="text-[#8B6914]">STUDIO</span>
-        </span>
-        <span
-          className={`font-body text-[7.5px] tracking-[0.32em] uppercase mt-0.5 font-semibold ${
-            light ? 'text-[#EADCC8]/80' : 'text-[#5C450C]'
-          }`}
-        >
-          BY THE VENSEJ
-        </span>
-      </div>
     </div>
   );
 }

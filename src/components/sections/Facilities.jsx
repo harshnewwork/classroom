@@ -3,7 +3,6 @@ import { AnimatedSection, StaggerContainer, StaggerItem } from '../ui/AnimatedSe
 import { SectionLabel } from '../ui/SectionLabel';
 import {
   Sofa,
-  Laptop,
   Monitor,
   Wifi,
   UserCheck,
@@ -18,8 +17,7 @@ import {
 
 const facilities = [
   { icon: Sofa,      title: 'Furnished AC Cabins',     desc: 'Ready-to-use, fully furnished classrooms.',            image: '/images/classroom-standard.png' },
-  { icon: Laptop,    title: 'Laptop Support',          desc: 'Laptop available during class.',                       image: '/images/classroom-physics.png' },
-  { icon: Monitor,   title: 'TV & Projector',          desc: 'Easy screen and presentation connectivity.',           image: '/images/classroom-biology.png' },
+  { icon: Monitor,   title: 'In-Cabin Digital Screen', desc: 'Screen and laptop available in every cabin.',          image: '/images/classroom-physics.png' },
   { icon: Wifi,      title: 'Wi-Fi & Utilities',       desc: 'High-speed internet and electricity included.',        image: '/images/classroom-seminar.png', highlight: true },
   { icon: UserCheck, title: 'On-Site Support',         desc: 'Dedicated manager and IT assistance.',                 image: '/images/reception-lobby.png' },
   { icon: Camera,    title: 'CCTV Security',           desc: 'Monitored common areas.',                             image: '/images/reception-lobby.png' },

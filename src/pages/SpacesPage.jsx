@@ -125,7 +125,7 @@ export function SpacesPage() {
                 How Minimum Billing Works
               </h3>
               <p className="font-body text-[#3E2F1F] text-sm leading-relaxed font-normal max-w-2xl">
-                A minimum of 60% of cabin capacity is billed per session. Pay for additional seats only when used.
+                A minimum of 80% of cabin capacity is billed per session. Pay for additional seats only when used.
               </p>
             </div>
           </div>

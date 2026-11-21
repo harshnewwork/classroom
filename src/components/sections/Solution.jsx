@@ -13,7 +13,7 @@ const features = [
   },
   {
     title: 'Digital Teaching Technology',
-    desc: 'TV, projector, display walls and laptop available in every cabin.',
+    desc: 'In-cabin digital screens, display walls, and presentation support in every cabin.',
     image: '/images/classroom-biology.png',
     alt: 'Interactive classroom with digital display wall and modern teaching technology',
   },

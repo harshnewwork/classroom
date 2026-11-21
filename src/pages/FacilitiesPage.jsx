@@ -5,7 +5,7 @@ import { Breadcrumbs } from '../components/seo/Breadcrumbs';
 import { SEO } from '../components/seo/SEO';
 import { Link } from 'react-router-dom';
 import {
-  Sofa, Laptop, Wifi, UserCheck, Camera, Home, Mic, Printer,
+  Sofa, Wifi, UserCheck, Camera, Home, Mic, Printer,
   Lock, Package, Zap, Monitor, ArrowRight, CheckCircle2,
   Sparkles
 } from 'lucide-react';
@@ -26,31 +26,17 @@ const facilitiesDetailed = [
     highlight: false,
   },
   {
-    icon: Laptop,
-    title: 'Laptop at Class Time',
-    summary: 'Technology provided — nothing to carry.',
+    icon: Monitor,
+    title: 'In-Cabin Digital Screen',
+    summary: 'High-definition digital display screen with dedicated presentation laptop.',
     details: [
-      'A dedicated laptop is ready in the cabin for your class duration',
-      'Connects directly to the in-cabin TV or overhead projector',
-      'Pre-configured to support slide decks, video playback, and web tools',
-      'Or connect your personal MacBook/Windows laptop via provided HDMI',
-      'On-site IT technician handles setup and connectivity checks',
+      'Dedicated digital screen or projector pre-connected to an in-cabin presentation laptop',
+      'Plug-and-play HDMI and wireless screencasting for slides, live coding, and video playback',
+      'Pre-configured and ready before your class begins — nothing heavy to carry',
+      'Seamlessly connect your own MacBook/Windows laptop via provided high-speed HDMI',
+      'On-site IT technician on standby to assist with setup, display tuning, and audio',
     ],
     image: '/images/classroom-physics.png',
-    highlight: false,
-  },
-  {
-    icon: Monitor,
-    title: 'TV & Projector Connectivity',
-    summary: 'Display anything — slides, videos, live coding demos.',
-    details: [
-      'High-definition display screen or digital projector in every cabin',
-      'Plug-and-play HDMI and wireless screencasting capability',
-      'Full-screen presentation mode with high-lumen clarity',
-      'Ideal for visual subjects, language coaching, and software training',
-      'Immediate technical troubleshooting from our floor IT team',
-    ],
-    image: '/images/classroom-biology.png',
     highlight: false,
   },
   {
@@ -206,8 +192,8 @@ export function FacilitiesPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <AnimatedSection>
             <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#5C450C] font-bold mb-4">Included in every seat, every session</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              {['AC + Furniture', 'In-Cabin Laptop', 'TV / Projector', 'Broadband Wi-Fi', 'Floor Manager', 'Housekeeping'].map((item) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              {['AC + Furniture', 'In-Cabin Digital Screen', 'Broadband Wi-Fi', 'Floor Manager', 'Housekeeping'].map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm bg-white/70 p-2.5 rounded-xs border border-[#DDD0B8]/80 shadow-xs">
                   <CheckCircle2 size={15} className="text-[#8B6914] flex-shrink-0" />
                   <span className="font-body text-[#1A1A1A] font-semibold text-xs sm:text-sm">{item}</span>

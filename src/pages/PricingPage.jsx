@@ -113,7 +113,7 @@ function PricingCard({ pkg, educatorType, isActive, onClick }) {
       <div className="mt-4 pt-3 border-t border-[#3A3228] flex flex-col gap-1.5">
         {[
           'Pay after you teach',
-          'Min. 60% seats billed',
+          'Min. 80% seats billed',
           pkg.discountLabel,
           `${pkg.depositPercent}% refundable deposit`,
           ...(pkg.hasFreeLocker ? ['Complimentary free locker'] : []),
@@ -196,7 +196,7 @@ export function PricingPage() {
             Traditional coaching room rentals in Gurugram demand fixed monthly leases between ₹35,000 and ₹75,000 regardless of student turnout. Mentors Studio replaces that liability with an educator-first variable model: you pay strictly per seat, per session, billed monthly in arrears. You collect tuition fees from your students first throughout the month, then settle your classroom invoice with zero cashflow strain.
           </p>
           <p className="font-body text-[#A89880] text-sm lg:text-base leading-relaxed font-light mb-4">
-            To reserve a dedicated room, every cabin requires a reasonable 60% minimum billable capacity (rounded up). In an 8-seat cabin, the minimum bill is 5 seats; in a 10-seat cabin, it is 6 seats; in our 24-seat seminar hall, it is 15 seats. If 7 students attend your 10-seat session, you pay for 7 seats; if 4 attend, you pay the 6-seat baseline. With packages offering up to 15% savings, educators run high-margin batches without ever risking lease penalties.
+            To reserve a dedicated room, every cabin requires a reasonable 80% minimum billable capacity (rounded up). In an 8-seat cabin, the minimum bill is 7 seats; in a 10-seat cabin, it is 8 seats; in our 24-seat seminar hall, it is 20 seats. If 9 students attend your 10-seat session, you pay for 9 seats; if 5 attend, you pay the 8-seat baseline. With packages offering up to 15% savings, educators run high-margin batches without ever risking lease penalties.
           </p>
           <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono">
             <Link to="/spaces" className="text-[#C9A96B] hover:text-[#F7F2EA] font-semibold inline-flex items-center gap-1">
@@ -248,7 +248,7 @@ export function PricingPage() {
             <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#A89880] mb-5">Important pricing conditions</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: '📊', title: 'Minimum 60% billing', desc: 'Even if fewer students attend, you are billed for at least 60% of cabin capacity per session, rounded up.' },
+                { icon: '📊', title: 'Minimum 80% billing', desc: 'Even if fewer students attend, you are billed for at least 80% of cabin capacity per session, rounded up.' },
                 { icon: '💳', title: 'Refundable deposit', desc: 'All packages include a refundable security deposit (Starter 20%, Growth 15%, Pro 12.5%, Elite 10% + Free locker), returned 100% when you complete the term.' },
                 { icon: '⏳', title: 'Session validity', desc: 'Package sessions remain valid across the allocated duration (2, 3, 6, or 12 months) for predictable scheduling.' },
                 { icon: '📅', title: 'Monthly billing', desc: 'Receive a consolidated GST invoice at the end of each month. Collect from your students first, then pay.' },
