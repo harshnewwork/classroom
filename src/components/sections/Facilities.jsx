@@ -8,6 +8,7 @@ import {
   Wifi,
   UserCheck,
   Camera,
+  Printer,
   ArrowRight,
 } from 'lucide-react';
 
@@ -42,6 +43,12 @@ const facilities = [
     title: 'CCTV Surveillance',
     desc: 'Continuous security monitoring across corridors and reception for complete student safety.',
     image: '/images/reception-lobby.png',
+  },
+  {
+    icon: Printer,
+    title: 'Printing & Scanning Services*',
+    desc: 'High-speed printing, photocopying and scanning at the front desk for question papers and notes.',
+    image: '/images/facilities-lockers.png',
   },
 ];
 
@@ -83,8 +90,8 @@ export function Facilities() {
           </div>
         </AnimatedSection>
 
-        {/* Grid — Curated 5 core universally-included facilities */}
-        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        {/* Grid — Curated 6 core facilities */}
+        <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {facilities.map((f, i) => {
             const Icon = f.icon;
             const isActive = activeIndex === i;

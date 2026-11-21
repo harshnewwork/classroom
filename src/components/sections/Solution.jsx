@@ -30,14 +30,14 @@ const features = [
     alt: 'Reception lobby with on-site facility manager and IT support staff',
   },
   {
-    title: 'Printing & Scanning',
-    desc: 'Multiple sizes. Charged per page. No separate print shop needed.',
+    title: 'Dedicated Lockers & Storage',
+    desc: 'Safe on-site storage for your reference books, test papers, and teaching kits.',
     image: '/images/facilities-lockers.png',
-    alt: 'Front desk facility lockers and administrative printing and scanning station',
+    alt: 'Front desk facility lockers and secure educator storage at Mentors Studio',
   },
   {
     title: 'Professional Infrastructure',
-    desc: 'Air conditioning, housekeeping, CCTV, lockers — all included.',
+    desc: 'Air conditioning, 100% generator power backup, CCTV, and daily housekeeping.',
     image: '/images/classroom-standard.png',
     alt: 'Professional air-conditioned classroom cabin with standard furnished infrastructure',
   },
@@ -46,6 +46,12 @@ const features = [
     desc: 'You focus entirely on teaching. We handle everything else.',
     image: '/images/terrace-balcony.png',
     alt: 'Full operational support and open terrace breakout spaces at Mentors Studio',
+  },
+  {
+    title: 'Printing & Scanning Services',
+    desc: 'Multiple sizes. Charged per page. No separate print shop needed.',
+    image: '/images/reception-lobby.png',
+    alt: 'Front desk administrative printing and scanning station for educator worksheets',
   },
 ];
 

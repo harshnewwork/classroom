@@ -52,7 +52,7 @@ const educatorProfiles = [
   {
     label: 'Educational Creators',
     icon: Video,
-    desc: 'Educators who teach and create content simultaneously — our recording facility supports both activities.',
+    desc: 'Educators who teach and create digital coursework simultaneously — our smart displays and IT support enable seamless content delivery.',
   },
 ];
 
